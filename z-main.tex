@@ -48,11 +48,12 @@
 \usepackage{emptypage}
 \usepackage{hyphenat}
 \usepackage{fancyhdr}
-\usepackage[backend=biber, style=ieee]{biblatex}
-\ifdefined\usarAPA 
-    \usepackage[backend=biber, style=apa]{biblatex}
+\ifdefined\usarAPA
+	\usepackage[backend=biber, style=apa]{biblatex}
+\else
+	\usepackage[backend=biber, style=ieee, sorting=none, citestyle=numeric-comp]{biblatex}
 \fi
-\addbibresource{m-bibliografia.bib}
+\addbibresource{o-bibliografia.bib}
 
 \usepackage[percent]{overpic}
 
@@ -62,7 +63,7 @@
 	%\usepackage[toc]{glossaries}
 	\usepackage[numberedsection]{glossaries}
 	\makeglossaries
-    \input{o-glosario}
+    \input{q-glosario}
 \fi
 
 % ==============================================================================
@@ -250,15 +251,15 @@
 % DEDICATORIA
 % ------------------------------------------------------------------------------
 \ifdefined\CAPdedicatoria
-\newpage
-\cleardoublepage\phantomsection
-\chapter*{Dedicatoria}
-\ifdefined\parpordefecto
-\defaultparformat{a-dedicatoria}
-\else
-\input{a-dedicatoria}
-\fi
-\addcontentsline{toc}{chapter}{Dedicatoria}
+	\newpage
+	\cleardoublepage\phantomsection
+	\chapter*{Dedicatoria}
+	\ifdefined\parpordefecto
+		\defaultparformat{a-dedicatoria}
+	\else
+		\input{a-dedicatoria}
+	\fi
+	\addcontentsline{toc}{chapter}{Dedicatoria}
 \fi
 
 % ÍNDICE GENERAL
