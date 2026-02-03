@@ -64,16 +64,17 @@ comunidad \cite{cedeña2012extensionDesarrollo}.
 
 
     \subsection{Aplicación Web}
-    Una aplicación Web es un programa informático o software el cuál se ejectua en Internet, sin la necesidad de que exista una instalación
-    local en el dispositivo del usuario, el uso del navegador web basta para poder acceder a esta. Puede comprenderse como un conjunto de
-    aplicaciones autónomas modulares que se pueden consumir desde una máquina a través de una red, como Internet.
-    Estas aplicaciones permiten comunicación e intercambio de datos entre diferentes sistemas y plataformas, facilitando la interoperabilidad
-    máquina a máquina sobre una red \cite{ibm2025WebServices}.
-    Permitiendo acceso a la información de manera rápida y sencilla, así como realizar diversas interacciones que la aplicación Web permita 
-    \cite{pardo2018comparacion}.
+    Una aplicación Web es un programa informático o software el cuál se ejectua en Internet, sin la necesidad de que 
+    exista una instalación local en el dispositivo del usuario, el uso del navegador web basta para poder acceder a esta.
+    Puede comprenderse como un conjunto de aplicaciones autónomas modulares que se pueden consumir desde una máquina a 
+    través de una red, como Internet. Estas aplicaciones permiten comunicación e intercambio de datos entre diferentes 
+    sistemas y plataformas, facilitando la interoperabilidad máquina a máquina sobre una red \cite{ibm2025WebServices}.
+    Permitiendo acceso a la información de manera rápida y sencilla, así como realizar diversas interacciones que la 
+    aplicación Web permita \cite{pardo2018comparacion}.
 
         \subsubsection{Beneficios de una aplicación web en procesos universitarios}
-        Los beneficios de implementar una aplicación web en procesos universitarios son múltiples, entre los cuales se pueden destacar:
+        Los beneficios de implementar una aplicación web en procesos universitarios son múltiples, entre los cuales se pueden 
+        destacar:
         \begin{itemize}
             \item \textbf{Ahorro de costos:} La migración a una aplicación web puede reducir costos operativos al tener menor 
             dependencia de recursos físicos.
@@ -83,24 +84,184 @@ comunidad \cite{cedeña2012extensionDesarrollo}.
             su dominio y adopción de tecnologías emergentes.
         \end{itemize}
         Según Urmeneta et al., la implementación de servicios web en instituciones educativas permite mejorar la eficiencia,
-        accesibilidad y calidad de los servicios ofrecidos a estudiantes, docentes y personal administrativo. Abordando ineficiencias
-        detectadas en los métodos manuales tradicionales, un sistema permite centralizar y agilizar el proceso de presentación, 
-        revisión y aprobación de resultados. Además, ayuda a conectar y comunicar correctamente a todos los actores. \cite{urmeneta2025design}.
+        accesibilidad y calidad de los servicios ofrecidos a estudiantes, docentes y personal administrativo. Abordando 
+        ineficiencias detectadas en los métodos manuales tradicionales, un sistema permite centralizar y agilizar el proceso 
+        de presentación, revisión y aprobación de resultados. Además, ayuda a conectar y comunicar correctamente a todos los 
+        actores. \cite{urmeneta2025design}.
 
 \section{Arquitectura de Aplicaciones Web}
-La arquitectura de las aplicaciones web se refiere al modelo estructural que define la organización e interacción de los componentes de una
-aplicación Web, tales como: servidores, bases de datos, lógica de negocio, interfaz de usuario, entre otros. Es de vital importancia, ya que 
-la escalabilidad, rendimiento, y mantenibilidad de la aplicación Web dependen en gran medida de su arquitectura
-\cite{romero2021arquitectura, universidadElBosque2024arquitectura}.
+La arquitectura de las aplicaciones web se refiere al modelo estructural que define la organización e interacción de los 
+componentes de una aplicación Web, tales como: servidores, bases de datos, lógica de negocio, interfaz de usuario, entre 
+otros. Es de vital importancia, ya que la escalabilidad, sostenibilidad, rendimiento, y mantenibilidad de la aplicación Web 
+dependen en gran medida de su arquitectura \cite{romero2021arquitectura, universidadElBosque2024arquitectura}.
 
-Generalmente, las aplicaciones Web se manejan bajo un modelo de cliente-servidor. El cual consta de los siguientes componentes clave:
+\subsection{\textit{Model-View-Controller} (MVC)}
+El patrón de diseño Modelo-Vista-Controlador (MVC, por sus siglas en inglés) es una arquitectura que separa la aplicación 
+en capas, dividiendo las aplicaciones en tres componentes lógicos \cite{RANA2022271, yalupin2021programacionFrontEndBackEnd}:
 \begin{itemize}
-    \item \textbf{Capa de Presentación:} También conocido como Cliente o \textit{Frontend}, es la parte de la aplicación con la que el
-            usuario interactura directamente. Esta incluye la interfaz de usuario y la experiencia de usuario (UI/UX), y su función 
-            principal es presentar información y reunir datos de entrada.
-    \item \textbf{Capa de Aplicación:} También conocido como Servidor o \textit{Backend}, es la parte de la aplicación que maneja la 
+    \item \textbf{Modelo:} También conocido como la capa de almacenamiento persistente, esta componente tiene como función 
+            almacenar y gestionar los datos guardados en bases de datos (SQL, NoSQL), garantizando una correcta persistencia
+            de datos.
+    \item \textbf{Vista:} También conocido como la capa de presentación, es la parte de la aplicación con la que el
+            usuario interactura directamente. Este componente incluye la interfaz de usuario y la experiencia de usuario 
+            (UI/UX), y su función principal es presentar información y reunir datos de entrada.
+    \item \textbf{Controlador:} También conocido como la capa de aplicación, es la parte de la aplicación que maneja la 
             lógica de negocio, procesamiento de datos, seguridad y comunicación con la base de datos.
-    \item \textbf{Capa de Almacenamiento Persistente:} Esta capa tiene como función almacenar y gestionar los datos guardados en bases 
-            de datos (SQL, NoSQL), garantizando una correcta persistencia de datos.
+\end{itemize}
+Este patrón de diseño, generalmente utilizado en aplicaciones Web \textit{client-server} o sistemas distribuidos, ofrece muchas
+ventajas, entre ellas la facilidad de mantenimienbo, escalabilidad y reutilización. Ya que cada componente se puede gestionar de
+manera independiente \cite{RANA2022271}.
+
+\section{\textit{Frontend}}
+El término \textit{Frontend}, de la mano con el componente \textit{Vista}, hace referencia a la interfaz gráfica de usuario
+(GUI, por sus siglas en inglés), la cual es la parte visual con la que el usuario interactúa directamente. En pocas palabras, 
+es la parte que permite la interacción del usuario con la aplicación. Bajo el contexto Web, la GUI vista por el usuario desde su
+navegador se le conoce como modelo de objetos del documento (DOM, por sus siglas en inglés) \cite{aws2025frontendBackend}.
+
+\subsection{Seguridad}
+La seguridad en el \textit{Frontend} se basa en estrategias de validación de entradas, desactivación de configuraciones
+predeterminadas y la implementación de políticas de seguridad de contenido (CSP, por sus siglas en inglés)
+\cite{aws2025frontendBackend}.
+
+\subsection{Renderizado Web}
+El renderizado Web es el proceso mediante el cual el navegador interpreta y transforma el código (HTML, CSS, JavaScript) 
+en una página visual e interactiva para el usuario \cite{vercel2024renderingStrategy}.
+Existen varias estrategias de renderizado web, entre las cuales se encuentran :
+
+\subsubsection{\textit{Static Site Generation} (SSG)}
+SSG es una técnica de renderizado donde se preprocesan las páginas en el momento de la compilación, dando como resultado archivos
+HTML estáticos que permiten enviarlos de forma más rápida y eficiente. Ideal para páginas con contenido que cambie con muy poca 
+frecuencia. 
+
+\textbf{Beneficios:}
+\begin{itemize}
+    \item Excelente rendimiento SEO.
+    \item Reducción de la carga del servidor.
+    \item Carga de página rápida.
+    \item Costes de infraestructura mínimos.
 \end{itemize}
 
+\textbf{Consideraciones:}
+\begin{itemize}
+    \item Páginas con gran número de páginas, aumentan el tiempo de compilación.
+    \item Una actualización de contenido requiere una compilación completa.
+\end{itemize}
+
+\subsubsection{\textit{Incremental Static Regeneration} (ISR)}
+ISR permite la actualización de páginas espefícicas sin necesidad de compilar todo de nuevo. Combinando los beneficios de SSG con
+una actualización más fluida y rápida. Ideal cuando SSG no se da a basto debido a su tiempo de compilación.
+
+\textbf{Beneficios:}
+\begin{itemize}
+    \item Carga de página rápida.
+    \item Permite actualizaciones bajo demanda, sin la necesidad de compilar todo.
+    \item Adaptación a gran número de páginas.
+\end{itemize}
+
+\textbf{Consideraciones:}
+\begin{itemize}
+    \item Contoles de caché más complejos.
+\end{itemize}
+
+\subsubsection{\textit{Server-Side Rendering} (SSR)}
+SSR es una técnica de renderizado donde el servidor genera un HTML completo en cada petición y se lo envía al cliente tal cual, 
+lo cuál permite contenido en tiempo real y personalizado. Ideal para aplicaciones con contenido dinámico y cambio constante.
+
+\textbf{Beneficios:}
+\begin{itemize}
+    \item Contenido actualizado.
+    \item Mejor rendimiento SEO.
+\end{itemize}
+
+\textbf{Consideraciones:}
+\begin{itemize}
+    \item Mayor carga en el servidor.
+    \item Tiempos de carga inicial más lentos.
+\end{itemize}
+
+\subsubsection{\textit{Client-Side rendering} (CSR)}
+CSR es una técnica donde el servidor genera un HTML básico, dejando que el cliente sea el encargado de renderizar el contenido
+completo mediante JavaScript. Ideal para aplicaciones web interactivas y con alta dinámica en su contenido.
+
+\textbf{Beneficios:}
+\begin{itemize}
+    \item Interacciones en tiempo real con datos externos.
+    \item Reducción de la carga del servidor.
+    \item Experiencia de usuario fluida.
+\end{itemize}
+
+\textbf{Consideraciones:}
+\begin{itemize}
+    \item Carga inicial más lenta.
+    \item Se pierde rendimiento SEO.
+    \item Gestión rigurosa del estado de la aplicación.
+\end{itemize}
+
+\subsubsection{\textit{Partial Prerendering} (PPR)}
+PPR es una técnica que se encuentra en fase experimental, pero busca combinar los beneficios de las demás estrategias. Para ello, 
+prerenderiza desde el servidor cualquier parte estática de la página y luego transmite el contenido dinámico basándose en los
+límties de React Suspense. Al estar en fase experimental, su uso ideal aún no está definido, así como sus limitaciones.
+
+\textbf{Beneficios:}
+\begin{itemize}
+    \item Carga inicial rápida (como SSG).
+    \item Contenido dinámico actualizado (como SSR/CSR).
+    \item Mejor rendimiento SEO.
+    \item Reducción de gastos generales de desarrollo.
+\end{itemize}
+
+\cite{vercel2024renderingStrategy}
+
+\section{\textit{Backend}}
+El término \textit{Backend}, de la mano con el componente \textit{Controlador} y el componente \textit{Modelo}, es el
+encargado de administrar la funcionalidad general de la aplicación. Esto incluye la lógica de negocio y la gestión del 
+almacenamiento persistente de datos. Además, el \textit{Backend} es el responsable de manejar cualquier solicitud 
+proveniente del \textit{Frontend}, donde la procesa y devuelve una respuesta \cite{aws2025frontendBackend}.
+
+\subsection{Seguridad}
+La seguridad en el \textit{Backend} se basa en la seguridad del almacenamiento de datos y el tránsito. Esto incluye
+encriptación de datos, controles de acceso, seguridad de sesión y protección contra amenzas comunes tales como: 
+inyección SQL, \textit{cross-site scripting} (XSS) y \textit{cross-site request forgery} (CSRF) \cite{aws2025frontendBackend}.
+
+\section{\textit{Application Programming Interface} (API)}
+Una interfaz de programa de aplicación (API, por sus siglas en inglés) define las reglas a seguir para la comunicación entre
+sistemas de software, a este conjunto de reglas se le conoce como \textit{endpoints}. En pocas palabras, una API es un
+conjunto de definiciones que ayudan a estandarizar la comunicación con cierto sistema (servidor), permitiendo que distintas 
+aplicaciones (cliente) puedan interactuar con dicho sistema sin la necesidad de conocer su implementación interna 
+\cite{aws2025restfulAPI}
+
+\section{\textit{Representational State Transfer} (REST)}
+La transferencia de estado representacional (REST, por sus siglas en inglés) es una arquitectura de software que define un
+conjunto de condiciones como intefaz uniforme, operaciones HTTP estándar, ausencia de estado y representaciones intercambiables
+de información. Una API que cumple con estas condiciones se le conoce como
+API RESTful \cite{aws2025restfulAPI}.
+
+\subsection{Solicitud}
+Para que una API RESTful responda correctamente hacia una solicitud HTTP, la solicitud debe de contener los siguientes
+componentes principales \cite{aws2025restfulAPI}:
+
+\begin{itemize}
+    \item \textbf{\textit{Endpoint}:} Generalmente, es una URL (siglas en inglés para Localizador Uniforme de Recursos) que
+            identifica un recurso único en el servidor.
+    \item \textbf{Método:} Define la acción que se desea realizar sobre el recurso. Los métodos HTTP más comunes son:
+            \begin{itemize}
+                \item \textbf{GET:} Recuperar datos de un recurso.
+                \item \textbf{POST:} Crear un nuevo recurso.
+                \item \textbf{PUT:} Actualizar un recurso existente.
+                \item \textbf{DELETE:} Eliminar un recurso.
+            \end{itemize}
+    \item \textbf{Encabezados:} Son metadatos que proporcionan información como el formato de la solicitud, tipo de autenticación
+            , entre otros.
+    \item \textbf{Datos}: Para los métodos POST y PUT, y otros métodos, la solicitud puede incluir datos.
+    \item \textbf{Parámetros:} Brindan al servidor más detalles sobre la solicitud como: filtros, cookies, etc.
+\end{itemize}
+
+\subsection{Respuesta}
+Los principios REST indican que la respuesta del servidor contenga los siguientes componentes principales \cite{aws2025restfulAPI}:
+
+\begin{itemize}
+    \item \textbf{Línea de estado:} Contiene un código de estado HTTP de tres dígitos que indica el resultado de la solicitud.
+    \item \textbf{Cuerpo del mensaje:} De la mano con los encabezados de la respuesta, contiene la representación del recurso.
+    \item \textbf{Encabezados:} Al igual que en la solicitud, estos son metadatos que brindan contexto sobre la respuesta, incluyendo
+            información como el servidor, codificación, etc.
+\end{itemize}
