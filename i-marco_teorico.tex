@@ -223,20 +223,99 @@ La seguridad en el \textit{Backend} se basa en la seguridad del almacenamiento d
 encriptación de datos, controles de acceso, seguridad de sesión y protección contra amenzas comunes tales como: 
 inyección SQL, \textit{cross-site scripting} (XSS) y \textit{cross-site request forgery} (CSRF) \cite{aws2025frontendBackend}.
 
-\section{\textit{Application Programming Interface} (API)}
+\section{Tecnologías de Implementación}
+
+\subsection{Node js}
+Node js es un entorno de ejecución de código abierto para JavaScript que utiliza el motor V8 de Google Chrome, ideal para
+construir aplicaciones web escalables, alto rendimiento, y lo más importante, no bloqueante. Gracias a que utiliza un modelo
+basado en eventos de E/S (entrada/salida) lo que permite manejar múltiples conexiones simultáneamente sin bloquearse. 
+Permitiendo así crear servidores web, APIs RESTful, aplicaciones en tiempo real (chat, juegos, etc.) \cite{cantelon2014node}.
+
+\subsection{JavaScript}
+JavaScript es un lenguaje de programación utilizado principalmente para el desarrollo de páginas web interactivas. Puede ser
+utilizado tanto en el \textit{Frontend} como en el \textit{Backend}, gracias a entornos de ejecución como \textit{Node.js}.
+Es un lenguaje interpretado, orientado a objetos y basado en prototipos y multiparadigma; incluso tiene acceso al
+\textit{DOM} de la página web, lo cuál permite manipular elementos HTML \cite{aws2025javascript}.
+
+\subsection{HTML}
+El lenguaje de marcas de hipertexto (HTML, por sus siglas en inglés) es la base de la mayoría de las páginas web. Define la
+estructura y contenido de una página web por medio de etiquetas y atributos que indican al navegador qué y cómo mostrar \cite{aws2025javascript}.
+
+\subsection{CSS}
+Las hojas de estilo en cascada (CSS, por sus siglas en inglés) es un lenguaje de reglas de estilo que ayudan a definir estilos
+al contenido HTML. Estas reglas indican al navegador cómo renderizar los elementos HTML \cite{aws2025javascript}.
+
+\subsection{TypeScript}
+TypeScript es un superconjunto de JavaScript, lo que significa que un código JavaScript válido también es un código TypeScript.
+TypeScript perfecciona JavaScript al agregar tipos en la sintaxis, lo que permite a herramientas de edición de código detectar
+errores en tiempo de desarrollo, también conocido como \textit{type-safe} \cite{aws2025javascript}.
+
+\subsection{React}
+React es una biblioteca JavaScript de código abierto creada por Facebook (Meta). Desde su lanzamiento en 2013, e ha convertido
+en una de las bibliotecas más populares para el \textit{Frontend}, superando a otras tecnologías como Angular y Vue.js.
+Gracias a su enfoque basado en componentes, React permite construir aplicaciones Web altamente dinámicas y escalables.
+React crea un DOM virtual en cada componente (copia del DOM) para compararlo con el estado del DOM real y aplicar el cambio 
+solamente al elemento actualizado, mejorando significativamente el rendimiento de la aplicación al no tener que renderizar 
+toda la página nuevamente. Cada componente es una fusión de la estructura HTML y la lógica JavaScript, lo que se conoce como
+sintaxis JSX (JavaScript XML) \cite{saavedra2023react}.
+
+\subsubsection{Beneficios}
+\begin{itemize}
+    \item El DOM virtual ayuda a ahorrar recursos y tráfico, mejorando el rendimiento.
+    \item La reutilización de componentes permite un desarrollo más limpio y estructurado.
+    \item Su estructura basada en comopnentes ayuda a la hora de escalar o darle mantenimiento a la aplicación.
+    \item Integración sencilla con otras bibliotecas.
+\end{itemize}
+
+\subsubsection{Consideraciones}
+\begin{itemize}
+    \item La biblioteca en sí puede aumentar el tamaño total de la aplicación.
+    \item Evoluciona constantemente, por lo que requiere aprendizaje continuo.
+    \item Al no ser un \textit{Framework}, requiere la integración de otras bibliotecas para funcionalidades adicionales.
+\end{itemize}
+
+\subsection{TanStack}
+TanStack es una colección de bibliotecas de código abierto de alto rendimiento para construir aplicaciones web modernas.
+Gracias a su versatilidad, puede integrarse a un proyecto sin importar el \textit{framework}, pero es comúnmente utilizado
+con React, Vue, Solid y Angular; ya que sus paquetes son especialmente para el \textit{Frontend} \cite{rauhala2025comparison}.
+
+\subsubsection{TanStack Router}
+TanStack Router es una biblioteca de enrutamiento \textit{type-safe} basado en el sistema de archivos. Compartiendo muchas 
+características con React Router, pero con soporte SSR, admitiendo múltiples tipos de rutas diferentes. Cada ruta puede 
+tener sus propios \textit{loaders}, \textit{actions} y \textit{error boundaries} \cite{rauhala2025comparison}.
+
+\subsubsection{TanStack Query}
+TanStack Query, antes conocido como React Query, es una biblioteca de gestión de estado asíncrono \textit{type-safe} para 
+\textit{fetching}, almacenamiento en caché, sincronización y actualización de datos del servidor. Se basa en tres conceptos
+principales \cite{garg2025react}:
+\begin{itemize}
+    \item \textbf{\textit{Queries}:} Para \textit{fetching} y lectura de datos.
+    \item \textbf{\textit{Mutations}:} Para crear, actualizar o eliminar datos.
+    \item \textbf{\textit{Query Client}:} Punto central de coordinación.
+\end{itemize}
+Además, ofrece características como TypeScript integrado, soporte para \textit{pagination} e \textit{infinite scrolling} 
+(altamente optimizados) y utilidades \textit{server-state} \cite{garg2025react}.
+
+\subsubsection{TanStack Form}
+TanStack Form es una biblioteca para la gestión de estado de formularios \textit{type-safe} de alto rendimiento. Diseñada
+para ser flexible y adaptable a cualquier caso de uso, permite la creación de formularios complejos con validaciones
+personalizadas, así como el manejo de errores. Además, permite integrar fácilmente cualquier componente de interfaz de
+usuario propia o de terceros \cite{tanstackSFform}.
+
+\subsection{\textit{Application Programming Interface} (API)}
 Una interfaz de programa de aplicación (API, por sus siglas en inglés) define las reglas a seguir para la comunicación entre
 sistemas de software, a este conjunto de reglas se le conoce como \textit{endpoints}. En pocas palabras, una API es un
 conjunto de definiciones que ayudan a estandarizar la comunicación con cierto sistema (servidor), permitiendo que distintas 
 aplicaciones (cliente) puedan interactuar con dicho sistema sin la necesidad de conocer su implementación interna 
-\cite{aws2025restfulAPI}
+\cite{aws2025restfulAPI}.
 
-\section{\textit{Representational State Transfer} (REST)}
+\subsection{\textit{Representational State Transfer} (REST)}
 La transferencia de estado representacional (REST, por sus siglas en inglés) es una arquitectura de software que define un
 conjunto de condiciones como intefaz uniforme, operaciones HTTP estándar, ausencia de estado y representaciones intercambiables
 de información. Una API que cumple con estas condiciones se le conoce como
 API RESTful \cite{aws2025restfulAPI}.
 
-\subsection{Solicitud}
+\subsubsection{Solicitud}
 Para que una API RESTful responda correctamente hacia una solicitud HTTP, la solicitud debe de contener los siguientes
 componentes principales \cite{aws2025restfulAPI}:
 
@@ -256,7 +335,7 @@ componentes principales \cite{aws2025restfulAPI}:
     \item \textbf{Parámetros:} Brindan al servidor más detalles sobre la solicitud como: filtros, cookies, etc.
 \end{itemize}
 
-\subsection{Respuesta}
+\subsubsection{Respuesta}
 Los principios REST indican que la respuesta del servidor contenga los siguientes componentes principales \cite{aws2025restfulAPI}:
 
 \begin{itemize}
