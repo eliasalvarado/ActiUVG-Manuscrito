@@ -3,7 +3,8 @@ La extensión universitaria es un componente fundamental de la misión en las un
 el conocimiento académico y científico de su comunidad académica hacia la sociedad en general. 
 Esta se puede realizar en diversas formas, tales como: conferencias, cursos cortos, talleres, proyectos de servicio 
 comunitario, consultorías, entre otros. Cada una de estas actividades comparten el conocimiento y recursos adquiridos
-en la Universidad con la sociedad, contrubuyendo así al desarrollo social, cultural, económico y científico \cite{bastias2004extension}. 
+en la Universidad con la sociedad, contrubuyendo así al desarrollo social, cultural, económico y científico
+\cite{bastias2004extension}. 
 
 Además, la extensión universitaria representa un compromiso de las universidades con la sociedad, apoyando el fácil
 acceso al conocimiento y fomentando la participación activa con el desarrollo integral de las comunidades. Esta actividad
@@ -73,15 +74,15 @@ comunidad \cite{cedeña2012extensionDesarrollo}.
     aplicación Web permita \cite{pardo2018comparacion}.
 
         \subsubsection{Beneficios de una aplicación web en procesos universitarios}
-        Los beneficios de implementar una aplicación web en procesos universitarios son múltiples, entre los cuales se pueden 
-        destacar:
+        Los beneficios de implementar una aplicación web en procesos universitarios son múltiples, entre los cuales se 
+        pueden destacar:
         \begin{itemize}
-            \item \textbf{Ahorro de costos:} La migración a una aplicación web puede reducir costos operativos al tener menor 
-            dependencia de recursos físicos.
-            \item \textbf{Eficiencia operativa:} La agilización de procesos aumenta significativamente la eficiencia operativa, 
-            reduciendo tiempos de espera y entregando información en tiempo real.
-            \item \textbf{Innovación:} Frente a la competencia, tener un sistema digitalizado permite a las universidades demostrar 
-            su dominio y adopción de tecnologías emergentes.
+            \item \textbf{Ahorro de costos:} La migración a una aplicación web puede reducir costos operativos al tener 
+            menor dependencia de recursos físicos.
+            \item \textbf{Eficiencia operativa:} La agilización de procesos aumenta significativamente la eficiencia
+            operativa, reduciendo tiempos de espera y entregando información en tiempo real.
+            \item \textbf{Innovación:} Frente a la competencia, tener un sistema digitalizado permite a las universidades
+            demostrar su dominio y adopción de tecnologías emergentes.
         \end{itemize}
         Según Urmeneta et al., la implementación de servicios web en instituciones educativas permite mejorar la eficiencia,
         accesibilidad y calidad de los servicios ofrecidos a estudiantes, docentes y personal administrativo. Abordando 
@@ -225,12 +226,32 @@ inyección SQL, \textit{cross-site scripting} (XSS) y \textit{cross-site request
 
 \section{Tecnologías de Implementación}
 
+\subsection{\textit{Amazon Web Services} (AWS)}
+AWS es una plataforma de \textit{cloud computing} más completa y adoptada a nivel mundial. Permite a empresas y desarrolladores
+acceder a una amplia gama de servicios de computación. Entre los cuales destacan \cite{aws2026aws}:
+\begin{itemize}
+    \item Servicios de computación: Amazon Elastic Compute Cloud (EC2), AWS Lambda, Amazon Lightsail, entre otros. Que permiten
+            ejecutar servidores virtuales, aplicaciones sin servidor, contenedores, etc.
+    \item Almacenamiento: Amazon Simple Storage Service (S3), Amazon Elastic Block Store (EBS), Amazon Glacier, entre otros. Que
+            permiten almacenar cualquier cantidad de datos, archivos u objetos de manera segura y escalable.
+    \item Bases de datos: Amazon Relational Database Service (RDS), Amazon DynamoDB, Amazon Aurora, entre otros. Que permiten
+            iniciar, gestionar y escalar bases de datos relacionales o no relacionales de manera sencilla y eficiente.
+\end{itemize}
+
 \subsection{Docker}
 Docker es una plataforma de código abierto que permite crear, desplegar y ejecutar aplicaciones dentro de contenedores. Un
 contenedor es una unidad de software ligera y portátil capaz de empaquetar código, librerías, dependencias y configuraciones
 esenciales para ejecutar una aplicación. Por lo que, actúa como una máquina virtual virtualizada. Altamente utilizado en el 
 desarrollo de aplicaciones modernas, incluyendo aplicaciones web, gracias a su gran control y consistencia en el entorno de 
 ejecución, permitiendo un mayor control sobre la infraestructura y despliegues \cite{aws2025docker}.
+
+\subsection{PostgreSQL}
+PostgreSQL es un sistema de base de datos relacional de código abierto que amplía las capacidades de SQL tradicional.
+Combinando numerosas funciones avanzadas que logran almacenar y escalar de forma segura las cargas de trabajo de datos más
+complejas. Gracias a su arquitectura, fiabilidad, integridad, extensibilidad y gran comunidad, se ha convertido en una de las
+bases de datos más utilizadas y sólidas. Cumpliendo con ACID (Atomicidad, Consistencia, Aislamiento y Durabilidad) y su alta
+gama en tipos de datos, funcionalidades internas y extensiones, lo hacen ideal para la mayoría de aplicaciones, incluyendo
+aplicaciones web \cite{postgresql2026about}.
 
 \subsection{Node js}
 Node js es un entorno de ejecución de código abierto para JavaScript que utiliza el motor V8 de Google Chrome, ideal para
@@ -246,7 +267,8 @@ Es un lenguaje interpretado, orientado a objetos y basado en prototipos y multip
 
 \subsection{HTML}
 El lenguaje de marcas de hipertexto (HTML, por sus siglas en inglés) es la base de la mayoría de las páginas web. Define la
-estructura y contenido de una página web por medio de etiquetas y atributos que indican al navegador qué y cómo mostrar \cite{aws2025javascript}.
+estructura y contenido de una página web por medio de etiquetas y atributos que indican al navegador qué y cómo mostrar
+\cite{aws2025javascript}.
 
 \subsection{CSS}
 Las hojas de estilo en cascada (CSS, por sus siglas en inglés) es un lenguaje de reglas de estilo que ayudan a definir estilos
@@ -311,35 +333,38 @@ usuario propia o de terceros \cite{tanstackSFform}.
 
 \subsection{\textit{Material UI} (MUI)}
 MUI es una biblioteca de componentes de interfaz de usuario de código abierto para React, diseñada bajo principios de
-\textit{Material Design} de Google. Esta biblioteca proporciona una gran variedad de componentes preconstruidos personalizables
-y adaptables en cualquier aspecto gracias a su robusto sistema de temas. Compatible con TypeScript, hace un desarrollo más fluido
-y seguro \cite{mui2025materialUI}.
+\textit{Material Design} de Google. Esta biblioteca proporciona una gran variedad de componentes preconstruidos
+personalizables y adaptables en cualquier aspecto gracias a su robusto sistema de temas. Compatible con TypeScript,
+hace un desarrollo más fluido y seguro \cite{mui2025materialUI}.
 
 \subsection{Axios}
-Axios es un Cliente HTTP basado en promesas para el navegador y Node JS. Gracias a que es isomórfico, puede ejecutarse tanto en el
-\textit{Frontend} como en el \textit{Backend}. Una de sus grandes ventajas es que transforma de manera automática las respuestas del
-servidor a formato JSON, también que permite interceptar peticiones y/o respuestas para realizar acciones personalizadas, además soporta
-\textit{timeouts}, cancelación de peticiones y manejo de errores \cite{axios2025axios}.
+Axios es un Cliente HTTP basado en promesas para el navegador y Node JS. Gracias a que es isomórfico, puede ejecutarse tanto
+en el \textit{Frontend} como en el \textit{Backend}. Una de sus grandes ventajas es que transforma de manera automática las
+respuestas del servidor a formato JSON, también que permite interceptar peticiones y/o respuestas para realizar acciones
+personalizadas, además soporta \textit{timeouts}, cancelación de peticiones y manejo de errores \cite{axios2025axios}.
 
 \subsection{Zustand}
-Zustand es una biblioteca ligera de gestión de estado para React. Funciona mediante \textit{hooks} los cuales permiten crear estados globales
-sin la necesidad de componentes proveedores de contexto. Busca minimizar tanto el código como la complejidad, ofreciendo estados inmutables
-y actualizaciones predecibles con un rendimiento óptimo. Además, es compatible con TypeScript \cite{zustand2025}.
+Zustand es una biblioteca ligera de gestión de estado para React. Funciona mediante \textit{hooks} los cuales permiten crear
+estados globales sin la necesidad de componentes proveedores de contexto. Busca minimizar tanto el código como la complejidad,
+ofreciendo estados inmutables y actualizaciones predecibles con un rendimiento óptimo. Además, es compatible con TypeScript
+\cite{zustand2025}.
 
 \subsection{\textit{JSON Web Token} (JWT)}
-\textit{JSON Web Token} es un estándar abierto (RFC 7519) el cuál ayuda a definir de manera compacta y autónoma una forma de transmitir información
-de manera segura entre partes como un JavaScript Object Notation (JSON, por sus siglas en inglés). Siendo segura al contener una firma digital, lo que
-permite verificar la integridad de su contenido, esta firma puede ser creada utilizando un secreto o un par de claves pública/privada utilizando RSA o ECDSA.
-En general, un JWT se utiliza para la autenticación y autorización dentro de una aplicación. Cada solicitud que un usuario logueado realice, llevará su JWT,
+\textit{JSON Web Token} es un estándar abierto (RFC 7519) el cuál ayuda a definir de manera compacta y autónoma una forma de
+transmitir información de manera segura entre partes como un JavaScript Object Notation (JSON, por sus siglas en inglés). Siendo
+segura al contener una firma digital, lo que permite verificar la integridad de su contenido, esta firma puede ser creada
+utilizando un secreto o un par de claves pública/privada utilizando RSA o ECDSA. En general, un JWT se utiliza para la
+autenticación y autorización dentro de una aplicación. Cada solicitud que un usuario logueado realice, llevará su JWT,
 permitiendo así acceder a los recursos y acciones protegidas por la aplicación \cite{auth02024jwt}.
 
 En su forma compacta, un JWT se compone de tres partes codificadas en Base64Url separadas por puntos (.), las cuales son:
 \begin{itemize}
     \item \textit{Header}: Suele constar de dos partes, el tipo de token (JWT) y el algoritmo de firma utilizado, como HMAC SHA256 o RSA.
-    \item \textit{Payload}: Contiene las reclamaciones, son declaraciones sobre una entidad (el usuario) e información adicional. Esta información puede ser
-            datos del usuario, permisos, entre otros.
-    \item \textit{Signature}: La firma se crea tomando el contenido codificado del \textit{Header} y el \textit{Payload} y un secreto, utilizando el algoritmo
-            especificado en el \textit{Header}. Esta firma garantiza que el JWT no ha sido alterado después de su emisión.
+    \item \textit{Payload}: Contiene las reclamaciones, son declaraciones sobre una entidad (el usuario) e información adicional.
+            Esta información puede ser datos del usuario, permisos, entre otros.
+    \item \textit{Signature}: La firma se crea tomando el contenido codificado del \textit{Header} y el \textit{Payload} y un
+            secreto, utilizando el algoritmo especificado en el \textit{Header}. Esta firma garantiza que el JWT no ha sido alterado
+            después de su emisión.
 \end{itemize}
 
 \subsection{\textit{Application Programming Interface} (API)}
@@ -381,8 +406,8 @@ Los principios REST indican que la respuesta del servidor contenga los siguiente
 \begin{itemize}
     \item \textbf{Línea de estado:} Contiene un código de estado HTTP de tres dígitos que indica el resultado de la solicitud.
     \item \textbf{Cuerpo del mensaje:} De la mano con los encabezados de la respuesta, contiene la representación del recurso.
-    \item \textbf{Encabezados:} Al igual que en la solicitud, estos son metadatos que brindan contexto sobre la respuesta, incluyendo
-            información como el servidor, codificación, etc.
+    \item \textbf{Encabezados:} Al igual que en la solicitud, estos son metadatos que brindan contexto sobre la respuesta,
+            incluyendo información como el servidor, codificación, etc.
 \end{itemize}
 
 \subsection{\textit{Performant npm} (PNPM)}
