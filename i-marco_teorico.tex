@@ -225,6 +225,13 @@ inyección SQL, \textit{cross-site scripting} (XSS) y \textit{cross-site request
 
 \section{Tecnologías de Implementación}
 
+\subsection{Docker}
+Docker es una plataforma de código abierto que permite crear, desplegar y ejecutar aplicaciones dentro de contenedores. Un
+contenedor es una unidad de software ligera y portátil capaz de empaquetar código, librerías, dependencias y configuraciones
+esenciales para ejecutar una aplicación. Por lo que, actúa como una máquina virtual virtualizada. Altamente utilizado en el 
+desarrollo de aplicaciones modernas, incluyendo aplicaciones web, gracias a su gran control y consistencia en el entorno de 
+ejecución, permitiendo un mayor control sobre la infraestructura y despliegues \cite{aws2025docker}.
+
 \subsection{Node js}
 Node js es un entorno de ejecución de código abierto para JavaScript que utiliza el motor V8 de Google Chrome, ideal para
 construir aplicaciones web escalables, alto rendimiento, y lo más importante, no bloqueante. Gracias a que utiliza un modelo
@@ -302,6 +309,39 @@ para ser flexible y adaptable a cualquier caso de uso, permite la creación de f
 personalizadas, así como el manejo de errores. Además, permite integrar fácilmente cualquier componente de interfaz de
 usuario propia o de terceros \cite{tanstackSFform}.
 
+\subsection{\textit{Material UI} (MUI)}
+MUI es una biblioteca de componentes de interfaz de usuario de código abierto para React, diseñada bajo principios de
+\textit{Material Design} de Google. Esta biblioteca proporciona una gran variedad de componentes preconstruidos personalizables
+y adaptables en cualquier aspecto gracias a su robusto sistema de temas. Compatible con TypeScript, hace un desarrollo más fluido
+y seguro \cite{mui2025materialUI}.
+
+\subsection{Axios}
+Axios es un Cliente HTTP basado en promesas para el navegador y Node JS. Gracias a que es isomórfico, puede ejecutarse tanto en el
+\textit{Frontend} como en el \textit{Backend}. Una de sus grandes ventajas es que transforma de manera automática las respuestas del
+servidor a formato JSON, también que permite interceptar peticiones y/o respuestas para realizar acciones personalizadas, además soporta
+\textit{timeouts}, cancelación de peticiones y manejo de errores \cite{axios2025axios}.
+
+\subsection{Zustand}
+Zustand es una biblioteca ligera de gestión de estado para React. Funciona mediante \textit{hooks} los cuales permiten crear estados globales
+sin la necesidad de componentes proveedores de contexto. Busca minimizar tanto el código como la complejidad, ofreciendo estados inmutables
+y actualizaciones predecibles con un rendimiento óptimo. Además, es compatible con TypeScript \cite{zustand2025}.
+
+\subsection{\textit{JSON Web Token} (JWT)}
+\textit{JSON Web Token} es un estándar abierto (RFC 7519) el cuál ayuda a definir de manera compacta y autónoma una forma de transmitir información
+de manera segura entre partes como un JavaScript Object Notation (JSON, por sus siglas en inglés). Siendo segura al contener una firma digital, lo que
+permite verificar la integridad de su contenido, esta firma puede ser creada utilizando un secreto o un par de claves pública/privada utilizando RSA o ECDSA.
+En general, un JWT se utiliza para la autenticación y autorización dentro de una aplicación. Cada solicitud que un usuario logueado realice, llevará su JWT,
+permitiendo así acceder a los recursos y acciones protegidas por la aplicación \cite{auth02024jwt}.
+
+En su forma compacta, un JWT se compone de tres partes codificadas en Base64Url separadas por puntos (.), las cuales son:
+\begin{itemize}
+    \item \textit{Header}: Suele constar de dos partes, el tipo de token (JWT) y el algoritmo de firma utilizado, como HMAC SHA256 o RSA.
+    \item \textit{Payload}: Contiene las reclamaciones, son declaraciones sobre una entidad (el usuario) e información adicional. Esta información puede ser
+            datos del usuario, permisos, entre otros.
+    \item \textit{Signature}: La firma se crea tomando el contenido codificado del \textit{Header} y el \textit{Payload} y un secreto, utilizando el algoritmo
+            especificado en el \textit{Header}. Esta firma garantiza que el JWT no ha sido alterado después de su emisión.
+\end{itemize}
+
 \subsection{\textit{Application Programming Interface} (API)}
 Una interfaz de programa de aplicación (API, por sus siglas en inglés) define las reglas a seguir para la comunicación entre
 sistemas de software, a este conjunto de reglas se le conoce como \textit{endpoints}. En pocas palabras, una API es un
@@ -344,3 +384,11 @@ Los principios REST indican que la respuesta del servidor contenga los siguiente
     \item \textbf{Encabezados:} Al igual que en la solicitud, estos son metadatos que brindan contexto sobre la respuesta, incluyendo
             información como el servidor, codificación, etc.
 \end{itemize}
+
+\subsection{\textit{Performant npm} (PNPM)}
+PNPM es un gestor de paquetes para Node JS que se enfoca en ahorro de espacio en disco y mejora la velocidad de instalación
+gracias a su enfoque de almacenamiento compartido mediante almacenamiento cnetralizado y enlaces simbólicos, el cuál permite 
+que múltiples proyectos compartan dependencias comunes sin la necesidad de duplicar archivos \cite{pnpm2025motivation}.
+
+
+
