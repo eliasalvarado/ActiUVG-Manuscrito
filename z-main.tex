@@ -59,9 +59,10 @@
 
 \usepackage{chngcntr}
 
-\usepackage[numberedsection]{glossaries}
+\usepackage[numberedsection, acronym]{glossaries}
 \makeglossaries
 \input{q-glosario}
+\input{q-abreviaturas}
 
 % ==============================================================================
 % MÁRGENES Y FORMATO GENERALES
@@ -289,6 +290,15 @@
 	\renewcommand{\listtablename}{Lista de cuadros}
 	\listoftables
 	\addcontentsline{toc}{chapter}{Lista de cuadros}
+\fi
+
+% LISTA DE ABREVIATURAS
+% ------------------------------------------------------------------------------
+\ifdefined\CAPabreviaturas
+	\newpage
+    \cleardoublepage\phantomsection
+	\printglossary[type=\acronymtype, title=Lista de Abreviaturas]
+	\addcontentsline{toc}{chapter}{Lista de Abreviaturas}
 \fi
 
 % RESUMEN
