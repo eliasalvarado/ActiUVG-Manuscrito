@@ -59,7 +59,7 @@
 
 \usepackage{chngcntr}
 
-\usepackage[numberedsection, acronym]{glossaries}
+\usepackage[acronym]{glossaries}
 \makeglossaries
 \input{q-glosario}
 \input{q-abreviaturas}
@@ -295,10 +295,11 @@
 % LISTA DE ABREVIATURAS
 % ------------------------------------------------------------------------------
 \ifdefined\CAPabreviaturas
+	\glsaddall
 	\newpage
     \cleardoublepage\phantomsection
-	\printglossary[type=\acronymtype, title=Lista de Abreviaturas]
-	\addcontentsline{toc}{chapter}{Lista de Abreviaturas}
+	\printglossary[type=\acronymtype, title=Abreviaturas, toctitle=Abreviaturas]
+	\addcontentsline{toc}{chapter}{Abreviaturas}
 \fi
 
 % RESUMEN
@@ -498,7 +499,8 @@
 % ------------------------------------------------------------------------------
 \ifdefined\CAPglosario
 	\newpage
-	\printglossary
+	\cleardoublepage\phantomsection
+	\printglossary[title=Glosario, toctitle=Glosario]
 \fi
 
 \end{document}
