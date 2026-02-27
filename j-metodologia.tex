@@ -1,1 +1,87 @@
-Para el frontend se utilizaron los diseños de \cite{Rodríguez_Dis_2023}
+En este capítulo se describe la metodología empleada para el desarrollo de la plataforma web,
+desde la fase de análisis de requerimientos hasta la unificación de todas las partes del proyecto.
+
+La metodología aplicada se fundamentó en un enfoque estructurado de cinco fases secuenciales e
+interrelacionadas, que permitieron una gestión eficiente del proyecto y una integración fluida de
+los distintos productos finales de cada fase.
+
+\section{Fase 1: Recolección de Requerimientos}
+La primera fase se centró en la extracción de requerimientos técnicos y funcionales a partir del
+análisis de los diseños de Interfaz de Usuario previamente elaborador por Andrés Rodríguez en
+\cite{Rodríguez_Dis_2023}.
+
+Esta fase tiene como objetivo principal identificar y documentar las reglas de negocio, flujos de
+información, roles, restricciones y validaciones necesarias para que la plataforma opere de manera correcta.
+
+\subsection{Definición de módulos funcionales}
+Con el fin de identificar acciones, validaciones y flujos de navegación se realizó un análisis detallado
+de cada una de las páginas, componentes y formularios presentes en los diseños de interfaz.
+Este análisis permitió extraer los módulos funcionales que permitirán un soporte alineado y coherente con 
+el fin de la plataforma.
+Los módulos funcionales identificados fueron:
+\begin{itemize}
+    \item \textbf{Módulo de Autenticación:} Este módulo se encarga del registro, inicio de sesión, recuperación
+            de contraseña, \textit{logout} y gestión de sesiones de los usuarios. Además, la asignación automática
+            de roles a los usuarios.
+    \item \textbf{Módulo de Usuarios:} Este módulo se encarga de la actualización de información, cambio de contraseña,
+            aprobación de cuentas para usuarios con roles específicos, vista de perfiles. 
+    \item \textbf{Módulo de Proyectos:} Este módulo se encarga de la creación, edición, eliminación y visualización de
+            proyectos, así como la gestión de sus estados y la aprobación de proyectos por parte de usuarios con roles específicos.
+    \item \textbf{Módulo de Postulaciones:} Este módulo se encarga de la gestión de postulaciones a proyectos, incluyendo
+            la postulación, revisión y aprobación de postulaciones por parte de usuarios con roles específicos. Además, de
+            permitir la visualización de historial de postulaciones.
+    \item \textbf{Módulo de Horas:} Este módulo se encarga de la gestión de horas dedicadas a proyectos, incluyendo el registro,
+            revisión y aprobación de horas por parte de usuarios con roles específicos. Además, de permitir la visualización de
+            historial de horas.
+    \item \textbf{Módulo de Archivos:} Este módulo se encarga de la gestión de archivos relacionados con usuarios, proyectos y
+            horas, incluyendo la creación y eliminación de archivos, así como la visualización de archivos relacionados a cada entidad.
+\end{itemize}
+
+\subsection{Análisis de formularios y mapeo de datos}
+Alineado con los módulos funcionales, cada formulario presente en los diseños de interfaz fue desglosado para identificar los
+campos de entrada, sus tipos de datos y validaciones necesarias. Permitiendo establecer un mapeo claro entre los datos requeridos
+por la plataforma para cada acción posible.
+
+\subsection{Definición de roles y permisos}
+A partir de los diseños de interfaz fue sencillo identificar los distintos roles de usuario y sus respectivas acciones permitidas.
+De esta manera, se definieron los roles y permisos por usuario, resultando en la siguiente clasificación:
+\begin{itemize}
+    \item \textbf{Todos los usuarios:}
+    \begin{itemize}
+        \item Login y registro.
+        \item Verificación de correo electrónico.
+        \item Restablecimiento de contraseña.
+        \item Visualización de proyectos.
+        \item Visualización de perfiles de usuario.
+        \item Visualización de archivos relacionados a cada entidad.
+        \item Visualización de historial de postulaciones y horas.
+        \item Visualización de las motivaciones.
+        \item Actualización de información personal y cambio de contraseña.
+    \end{itemize}
+    \item \textbf{Estudiantes:}
+    \begin{itemize}
+        \item Postulación a proyectos.
+        \item Participación en proyectos.
+        \item Abandonar proyectos.
+        \item Registro de horas trabajadas con evidencias.
+        \item Visualización de horas aprobadas en proyectos.
+    \end{itemize}
+    \item \textbf{Organizaciones externas:}
+    \begin{itemize}
+        \item Creación, edición y eliminación de proyectos con archivos (recursos) ligados.
+        \item Iniciar, finalizar y cancelar proyectos propios.
+        \item Visualización de postulaciones a proyectos propios.
+        \item Aprobación de postulaciones.
+        \item Visualización de participantes de proyectos propios.
+        \item Eliminar participantes de proyectos propios.
+        \item Aprobación de horas trabajadas por estudiantes en proyectos propios.
+    \end{itemize}
+    \item \textbf{Directores:}
+    \begin{itemize}
+        \item Lo mismo que organizaciones externas.
+        \item Aprobación de proyectos enviados por organizaciones externas.
+        \item Aprobación de cuentas de organizaciones externas.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Modelación de la Base de Datos}:
