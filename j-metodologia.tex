@@ -54,7 +54,6 @@ De esta manera, se definieron los roles y permisos por usuario, resultando en la
         \item Visualización de proyectos.
         \item Visualización de perfiles de usuario.
         \item Visualización de archivos relacionados a cada entidad.
-        \item Visualización de historial de postulaciones y horas.
         \item Visualización de las motivaciones.
         \item Actualización de información personal y cambio de contraseña.
     \end{itemize}
@@ -65,13 +64,14 @@ De esta manera, se definieron los roles y permisos por usuario, resultando en la
         \item Abandonar proyectos.
         \item Registro de horas trabajadas con evidencias.
         \item Visualización de horas aprobadas en proyectos.
+        \item Visualización de historial de postulaciones y horas.
     \end{itemize}
     \item \textbf{Organizaciones externas:}
     \begin{itemize}
         \item Creación, edición y eliminación de proyectos con archivos (recursos) ligados.
         \item Iniciar, finalizar y cancelar proyectos propios.
         \item Visualización de postulaciones a proyectos propios.
-        \item Aprobación de postulaciones.
+        \item Aprobación de postulaciones de proyectos propios.
         \item Visualización de participantes de proyectos propios.
         \item Eliminar participantes de proyectos propios.
         \item Aprobación de horas trabajadas por estudiantes en proyectos propios.
@@ -84,4 +84,149 @@ De esta manera, se definieron los roles y permisos por usuario, resultando en la
     \end{itemize}
 \end{itemize}
 
-\subsection{Modelación de la Base de Datos}:
+\subsection{Modelación de la Base de Datos}
+Con el fin de garantizar integridad, seguridad y escalabilidad de los datos, se optó por una
+base de datos relacional utilizando PostgreSQL como motor de base de datos.
+La Figura \ref{fig:ERdb} muestra el diagrama entidad-relación de la base de datos.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{assets/ERdb.png}
+    \caption{Diagrama Entidad-Relación de la Base de Datos}
+    \label{fig:ERdb}
+\end{figure}
+
+\subsubsection{Estandarización de estados lógicos}
+Con el fin de estandarizar estados lógicos, evitando inconsistencias, se definieron tipos
+enumerados (ENUMs) para los roles de los usuarios y estados de proyectos, postulaciones y horas.
+
+\subsubsection{Entidades}
+\begin{itemize}
+    \item \textbf{Campuses:} Almacena los distintos campus universitarios disponibles.
+    \item \textbf{Faculties:} Almacena la información de las facultades académicas.
+    \item \textbf{Careers:} Almacena las carreras académicas disponibles.
+    \item \textbf{Users:} Almacena la información de los usuarios registrados, principalmente incluyendo información de
+            autenticación y rol.
+    \item \textbf{Students:} Almacena la información académica y personal de los estudiantes.
+    \item \textbf{Directors:} Almacena la información académica de los directores académicos.
+    \item \textbf{DirectorFaculties:} Tabla intermedia que permite vincular directores y facultades.
+    \item \textbf{DirectorCareers:} Tabla intermedia que permite vincular directores y carreras.
+    \item \textbf{Organizations:} Almacena la información de las organizaciones externas.
+    \item \textbf{RefreshTokens:} Almacena los tokens de autenticación persistente utilizados para renovar sesiones de usuario.
+    \item \textbf{PasswordResetTokens:} Almacena tokens temporales de un solo uso para el proceso de recuperación de contraseña.
+    \item \textbf{EmailVerificationTokens:} Almacena los tokens utilizados para verificar la dirección de correo electrónico
+            de los usuarios.
+    \item \textbf{Projects:} Almacena los proyectos disponibles en la plataforma. Incluyendo información como título, descripción,
+            fechas, estado, requisitos, entre otros.
+    \item \textbf{ProjectCareers:} Tabla intermedia que permite vincular proyectos con carreras.
+    \item \textbf{ProjectTags:} Tabla intermedia que permite vincular etiquetas con proyectos.
+    \item \textbf{Applications:} Almacena las postulaciones de los estudiantes a proyectos específicos, incluyendo el estado de
+            la aplicación.
+    \item \textbf{Hours:} Almacena las horas realizadas por los estudiantes en los proyectos, incluyendo el tipo de hora,
+            cantidad y estado de aprobación.
+    \item \textbf{Files:} Almacena los archivos asociados al sistema, como fotografías de perfil, recursos de proyectos o
+            evidencias de horas.
+\end{itemize}
+
+\subsubsection{Relaciones}
+\begin{itemize}
+    \item Un campus puede tener múltiples facultades, pero cada facultad pertenece a un único campus.
+    \item Una facultad puede tener varias carreras, pero cada carrera pertenece a una sola facultad.
+    \item Un usuario puede estar asociado a un único estudiante, director u organización.
+    \item Un director puede tener varias facultades.
+    \item Un director puede tener varias carreras.
+    \item Una organización puede crear múltiples proyectos, pero cada proyecto pertenece a una única organización (cuando aplica).
+    \item Un director puede crear múltiples proyectos, pero cada proyecto pertenece a un único director (cuando aplica).
+    \item Un proyecto puede estar disponible para varias carreras y una carrera puede participar en múltiples proyectos.
+    \item Un proyecto puede recibir múltiples postulaciones, pero cada postulación corresponde a un único proyecto.
+    \item Un estudiante puede postularse a múltiples proyectos, pero cada postulación pertenece a un único estudiante.
+    \item Un estudiante puede registrar múltiples transacciones de horas en distintos proyectos.
+    \item Un proyecto puede tener múltiples registros de horas asociados.
+    \item Un usuario puede subir múltiples archivos.
+    \item Un proyecto puede tener múltiples archivos asociados como recursos.
+    \item Un registro de horas puede tener múltiples archivos asociados como evidencias.
+    \item Un usuario puede tener múltiples tokens de autenticación, verificación o recuperación asociados.
+\end{itemize}
+
+\subsection{Definición de \textit{Endpoints}}
+A partir de los módulos funcionales y el análisis de formularios se estructuró la arquitectura \textit{RESTful} de la API.
+Definiendo contratos de comunicación claros, incluyendo rutas, verbos HTTP, parámetros de entrada, formatos de respuesta
+y códigos de estado.
+
+\subsubsection{Autenticación}
+Ruta base: \texttt{/auth}. Este conjunto de \textit{endpoints} se encarga de la autenticación, recuperación de contraseña,
+verificación de correo electrónico, gestión de sesiones y tokens de autenticación.
+\begin{itemize}
+    \item \texttt{POST /auth/register}: Registro de usuarios.
+    \item \texttt{POST /auth/login}: Inicio de sesión.
+    \item \texttt{POST /auth/refresh}: Renovación de tokens de autenticación.
+    \item \texttt{POST /auth/verify-email}: Verificación de correo electrónico.
+    \item \texttt{POST /auth/forgot-password}: Solicitud de restablecimiento de contraseña.
+    \item \texttt{POST /auth/reset-password}: Confirmación de restablecimiento de contraseña con token.
+    \item \texttt{POST /auth/logout}: Cierre de una sesión específica.
+    \item \texttt{POST /auth/logout-all}: Cierre de todas las sesiones activas.
+    \item \texttt{GET /auth/sessions}: Listado de las sesiones activas.
+\end{itemize}
+
+\subsubsection{Usuarios}
+Ruta base: \texttt{/users}. Este conjunto de \textit{endpoints} gestiona la información de los usuarios registrados,
+incluyendo consulta de perfiles, actualización de datos, cambio de contraseña y eliminación de cuentas.
+\begin{itemize}
+    \item \texttt{GET /users/}: Listar estudiantes.
+    \item \texttt{GET /users/me}: Obtener perfil propio.
+    \item \texttt{GET /users/:id/profile}: Obtener perfil público de un usuario.
+    \item \texttt{GET /users/:userId}: Obtener usuario por ID (administrador).
+    \item \texttt{PUT /users/:id}: Actualizar información de usuario.
+    \item \texttt{PUT /users/:id/change-password}: Cambiar contraseña.
+    \item \texttt{DELETE /users/:id}: Eliminar usuario.
+\end{itemize}
+
+\subsubsection{Proyectos}
+Ruta base: \texttt{/projects}. Este conjunto de \textit{endpoints} gestiona la creación, consulta, actualización,
+aprobación y eliminación de proyectos.
+\begin{itemize}
+    \item \texttt{GET /projects}: Listar proyectos con filtros.
+    \item \texttt{GET /projects/my-projects}: Listar proyectos propios.
+    \item \texttt{GET /projects/pending-approvals}: Listar proyectos pendientes de aprobación o rechazo.
+    \item \texttt{GET /projects/:projectId}: Obtener proyecto por ID.
+    \item \texttt{POST /projects}: Crear proyecto.
+    \item \texttt{PUT /projects/:projectId}: Actualizar proyecto.
+    \item \texttt{POST /projects/:projectId/approve}: Aprobar o rechazar proyecto.
+    \item \texttt{PATCH /projects/:projectId/status}: Cambiar estado del proyecto.
+    \item \texttt{DELETE /projects/:projectId}: Eliminar proyecto.
+\end{itemize}
+
+\subsubsection{Aplicaciones}
+Ruta base: \texttt{/applications}. Este conjunto de \textit{endpoints} gestiona las postulaciones de estudiantes
+a proyectos y la administración de participantes.
+\begin{itemize}
+    \item \texttt{POST /applications}: Aplicar a un proyecto.
+    \item \texttt{GET /applications/completed}: Obtener historial de proyectos finalizados.
+    \item \texttt{GET /applications/project/:projectId}: Obtener aplicaciones de un proyecto.
+    \item \texttt{GET /applications/project/:projectId/participants}: Obtener participantes aceptados de un proyecto.
+    \item \texttt{PATCH /applications/:applicationId/status}: Aprobar o rechazar aplicación.
+    \item \texttt{PATCH /applications/project/:projectId/leave}: Abandonar proyecto.
+    \item \texttt{PATCH /applications/project/:projectId/participant/:studentId}: Eliminar participante de un proyecto.
+\end{itemize}
+
+\subsubsection{Horas}
+Ruta base: \texttt{/hours}. Este conjunto de \textit{endpoints} gestiona el registro, consulta, aprobación
+y reenvío de horas asociadas a proyectos.
+\begin{itemize}
+    \item \texttt{POST /hours}: Registrar horas con evidencias.
+    \item \texttt{GET /hours/total}: Obtener total de horas aprobadas.
+    \item \texttt{GET /hours/:hourId}: Obtener detalles de un registro de horas.
+    \item \texttt{GET /hours/project/:projectId/pending}: Obtener horas pendientes de aprobación en un proyecto.
+    \item \texttt{PATCH /hours/:hourId/status}: Aprobar o rechazar horas.
+    \item \texttt{POST /hours/:hourId/evidences}: Agregar evidencias a registro.
+    \item \texttt{DELETE /hours/:hourId/evidences/:fileId}: Eliminar evidencia específica.
+    \item \texttt{PATCH /hours/:hourId/resubmit}: Reenviar horas rechazadas.
+\end{itemize}
+
+\subsubsection{Archivos}
+Ruta base: \texttt{/files}. Este conjunto de \textit{endpoints} gestiona la descarga o previsualización de los archivos
+de la plataforma. Esto incluye fotos de perfil, recursos de proyectos y evidencias de horas.
+\begin{itemize}
+    \item \texttt{GET /files/:id/download}: Descargar archivo.
+    \item \texttt{GET /files/:id/preview}: Previsualizar archivo.
+\end{itemize}
