@@ -90,34 +90,26 @@ comunidad \cite{cedeña2012extensionDesarrollo}.
         de presentación, revisión y aprobación de resultados. Además, ayuda a conectar y comunicar correctamente a todos los 
         actores. \cite{urmeneta2025design}.
 
-\section{Arquitectura de Aplicaciones Web}
-La arquitectura de las aplicaciones web se refiere al modelo estructural que define la organización e interacción de los 
-componentes de una aplicación Web, tales como: servidores, bases de datos, lógica de negocio, interfaz de usuario, entre 
-otros. Es de vital importancia, ya que la escalabilidad, sostenibilidad, rendimiento, y mantenibilidad de la aplicación Web 
-dependen en gran medida de su arquitectura \cite{romero2021arquitectura, universidadElBosque2024arquitectura}.
-
-\subsection{\textit{Model-View-Controller} (MVC)}
-El patrón de diseño Modelo-Vista-Controlador (MVC, por sus siglas en inglés) es una arquitectura que separa la aplicación 
-en capas, dividiendo las aplicaciones en tres componentes lógicos \cite{RANA2022271, yalupin2021programacionFrontEndBackEnd}:
-\begin{itemize}
-    \item \textbf{Modelo:} También conocido como la capa de almacenamiento persistente, esta componente tiene como función 
-            almacenar y gestionar los datos guardados en bases de datos (SQL, NoSQL), garantizando una correcta persistencia
-            de datos.
-    \item \textbf{Vista:} También conocido como la capa de presentación, es la parte de la aplicación con la que el
-            usuario interactura directamente. Este componente incluye la interfaz de usuario y la experiencia de usuario 
-            (UI/UX), y su función principal es presentar información y reunir datos de entrada.
-    \item \textbf{Controlador:} También conocido como la capa de aplicación, es la parte de la aplicación que maneja la 
-            lógica de negocio, procesamiento de datos, seguridad y comunicación con la base de datos.
-\end{itemize}
-Este patrón de diseño, generalmente utilizado en aplicaciones Web \textit{client-server} o sistemas distribuidos, ofrece muchas
-ventajas, entre ellas la facilidad de mantenimienbo, escalabilidad y reutilización. Ya que cada componente se puede gestionar de
-manera independiente \cite{RANA2022271}.
-
 \section{\textit{Frontend}}
-El término \textit{\gls{frontend}}, de la mano con el componente \textit{Vista}, hace referencia a la interfaz gráfica de usuario
-(GUI, por sus siglas en inglés), la cual es la parte visual con la que el usuario interactúa directamente. En pocas palabras, 
-es la parte que permite la interacción del usuario con la aplicación. Bajo el contexto Web, la GUI vista por el usuario desde su
-navegador se le conoce como modelo de objetos del documento (DOM, por sus siglas en inglés) \cite{aws2025frontendBackend}.
+El término \textit{\gls{frontend}}, hace referencia a la interfaz gráfica de usuario (GUI, por sus siglas en inglés),
+la cual es la parte visual con la que el usuario interactúa directamente. En pocas palabras, es la parte que permite la
+interacción del usuario con la aplicación. Bajo el contexto Web, la GUI vista por el usuario desde su navegador se le
+conoce como modelo de objetos del documento (DOM, por sus siglas en inglés) \cite{aws2025frontendBackend}.
+
+\subsection{Arquitecturas}
+Para el \textit{Frontend} la arquitectura se centra en el lugar donde se realiza el procesamiento y entrega del contenido.
+La arquitectura influirá no solo en la experiencia de usuario, sino también en el rendimiento, seguridad y escalabilidad
+\cite{romero2021arquitectura}.
+
+\subsubsection{\textit{Single Page Application} (SPA)}
+Una SPA es cuando la aplicación se renderiza y corre completamente en el navegador del cliente. Permitiendo una experiencia
+de usuario fluida e interactiva, no requiere recargar para actualizar el contenido, ya que realiza llamadas al \textit{Backend}
+de manera asíncrona \cite{universidadElBosque2024arquitectura}.
+
+\subsubsection{\textit{Progressive Web App} (PWA)}
+Una PWA continúa con el principio de SPA, añadiendo funcionalidades que permiten simular comportamientos que solamente tiene
+una aplicación nativa de escritorio o móvil, haciendo posible ejecutar servicios adicionales aún cuando el ambiente donde se
+ejecuta la aplicación es el navegador \cite{universidadElBosque2024arquitectura}.
 
 \subsection{Seguridad}
 La seguridad en el \textit{Frontend} se basa en estrategias de validación de entradas, desactivación de configuraciones
@@ -214,10 +206,45 @@ límties de React Suspense. Al estar en fase experimental, su uso ideal aún no 
 \cite{vercel2024renderingStrategy}
 
 \section{\textit{Backend}}
-El término \textit{\gls{backend}}, de la mano con el componente \textit{Controlador} y el componente \textit{Modelo}, es el
-encargado de administrar la funcionalidad general de la aplicación. Esto incluye la lógica de negocio y la gestión del 
-almacenamiento persistente de datos. Además, el \textit{Backend} es el responsable de manejar cualquier solicitud 
-proveniente del \textit{Frontend}, donde la procesa y devuelve una respuesta \cite{aws2025frontendBackend}.
+El término \textit{\gls{backend}}, es el encargado de administrar la funcionalidad general de la aplicación. Esto incluye
+la lógica de negocio y la gestión del almacenamiento persistente de datos. Además, el \textit{Backend} es el responsable
+de manejar cualquier solicitud proveniente del \textit{Frontend}, donde la procesa y devuelve una respuesta
+\cite{aws2025frontendBackend}.
+
+\subsection{Arquitecturas}
+
+\subsubsection{\textit{Model-View-Controller} (MVC)}
+El patrón de diseño Modelo-Vista-Controlador (MVC, por sus siglas en inglés) es una arquitectura que separa la aplicación 
+en capas, dividiendo las aplicaciones en tres componentes lógicos \cite{RANA2022271, yalupin2021programacionFrontEndBackEnd}:
+\begin{itemize}
+    \item \textbf{Modelo:} También conocido como la capa de almacenamiento persistente, esta componente tiene como función 
+            almacenar y gestionar los datos guardados en bases de datos (SQL, NoSQL), garantizando una correcta persistencia
+            de datos.
+    \item \textbf{Vista:} También conocido como la capa de presentación, es la parte de la aplicación con la que el
+            usuario interactura directamente. Este componente incluye la interfaz de usuario y la experiencia de usuario 
+            (UI/UX), y su función principal es presentar información y reunir datos de entrada.
+    \item \textbf{Controlador:} También conocido como la capa de aplicación, es la parte de la aplicación que maneja la 
+            lógica de negocio, procesamiento de datos, seguridad y comunicación con la base de datos.
+\end{itemize}
+Este patrón de diseño, generalmente utilizado en aplicaciones Web \textit{client-server} o sistemas distribuidos, ofrece muchas
+ventajas, entre ellas la facilidad de mantenimiento, escalabilidad y reutilización. Ya que cada componente se puede gestionar de
+manera independiente \cite{RANA2022271}.
+
+\subsubsection{Arquitecturas por capas}
+La arquitectura por capas se caracteriza por dividir la aplicación en capas lógicas que tienen funciones únicas. La organización
+se basa en jerarquía, estructura y separación de responsabilidades según los componentes técnicos del sistema. Cada capa se comunica
+únicamente con una capa adyacente. Esto permite que el flujo se propague de manera ordenada de una capa a otra de manera secuencial.
+Busca aislamiento y modularidad, garantizando que las modificaciones de una capa no influyan ni afecten a las demás directamente
+\cite{richards2021fundamentalsSoftwareArchitecture}.
+Las capas más comunes son:
+\begin{itemize}
+    \item \textbf{Capa de presentación:} Es la responsable de la interacción directa con el usuario, incluyendo validaciones de entrada,
+            presentación de resultados y comunicación con la capa de negocio.
+    \item \textbf{Capa de negocio:} Es la responsable de reglas de negocio, lógica en procesamiento y orquestación de servicios.
+    \item \textbf{Capa de persistencia:} Es la responsable de la gestión de datos, incluyendo comunicaciones con bases de datos, almacenamiento
+            y recuperación de datos.
+    \item \textbf{Capa de Base de datos:} Es la responsable de almacenar físicamente los datos.
+\end{itemize}
 
 \subsection{Seguridad}
 La seguridad en el \textit{Backend} se basa en la seguridad del almacenamiento de datos y el tránsito. Esto incluye
@@ -244,6 +271,11 @@ Docker es una plataforma de código abierto que permite crear, desplegar y ejecu
 esenciales para ejecutar una aplicación. Por lo que, actúa como una máquina virtual virtualizada. Altamente utilizado en el 
 desarrollo de aplicaciones modernas, incluyendo aplicaciones web, gracias a su gran control y consistencia en el entorno de 
 ejecución, permitiendo un mayor control sobre la infraestructura y despliegues \cite{aws2025docker}.
+
+\subsubsection{Orquestación con \textit{Docker Compose}}
+\textit{Docker Compose} es una herramienta que facilita la configuración, interacción y ejecución de múltiples contenedores
+Docker. Permite desplegar aplicaciones complejas con múltiples servicios (como bases de datos, servidores web, etc.) de manera
+rápida y eficiente \cite{aws2025docker}.
 
 \subsection{PostgreSQL}
 PostgreSQL es un sistema de base de datos relacional de código abierto que amplía las capacidades de SQL tradicional.
