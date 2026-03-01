@@ -86,7 +86,7 @@ De esta manera, se definieron los roles y permisos por usuario, resultando en la
 
 \subsection{Modelación de la Base de Datos}
 Con el fin de garantizar integridad, seguridad y escalabilidad de los datos, se optó por una
-base de datos relacional utilizando PostgreSQL como motor de base de datos.
+base de datos relacional.
 La Figura \ref{fig:ERdb} muestra el diagrama entidad-relación de la base de datos.
 
 \begin{figure}
@@ -229,4 +229,61 @@ de la plataforma. Esto incluye fotos de perfil, recursos de proyectos y evidenci
 \begin{itemize}
     \item \texttt{GET /files/:id/download}: Descargar archivo.
     \item \texttt{GET /files/:id/preview}: Previsualizar archivo.
+\end{itemize}
+
+\section{Fase 2: Desarrollo del \textit{Backend}}
+La segunda fase se centró en la implementación del \textit{Backend} de la plataforma, capaz de soportar y gestionar
+todas las funcionalidades definidas en la fase anterior. 
+
+El objetivo de esta fase es desarrollar una API estructurada capaz de gestionar proyectos de extensión por parte de
+los usuarios. Esto incluye la gestión de usuarios, proyectos, postulaciones, horas y archivos.
+
+\subsection{Selección de tecnologías}
+
+\subsubsection{Entorno de ejecución y \textit{Framework}}
+Se seleccionó \textbf{Node.js} como entorno de ejecución, utilizando el \textit{framework} \textbf{Express}.
+Este entorno permite que la API opere de manera asíncrona y facilitando el manejo de solicitudes simultáneas
+sin afectar el rendimiento. Express, por su parte, proporciona una estructura flexible y minimalista, lo cuál
+agiliza el desarrollo y facilita aspectos de mantenibilidad y escalabilidad.
+
+\subsubsection{Compilador}
+Para aumentar la robustez del código y tener un desarrollo más eficiente y seguro, se seleccionó \textbf{TypeScript}
+para introducir tipado estático en el proyecto. Con el fin de evitar errores durante el desarrollo y mejorar la
+legibilidad del código.
+
+\subsubsection{Persistencia de datos}
+Se optó por una base de datos relacional utilizando \textbf{PostgreSQL} como motor de base de datos para el
+almacenamiento de los datos de la plataforma. Esto gracias a su robustez, escalabilidad, soporte a tipos de datos
+avanzados (como UUID, gracias a la extensión pgcrypto).
+
+Además, para el almacenamiento de archivos se optó por \textbf{Amazon S3}. Esto gracias a su alta disponibilidad, escalabilidad y
+seguridad. Esto permite cargar, eliminar o consultar archivos. Además, que AWS ofrece SDKs que facilitan la integración
+de la tecnología a proyectos, en este caso, el SDK (v3) de AWS para JavaScript en Node.js.
+
+\subsubsection{Librerías}
+Con el fin de garantizar seguridad en los datos en reposo, se integró \textbf{bcryptjs} para un \textit{\gls{hashing}} seguro de
+contraseñas. También se integraron liberías como \textbf{jsonwebtoken} para la gestión de tokens de autenticación, \textbf{Joi}
+para validaciones de datos de entrada, \textbf{Nodemailer} para el envío de correos electrónicos, \textbf{Multer} para procesamiento
+de archivos, \textbf{Winston} para \textit{\gls{log}} del sistema, entre otras liberías.
+
+\subsection{Estructura del proyecto}
+Para mantener una organización y separación de responsabilidades clara, el proyecto se estructuró en capas de la siguiente manera:
+\begin{itemize}
+    \item \textbf{Routers:} Esta capa se encarga de definir y exponer los \textit{endpoints} con el fin de interceptar las solicitudes entrantes y dirigirlas al controlador correspondiente.
+    \item \textbf{Middlewares:} Esta capa (intermedia) se encarga de procesar las solicitudes entrantes y permite realizar validaciones como autenticación, autorización, validación de datos, manejo de errores, entre otros.
+    \item \textbf{Controllers:} Esta capa se encarga de recibir las solicitudes enviadas por los routers, procesar la información de entrada e invocar los servicios correspondientes y devolver una respuesta al cliente.
+    \item \textbf{Services:} Esta capa se encarga de toda la lógica de negocio, orquestando operaciones, reglas de negocio y permitiendo reutilización de servicios.
+    \item \textbf{Repositories:} Esta capa se encarga de la interacción directa con la base de datos, realizando operaciones CRUD de las entidades y consultas directas.
+\end{itemize}
+
+Esta estructura fue aplicada a cada uno de los módulos definidos en la fase anterior.
+
+\subsubsection{Archivos adicionales}
+Además de las capas mencionadas, se crearon directorios y archivos adicionales para configuración de la plataforma, así como archivos de conexión (a la base de datos, a AWS S3 y servicios de correo electrónico), entre otros.
+\begin{itemize}
+    \item \textbf{Types:} Este directorio contiene las definiciones de tipos utilizados en el proyecto.
+    \item \textbf{Validators:} Este directorio contiene esquemas de validación de datos de entrada utilizando Joi.
+    \item \textbf{DB:} Este directorio contiene el \textit{\gls{script}} para la creación completa de la base de datos.
+    \item \textbf{Config:} Este directorio contiene archivos de configuración global.
+    \item \textbf{Connections:} Archivos de conexión a la base de datos, AWS S3 y servicios de correo electrónico.
 \end{itemize}

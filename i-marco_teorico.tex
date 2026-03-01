@@ -90,8 +90,16 @@ comunidad \cite{cedeña2012extensionDesarrollo}.
         de presentación, revisión y aprobación de resultados. Además, ayuda a conectar y comunicar correctamente a todos los 
         actores. \cite{urmeneta2025design}.
 
+        \subsubsection{Arquitectura cliente-servidor}
+        Esta arquitectura se basa en la división clara de responsabilidad. Por una parte se tiene el cliente, que es la parte
+        de la aplicación con la que un usuario interactúa directamente, y por otra parte se tiene el servidor, que es la parte
+        encargada de realizar todas las operaciones lógicas necesarias para hacer funcionar la aplicación.
+        En esta arquitectura, el cliente envía solicitudes al servidor, el servidor entonces procesa la solicitud bajo lógica
+        de negocio y procesamiento de información y finalmente devuelve una respuesta al cliente
+        \cite{pardo2018comparacion,urmeneta2025design}.
+
 \section{\textit{Frontend}}
-El término \textit{\gls{frontend}}, hace referencia a la interfaz gráfica de usuario (GUI, por sus siglas en inglés),
+El término \textit{\gls{frontend}}, hace referencia al clienta el cuál es la interfaz gráfica de usuario (GUI, por sus siglas en inglés),
 la cual es la parte visual con la que el usuario interactúa directamente. En pocas palabras, es la parte que permite la
 interacción del usuario con la aplicación. Bajo el contexto Web, la GUI vista por el usuario desde su navegador se le
 conoce como modelo de objetos del documento (DOM, por sus siglas en inglés) \cite{aws2025frontendBackend}.
@@ -206,10 +214,10 @@ límties de React Suspense. Al estar en fase experimental, su uso ideal aún no 
 \cite{vercel2024renderingStrategy}
 
 \section{\textit{Backend}}
-El término \textit{\gls{backend}}, es el encargado de administrar la funcionalidad general de la aplicación. Esto incluye
-la lógica de negocio y la gestión del almacenamiento persistente de datos. Además, el \textit{Backend} es el responsable
-de manejar cualquier solicitud proveniente del \textit{Frontend}, donde la procesa y devuelve una respuesta
-\cite{aws2025frontendBackend}.
+El término \textit{\gls{backend}}, hace referencia al servidor que es el encargado de administrar la funcionalidad general
+de la aplicación. Esto incluye la lógica de negocio y la gestión del almacenamiento persistente de datos. Además, el
+\textit{Backend} es el responsable de manejar cualquier solicitud proveniente del \textit{Frontend}, donde la procesa y
+devuelve una respuesta \cite{aws2025frontendBackend}.
 
 \subsection{Arquitecturas}
 
@@ -257,13 +265,19 @@ inyección SQL, \textit{cross-site scripting} (XSS) y \textit{cross-site request
 AWS es una plataforma de \textit{\gls{cloudcomputing}} más completa y adoptada a nivel mundial. Permite a empresas y desarrolladores
 acceder a una amplia gama de servicios de computación. Entre los cuales destacan \cite{aws2026aws}:
 \begin{itemize}
-    \item Servicios de computación: Amazon Elastic Compute Cloud (EC2), AWS Lambda, Amazon Lightsail, entre otros. Que permiten
+    \item Servicios de computación: \textit{Amazon Elastic Compute Cloud} (EC2), AWS Lambda, Amazon Lightsail, entre otros. Que permiten
             ejecutar servidores virtuales, aplicaciones sin servidor, contenedores, etc.
-    \item Almacenamiento: Amazon Simple Storage Service (S3), Amazon Elastic Block Store (EBS), Amazon Glacier, entre otros. Que
-            permiten almacenar cualquier cantidad de datos, archivos u objetos de manera segura y escalable.
-    \item Bases de datos: Amazon Relational Database Service (RDS), Amazon DynamoDB, Amazon Aurora, entre otros. Que permiten
+    \item Almacenamiento: \textit{Amazon Simple Storage Service} (S3), \textit{Amazon Elastic Block Store} (EBS), \textit{Amazon Glacier},
+            entre otros. Que permiten almacenar cualquier cantidad de datos, archivos u objetos de manera segura y escalable.
+    \item Bases de datos: \textit{Amazon Relational Database Service} (RDS), \textit{Amazon DynamoDB}, Amazon Aurora, entre otros. Que permiten
             iniciar, gestionar y escalar bases de datos relacionales o no relacionales de manera sencilla y eficiente.
 \end{itemize}
+
+\subsubsection{\textit{Amazon Simple Storage Service} (S3)}
+S3 es un servicio de Amazon para almacenamiento de objetos basado en la nube. Porporciona disponibilidad, seguridad y alta escalabiliadd.
+Permite conexiones con otros servicios de AWS, así como aplicaciones de terceros, lo que facilita la integración de esta tecnología a proyectos
+como aplicaciones móviles, aplicaciones web, entre otros. Entre sus principales usos, se encuentra el almacenamiento estático de archivos, 
+copias de seguridad, archivos multimedia, entre otros \cite{aws2024s3}.
 
 \subsection{Docker}
 Docker es una plataforma de código abierto que permite crear, desplegar y ejecutar aplicaciones dentro de contenedores. Un
@@ -285,8 +299,8 @@ bases de datos más utilizadas y sólidas. Cumpliendo con ACID (Atomicidad, Cons
 gama en tipos de datos, funcionalidades internas y extensiones, lo hacen ideal para la mayoría de aplicaciones, incluyendo
 aplicaciones web \cite{postgresql2026about}.
 
-\subsection{Node js}
-Node js es un entorno de ejecución de código abierto para JavaScript que utiliza el motor V8 de Google Chrome, ideal para
+\subsection{Node.js}
+Node.js es un entorno de ejecución de código abierto para JavaScript que utiliza el motor V8 de Google Chrome, ideal para
 construir aplicaciones web escalables, alto rendimiento, y lo más importante, no bloqueante. Gracias a que utiliza un modelo
 basado en eventos de E/S (entrada/salida) lo que permite manejar múltiples conexiones simultáneamente sin bloquearse. 
 Permitiendo así crear servidores web, APIs RESTful, aplicaciones en tiempo real (chat, juegos, etc.) \cite{cantelon2014node}.
@@ -370,7 +384,7 @@ personalizables y adaptables en cualquier aspecto gracias a su robusto sistema d
 hace un desarrollo más fluido y seguro \cite{mui2025materialUI}.
 
 \subsection{Axios}
-Axios es un Cliente HTTP basado en promesas para el navegador y Node JS. Gracias a que es \gls{isomorfico}, puede ejecutarse tanto
+Axios es un Cliente HTTP basado en promesas para el navegador y Node.js. Gracias a que es \gls{isomorfico}, puede ejecutarse tanto
 en el \textit{Frontend} como en el \textit{Backend}. Una de sus grandes ventajas es que transforma de manera automática las
 respuestas del servidor a formato JSON, también que permite interceptar peticiones y/o respuestas para realizar acciones
 personalizadas, además soporta \textit{timeouts}, cancelación de peticiones y manejo de errores \cite{axios2025axios}.
@@ -443,7 +457,7 @@ Los principios REST indican que la respuesta del servidor contenga los siguiente
 \end{itemize}
 
 \subsection{\textit{Performant npm} (PNPM)}
-PNPM es un gestor de paquetes para Node JS que se enfoca en ahorro de espacio en disco y mejora la velocidad de instalación
+PNPM es un gestor de paquetes para Node.js que se enfoca en ahorro de espacio en disco y mejora la velocidad de instalación
 gracias a su enfoque de almacenamiento compartido mediante almacenamiento cnetralizado y enlaces simbólicos, el cuál permite 
 que múltiples proyectos compartan dependencias comunes sin la necesidad de duplicar archivos \cite{pnpm2025motivation}.
 
