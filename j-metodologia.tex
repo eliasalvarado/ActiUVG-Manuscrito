@@ -309,6 +309,11 @@ Para el módulo de Autenticación se implementó una autenticación basada en \t
 con JWT, incluyen información relevante del usuario así como su rol, lo que permite una autorización basada en roles para los distintos \textit{endpoints} 
 de los demás módulos.
 
+\subsubsection{Gestión de usuarios}
+Para el módulo de Usuarios se implementó la gestión básica de usuarios. Esto incluye la consulta, actualización y eliminación de usuarios.
+Se crearon reglas de negocio para la actualización y eliminación de usuarios, como que un usuario pueda actualizar solamente su propia información. Así
+como temas de autenticación, como el cambio de contraseña.
+
 \subsubsection{Ciclo de vida de proyectos de extensión}
 Para el módulo de Proyectos, se implementó un ciclo de vida completo para los proyectos en los que se incluyen los estados: \textit{draft}, \textit{open},
 \textit{in progress}, \textit{completed} y \textit{cancelled}. Una vez un Director u Organización externa crea un proyecto, este se encuentra en estado 
@@ -332,6 +337,17 @@ Para el módulo de Horas, se implementó un ciclo de vida completo para estas, e
 el dueño del proyecto las aprueba o rechaza, momento en el que las horas pasan a estado \textit{approved} o \textit{rejected}, respectivamente.
 En caso de que las horas sean rechazadas, el estudiante tendrá la opción de corregir la cantidad de horas indicadas y reenviar las horas para su aprobación,
 este proceso se podrá realizar un máximo de 3 veces, después de lo cual las horas quedarán en estado \textit{rejected} de manera permanente.
+
+\subsubsection{Manejo de archivos}
+Para el módulo de Archivos, se utilizó el SDK de AWS S3 para poder realizar operaciones de carga, consulta y eliminación de archivos.
+Dentro de la instancia de S3 se creó un \textit{bucket} con tres directorios: \textit{profile} para almacenar las fotografías de perfil de los usuarios, 
+\textit{resource} para almacenar los archivos relacionados a los proyectos y \textit{evidence} para almacenar los archivos relacionados al reporte de horas
+trabajadas por los estudiantes. Los directorios de \textit{resource} y \textit{evidence} se organizan internamente con subdirectorios por proyecto o usuario;
+además, estos directorios son de acceso privado. Por lo que para consultar o descargar un archivo, se genera un \textit{pre-signed URL} con una duración limitada,
+que permite acceder al archivo de manera segura sin exponer el acceso directo a S3.
+Cada vez que se realiza la carga de un archivo, el primer paso es validar que el archivo cumpla reglas de tamaño máximo, extensiones, entre otras validaciones.
+Luego, el archivo se carga a S3 en su respectivo directorio, esta acción retorna un nombre único conocido como \textit{key}. Esta \textit{key}, junto con otra
+información relevante, se almacena en la base de datos con sus respectivas relaciones con usuarios, proyectos u horas, dependiendo del caso.
 
 \section{Fase 3: Implementación del \textit{Frontend}}
 
@@ -403,3 +419,37 @@ Resultando en los siguientes directorios principales:
 \end{itemize}
 
 \subsection{Desarrollo de la interfaz de usuario}
+Una vez definida la estrategia de renderizado, arquitectura y estructura del proyecto se procedió a desarrollar la interfaz de usuario
+utilizando los prototipos de interfaz de usuario previamente diseñados por Andrés Rodríguez en \cite{Rodríguez_Dis_2023}. Ya que dichos
+diseños fueron validados tanto por usuarios finales como por expertos en el área.
+
+Luego de varias iteraciones, pruebas, correcciones y refactorizaciones, se logró desarrollar una interfaz de usuario funcional,
+\textit{responsive} y alineada con los diseños de interfaz, que permite a los usuarios interactuar con la plataforma de una manera
+fuida y eficiente. Utilizando correctamente la API desarrollada en la fase anterior para lograr gestión de usuarios, proyectos de extensión,
+postulaciones, horas y archivos por parte de los usuarios desde la plataforma.
+
+\subsubsection{Definición de tema}
+Utilizando la característica de personalización de temas de Material-UI, se definieron los siguientes aspectos para el tema global de la aplicación:
+\begin{itemize}
+    \item \textbf{Paleta de colores:} Se definieron colores primarios, secundarios, de fondo, de texto, error, información, éxito, entre otros.
+    \item \textbf{Tipografía:} Se definieron las fuentes, tamaños, pesos y estilos.
+    \item \textbf{\textit{Breakpoints}:} Se definieron los puntos de quiebre para el diseño \textit{responsive}.
+\end{itemize}
+
+\subsubsection{Definición de aliases de rutas}
+Con el fin de facilitar la importación de archivos, Vite permite definir aliases de rutas que basado en un prefijo, redirigen a la ruta completa y
+real del archivo. Por lo que se definieron los siguientes aliases de rutas:
+\begin{itemize}
+    \item \textbf{@routers}: Directorio de routers.
+    \item \textbf{@pages}: Directorio de páginas.
+    \item \textbf{@components}: Directorio de componentes.
+    \item \textbf{@services}: Directorio de servicios.
+    \item \textbf{@stores}: Directorio de stores.
+    \item \textbf{@types}: Directorio de tipos.
+    \item \textbf{@styles}: Directorio de estilos.
+    \item \textbf{@utils}: Directorio de utilidades.
+    \item \textbf{@schemas}: Directorio de esquemas de validación.
+    \item \textbf{@context}: Directorio de contextos.
+    \item \textbf{@hooks:} Directorio de hooks personalizados.
+    \item \textbf{@config:} Directorio de configuraciones.
+\end{itemize}
