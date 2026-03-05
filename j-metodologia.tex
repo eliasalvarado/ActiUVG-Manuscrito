@@ -179,6 +179,9 @@ incluyendo consulta de perfiles, actualización de datos, cambio de contraseña 
     \item \texttt{PUT /users/:id}: Actualizar información de usuario.
     \item \texttt{PUT /users/:id/change-password}: Cambiar contraseña.
     \item \texttt{DELETE /users/:id}: Eliminar usuario.
+    \item \texttt{PUT /users/:id/profile-picture}: Actualizar fotografía de perfil.
+    \item \texttt{GET /pending-organizations}: Obtener lista de organizaciones pendientes de aprobación.
+    \item \texttt{PATCH /users/:id/approve}: Aprobar o rechazar cuenta de organización.
 \end{itemize}
 
 \subsubsection{Proyectos}
@@ -305,14 +308,18 @@ definidos para cada módulo. Cada uno de los módulos protegidos con \textit{rat
 
 \subsubsection{Autenticación y autorización}
 Para el módulo de Autenticación se implementó una autenticación basada en \textit{Access Tokens} (corta duración, 1 hora) y \textit{Refresh Tokens}
-(larga duración, 7 días), con rotación de \textit{tokens} cuando un usuario renueva su sesión (\textit{refresh token}). Estos \textit{tokens}, generados
-con JWT, incluyen información relevante del usuario así como su rol, lo que permite una autorización basada en roles para los distintos \textit{endpoints} 
-de los demás módulos.
+(larga duración, 7 días), con rotación de \textit{tokens} cuando un usuario renueva su sesión (\textit{refresh token}). El \textit{Access Token}, generado
+con JWT, incluye información relevante del usuario así como su rol, lo que permite una autorización basada en roles para los distintos \textit{endpoints} 
+de los demás módulos. El \textit{Refresh Token} se almacena de manera segura en la base de datos, asociado al usuario y a la sesión específica, lo que
+permite gestionar múltiples sesiones por usuario y revocar sesiones de manera individual. Este último se envía al cliente como una \textit{cookie} HTTP-only,
+con el fin aumentar la seguridad.
+Todos los usuarios deben de verificar su correo electrónico por medio de un \textit{token} de verificación enviado por medio de correo electrónico.
 
 \subsubsection{Gestión de usuarios}
 Para el módulo de Usuarios se implementó la gestión básica de usuarios. Esto incluye la consulta, actualización y eliminación de usuarios.
 Se crearon reglas de negocio para la actualización y eliminación de usuarios, como que un usuario pueda actualizar solamente su propia información. Así
 como temas de autenticación, como el cambio de contraseña.
+Adicional, las organizaciones deberán de ser aprobadas por algún director para poder tener su cuenta habilitada.
 
 \subsubsection{Ciclo de vida de proyectos de extensión}
 Para el módulo de Proyectos, se implementó un ciclo de vida completo para los proyectos en los que se incluyen los estados: \textit{draft}, \textit{open},
@@ -371,23 +378,18 @@ durante el desarrollo y mejorando la legibilidad del código. Además, TypeScrip
 Adicional a esto, se integró \textbf{ESLint} para mantener un estilo de código consistente y evitar errores comunes, así como \textbf{Prettier} para el
 formateo automático del código.
 
-\subsubsection{Interfaz de usuario y estilos}
-Para la construcción de la interfaz de usuario se optó por utilizar \textbf{Material-UI}, ya que además de que ofrece una amplia variedad de componentes
-preconstruidos y personalizables para adaptar el diseño y colores para alinear la identidad visual de la plataforma, tiene integración nativa para TypeScript.
-
-\subsubsection{Enrutamiento}
-Para la gestión de rutas y navegación dentro de la aplicación se seleccionó \textbf{TanStack Router}, ya que ofrece enrutamiento tipado, gestión de datos
+\subsection{Librerías}
+Con el fin de garantizar una interfaz de usuario alineada con los diseños de interfaz y con una línea gráfica coherente, se optó por utilizar \textbf{Material UI},
+ya que además de que ofrece una amplia variedad de componentes preconstruidos y personalizables para adaptar el diseño y colores para alinear
+la identidad visual de la plataforma, tiene integración nativa para TypeScript.
+Para la gestión de rutas y navegación dentro de la plataforma se seleccionó \textbf{TanStack Router}, ya que ofrece enrutamiento tipado, gestión de datos
 asíncronas (\textit{preloaders}) y rutas anidadas, entre muchas otras características. Su enrutamiento basado en archivos permite una organización y 
 entendimiento del proyecto más sencillo.
-
-\subsubsection{\textit{Fetching}}
 Para la gestión de datos asíncrona y comunicación con la API se seleccionó \textbf{TanStack Query}, ya que ofrece sincronización automática para los datos,
 manejo de estados durante el proceso de \textit{fetching} (cargando, error, éxito, entre otros), almacenamiento en caché para optimizar el rendimiento.
 Adicionalmente, se integró \textbf{Axios} como cliente HTTP para realizar las solicitudes a la API, gracias a su manejo de promesas, interceptores.
 TanStack Query admite cualquier cliente HTTP, por lo que Axios se integra de manera sencilla.
-
-\subsubsection{Manejo de estados}
-Para el manejo de estados globales de la plataforma se seleccionó \textbf{Zustand}, ya que es ligero y optimizado para el rendimiento, permitiendo
+Finalmente, para el manejo de estados globales de la plataforma se seleccionó \textbf{Zustand}, ya que es ligero y optimizado para el rendimiento, permitiendo
 una gestión de estados simple pero efectiva. Para la validación de formularios se seleccionó \textbf{Zod} gracias a su enfoque en TypeScript y la construcción
 de esquemas de validación robusta y reutilizable. Para el manejo de estados de formularios se seleccionó \textbf{TanStack Form} gracias a su soporte para múltiples
 \textit{frameworks} y librerías, entre ellas, React, así como su integración con distintas librerías de validación como Zod.
@@ -412,7 +414,7 @@ Resultando en los siguientes directorios principales:
 \subsubsection{Archivos adicionales}
 \begin{itemize}
     \item \textbf{Types:} Este directorio contiene las definiciones de tipos utilizados en el proyecto.
-    \item \textbf{Styles:} Este directorio un único archivo que configura el \textit{theme} de Material-UI para toda la aplicación.
+    \item \textbf{Styles:} Este directorio contiene un único archivo que configura el \textit{theme} de Material UI para toda la aplicación.
     \item \textbf{Utils:} Este directorio contiene utilidades y configuraciones utilizadas en la aplicación.
     \item \textbf{Schemas:} Este directorio contiene los esquemas de validación de datos.
     \item \textbf{Context:} Este directorio contiene los contextos de React utilizados en la aplicación.
@@ -428,28 +430,67 @@ Luego de varias iteraciones, pruebas, correcciones y refactorizaciones, se logr�
 fuida y eficiente. Utilizando correctamente la API desarrollada en la fase anterior para lograr gestión de usuarios, proyectos de extensión,
 postulaciones, horas y archivos por parte de los usuarios desde la plataforma.
 
-\subsubsection{Definición de tema}
-Utilizando la característica de personalización de temas de Material-UI, se definieron los siguientes aspectos para el tema global de la aplicación:
+\subsubsection{Pantallas}
+Las pantallas, previamente diseñadas, necesarias para la plataforma son las siguientes:
 \begin{itemize}
-    \item \textbf{Paleta de colores:} Se definieron colores primarios, secundarios, de fondo, de texto, error, información, éxito, entre otros.
-    \item \textbf{Tipografía:} Se definieron las fuentes, tamaños, pesos y estilos.
-    \item \textbf{\textit{Breakpoints}:} Se definieron los puntos de quiebre para el diseño \textit{responsive}.
+    \item \textbf{Home:} Esta pantalla es la página de inicio de la plataforma. Tiene dos variantes, una para usuarios no autenticados y otra para usuarios autenticados. Sus elementos dependen del rol del usuario.
+    \item \textbf{Registro:} Pantalla que permite a los nuevos usuarios crear una cuenta en la plataforma. Incluye un formulario de registro con campos específicos para cada tipo de usuario.
+    \item \textbf{Inicio de sesión:} Pantalla que permite a los usuarios existentes iniciar sesión en la plataforma.
+    \item \textbf{Verificación de correo electrónico:} Pantalla que permite a los usuarios verificar su dirección de correo electrónico después de registrarse.
+    \item \textbf{Restablecimiento de contraseña:} Pantalla que permite a los usuarios solicitar un restablecimiento de contraseña.
+    \item \textbf{Perfil:} Pantalla que muestra la información de un usuario.
+    \item \textbf{Edición de perfil:} Pantalla que permite a los usuarios editar su información de perfil.
+    \item \textbf{Cambio de contraseña:} Pantalla que permite a los usuarios cambiar su contraseña.
+    \item \textbf{Proyectos propios:} Pantalla que muestra los proyectos creados por el usuario. Visible para directores y organizaciones externas.
+    \item \textbf{Creación de proyecto:} Pantalla que permite a directores y organizaciones externas crear un nuevo proyecto en la plataforma.
+    \item \textbf{Edición de proyecto:} Pantalla que permite a directores y organizaciones externas editar un proyecto existente.
+    \item \textbf{Búsqueda de proyectos:} Pantalla que permite a los usuarios buscar proyectos en la plataforma. Los filtros de búsqueda dependen del rol del usuario.
+    \item \textbf{Visualización de proyecto:} Pantalla que permite a los usuarios visualizar los detalles de un proyecto. Los elementos visibles dependen del rol del usuario.
+    \item \textbf{Configuración de proyecto:} Pantalla que permite a directores y organizaciones externas cambiar el estado de un proyecto, modificar los participantes o aceptar/rechazar postulaciones.
+    \item \textbf{Proyecto actual:} Pantalla que muestra la información del proyecto en el que se está participando actualmente. Visible para estudiantes.
+    \item \textbf{Historial de proyectos}: Pantalla que muestra el historial de proyectos en los que se ha participado. Visible para estudiantes.
+    \item \textbf{Registro de horas:} Pantalla que permite a los estudiantes registrar las horas trabajadas en un proyecto, incluyendo la carga de evidencias.
+    \item \textbf{Motivaciones:} Pantalla que muestra las motivaciones disponibles para los usuarios.
+    \item \textbf{Proyectos pendientes de aprobación:} Pantalla que muestra los proyectos que están en espera de ser aprobados. Visible para directores.
+    \item \textbf{Organizaciones externas pendientes de aprobación:} Pantalla que muestra las organizaciones externas que están en espera de ser aprobadas. Visible para directores.
 \end{itemize}
 
-\subsubsection{Definición de aliases de rutas}
-Con el fin de facilitar la importación de archivos, Vite permite definir aliases de rutas que basado en un prefijo, redirigen a la ruta completa y
-real del archivo. Por lo que se definieron los siguientes aliases de rutas:
+\subsubsection{Definición de tema}
+Utilizando la característica de personalización de temas de Material UI, se definieron los siguientes aspectos para el tema global de la aplicación:
 \begin{itemize}
-    \item \textbf{@routers}: Directorio de routers.
-    \item \textbf{@pages}: Directorio de páginas.
-    \item \textbf{@components}: Directorio de componentes.
-    \item \textbf{@services}: Directorio de servicios.
-    \item \textbf{@stores}: Directorio de stores.
-    \item \textbf{@types}: Directorio de tipos.
-    \item \textbf{@styles}: Directorio de estilos.
-    \item \textbf{@utils}: Directorio de utilidades.
-    \item \textbf{@schemas}: Directorio de esquemas de validación.
-    \item \textbf{@context}: Directorio de contextos.
-    \item \textbf{@hooks:} Directorio de hooks personalizados.
-    \item \textbf{@config:} Directorio de configuraciones.
+    \item \textbf{Paleta de colores:} Se definieron colores primarios, secundarios, de fondo, de texto, error, información, éxito, entre otros.
+    \item \textbf{Tipografía:} Se definieron las fuentes (Roboto Mono y Raleway), tamaños, pesos y estilos.
+    \item \textbf{\textit{Breakpoints}:} Se definieron los puntos de quiebre para \textit{desktop}, \textit{tablet} y \textit{mobile} para el diseño \textit{responsive}.
 \end{itemize}
+
+\subsubsection{Rutas y navegación}
+Debido a cómo TanStack Router maneja las rutas, dentro del directorio de Routers se definieron los subdirectorios y archivos necesarios
+para cubrir todas las pantallas mencionadas anteriormente. Todos los archivos de rutas se encargan de definir la ruta, el componente a
+renderizar y parámetros si aplica.
+
+\subsubsection{Componentes}
+Para la construcción de componentes se utilizó principalmente los componentes ofrecidos por Material UI. Cada uno de los componentes
+fueron ordenados en subdirectorios dentro del directorio de \textit{Components} con el fin de mantener una organización clara.
+
+\subsubsection{Formularios y validaciones}
+Para manejar el estado de los formularios, TanStack Form ofrece un hook llamado \texttt{useAppForm}, el cuál permite el uso de componentes previamente
+implementados como parte de un formulario. Logrando una fácil gestión del estado del formulario en conjunto con una integración de Zod para validación
+síncrona de los datos de entrada.
+
+\subsubsection{Integración de la API}
+Para la integración de la API se utilizó TansStack Query y Axios. TanStack Query se encarga del ciclo de vida de las peticiones, mientras que Axios 
+se encarga de realizar dichas peticiones a la API. Axios fue configurado con dos intercepotores, uno para incluir el token de autenticación en las
+solicitudes y otro para manejar errores globales. Una configuración importante fue habilitar el uso de \textit{cookies} en las solicitudes para permitir 
+la renovación de tokens de autenticación. 
+
+\subsubsection{Consumo de la API}
+Cada uno de los módulos de la API fue integrado al \textit{Frontend} bajo dos formas. Para cada módulo se crearon:
+\begin{itemize}
+    \item \textbf{Servicios:} Contienen funciones puras (las llamadas realizadas con Axios), \textit{hooks} de TanStack Query (envuelven las funciones puras) e invalidaciones (para forzar resincronizaciones) y utilidades relacionadas a cada módulo.
+    \item \textbf{\textit{Hooks} personalizados:} Contienen y llaman a los servicios, por lo que contienen los datos retornados por Axios y los estados de las peticiones entregados por TanStack Query. Estos \textit{hooks} son los que se utilizan dentro de los componentes para consumir la API.
+\end{itemize}
+
+\subsubsection{Gestión de estado global}
+El único estado global que se maneja en la plataforma es la autenticación del usuario. Esto encapsula información relevante de una sesión, como si el usuario se encuentra autenticado, rol, nombre, 
+foto de perfil, entre otros. Ligado a esto, se crearon dos \textit{hooks}. El primero para la información de autenticación del usuario, y el segundo para la validación de permisos de acceso a rutas
+o elementos basados en el rol del usuario. 
