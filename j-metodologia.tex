@@ -260,14 +260,34 @@ almacenamiento de los datos de la plataforma. Esto gracias a su robustez, escala
 avanzados (como UUID, gracias a la extensión pgcrypto).
 
 Además, para el almacenamiento de archivos se optó por \textbf{Amazon S3}. Esto gracias a su alta disponibilidad, escalabilidad y
-seguridad. Esto permite cargar, eliminar o consultar archivos. Además, que AWS ofrece SDKs que facilitan la integración
-de la tecnología a proyectos, en este caso, el SDK (v3) de AWS para JavaScript en Node.js.
+seguridad. Además, AWS ofrece un SDK para JavaScript en Node.js, lo que facilita su integración con la API.
 
-\subsubsection{Librerías}
+\subsection{Librerías}
+
+\subsubsection{Seguridad de datos}
 Con el fin de garantizar seguridad en los datos en reposo, se integró \textbf{bcryptjs} para un \textit{\gls{hashing}} seguro de
-contraseñas. También se integraron liberías como \textbf{jsonwebtoken} para la gestión de tokens de autenticación, \textbf{Joi}
-para validaciones de datos de entrada, \textbf{Nodemailer} para el envío de correos electrónicos, \textbf{Multer} para procesamiento
-de archivos, \textbf{Winston} para \textit{\gls{log}} del sistema, entre otras liberías.
+contraseñas.
+
+\subsubsection{Autenticación y autorización}
+Se integró \textbf{jsonwebtoken} para la gestión de tokens de autenticación, basando el manejo de sesiones con JWT. Facilitando 
+la autorización basada en roles para los distintos \textit{endpoints} de la API.
+
+\subsubsection{Validaciones}
+Para la validación de datos de entrada se utilizó \textbf{Joi}. Ya que además de la definición de esquemas de validación robustos
+y reutilizables, tiene una integración sencilla como \textit{middleware} para las peticiones recibidas del lado del servidor.
+
+\subsubsection{Envío de correos electrónicos}
+Para el envío de correos electrónicos se utilizó \textbf{Nodemailer}. Esto para el envío de correos como el de verificación de 
+correo electrónico, restablecimiento de contraseña, entre otros.
+
+\subsubsection{Manejo de archivos}
+Para el manejo de archivos se integraron dos librerías importantes, la primera \textbf{Multer} para el procesamiento de archivos
+en las solicitudes entrantes que permite realizar validaciones y manejo de los archivos, y la segunda el SDK (v3) de AWS para 
+que permite realizar operaciones de carga, consulta y eliminación de archivos en S3.
+
+\subsubsection{Monitoreo}
+Para el monitoreo del sistema se utilizó \textbf{Winston} con el fin de generar \textit{\gls{log}} de eventos relevantes del sistema,
+como errores, acciones de usuarios, entre otros.
 
 \subsection{Arquitectura}
 Para mantener una organización y separación de responsabilidades clara, el proyecto utiliza una arquitectura por capas.
@@ -379,16 +399,24 @@ Adicional a esto, se integró \textbf{ESLint} para mantener un estilo de código
 formateo automático del código.
 
 \subsection{Librerías}
+
+\subsubsection{Interfaz de usuario y estilos}
 Con el fin de garantizar una interfaz de usuario alineada con los diseños de interfaz y con una línea gráfica coherente, se optó por utilizar \textbf{Material UI},
 ya que además de que ofrece una amplia variedad de componentes preconstruidos y personalizables para adaptar el diseño y colores para alinear
 la identidad visual de la plataforma, tiene integración nativa para TypeScript.
+
+\subsubsection{Enrutamiento}
 Para la gestión de rutas y navegación dentro de la plataforma se seleccionó \textbf{TanStack Router}, ya que ofrece enrutamiento tipado, gestión de datos
 asíncronas (\textit{preloaders}) y rutas anidadas, entre muchas otras características. Su enrutamiento basado en archivos permite una organización y 
 entendimiento del proyecto más sencillo.
+
+\subsubsection{Consumo de la API}
 Para la gestión de datos asíncrona y comunicación con la API se seleccionó \textbf{TanStack Query}, ya que ofrece sincronización automática para los datos,
 manejo de estados durante el proceso de \textit{fetching} (cargando, error, éxito, entre otros), almacenamiento en caché para optimizar el rendimiento.
 Adicionalmente, se integró \textbf{Axios} como cliente HTTP para realizar las solicitudes a la API, gracias a su manejo de promesas, interceptores.
 TanStack Query admite cualquier cliente HTTP, por lo que Axios se integra de manera sencilla.
+
+\subsubsection{Manejo de estados}
 Finalmente, para el manejo de estados globales de la plataforma se seleccionó \textbf{Zustand}, ya que es ligero y optimizado para el rendimiento, permitiendo
 una gestión de estados simple pero efectiva. Para la validación de formularios se seleccionó \textbf{Zod} gracias a su enfoque en TypeScript y la construcción
 de esquemas de validación robusta y reutilizable. Para el manejo de estados de formularios se seleccionó \textbf{TanStack Form} gracias a su soporte para múltiples
