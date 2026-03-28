@@ -1,0 +1,84 @@
+Este proyecto busca desarrollar una plataforma web capaz de administrar, publicar, participar
+y darle seguimiento a proyectos de extensión de la Universidad del Valle de Guatemala.
+Para lograr esto, la plataforma web constará de dos partes principales: un \textit{Backend} 
+y un \textit{Frontend}.
+
+\section{Entregables}
+\subsection{\textit{Backend}}
+Como entregable del \textit{Backend} se tendrá una API con un conjunto de \textit{enpoints}
+que permitan realizar operaciones según el rol del usuario.
+
+\subsubsection{Todos los usuarios}
+\begin{itemize}
+    \item Registro de usuario
+    \item Inicio de sesión
+    \item Verificación de correo electrónico
+    \item Restablecimiento de contraseña
+    \item Actualización de información personal y cambio de contraseña
+    \item Búsqueda y visualización de proyectos
+    \item Visualización de motivaciones
+\end{itemize}
+
+\subsubsection{Estudiantes}
+\begin{itemize}
+    \item Postulación a proyectos
+    \item Participación en un proyecto a la vez
+    \item Abandonar un proyecto
+    \item Registro de horas trabajadas en un proyecto, incluyendo evidencias
+    \item Visualización de horas aprobadas en proyectos pasados
+    \item Visualización de historial de postulaciones y horas
+\end{itemize}
+
+\subsubsection{Organizaciones externas y directores}
+\begin{itemize}
+    \item Creación, edición y eliminación de proyectos con archivos (recursos) ligados
+    \item Iniciar, finalizar o cancelar un proyecto propio
+    \item Aceptar o rechazar postulaciones a proyectos propios
+    \item Visualización de participantes en proyectos propios
+    \item Eliminación de participantes en proyectos propios
+    \item Aprobación o rechazo de horas registradas por estudiantes en proyectos propios
+\end{itemize}
+
+\subsubsection{Directores}
+\begin{itemize}
+    \item Aprobación o rechazo de proyectos
+    \item Aprobación o rechazo de cuentas de organizaciones externas
+\end{itemize}
+
+\subsection{\textit{Frontend}}
+Como entregable del \textit{Frontend} se tendrá una interfaz gráfica alineada a los diseños
+previamente contruidos y validados. Esta intefaz deberá de permitir a los usuarios finales
+realizar las operaciones descritas anteriormente según su rol.
+
+Las pantallas para la plataforma son las siguientes:
+
+\begin{itemize}
+    \item Home
+    \item Registro
+    \item Inicio de sesión
+    \item Verificación de correo electrónico
+    \item Restablecimiento de contraseña
+    \item Perfil
+    \item Edición de perfil
+    \item Cambio de contraseña
+    \item Proyectos propios
+    \item Creación de proyecto
+    \item Edición de proyecto
+    \item Búsqueda de proyectos
+    \item Visualización de proyecto
+    \item Configuración de proyecto
+    \item Proyecto actual
+    \item Historial de proyectos
+    \item Registro de horas
+    \item Motivaciones
+    \item Proyectos pendientes de aprobación
+    \item Organizaciones externas pendientes de aprobación
+\end{itemize}
+
+\section{Límites}
+Los siguientes puntos no están incluidos dentro del alcance de este proyecto:
+\begin{itemize}
+    \item Creación de Diseños para las pantallas y experiencia de usuario.
+    \item Pruebas de estrés, concurrencia, unitarias y de rendimiento para la API.
+    \item Implementación de funcionalidades adicionales no especificadas en los entregables.
+\end{itemize}
