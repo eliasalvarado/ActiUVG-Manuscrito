@@ -234,6 +234,16 @@ de la plataforma. Esto incluye fotos de perfil, recursos de proyectos y evidenci
     \item \texttt{GET /files/:id/preview}: Previsualizar archivo.
 \end{itemize}
 
+\subsubsection{Otros}
+Adicionalmente, se definieron otros \textit{endpoints} complementarios que principalmente permiten consultar datos
+disponibles en la plataforma.
+\begin{itemize}
+    \item \texttt{GET /faculties}: Listar facultades disponibles.
+    \item \texttt{GET /careers}: Listar carreras disponibles.
+    \item \texttt{GET /campuses}: Listar campus disponibles.
+    \item \texttt{GET /tags}: Listar etiquetas disponibles.
+\end{itemize}
+
 \section{Fase 2: Desarrollo del \textit{Backend}}
 La segunda fase se centró en la implementación del \textit{Backend} de la plataforma, capaz de soportar y gestionar
 todas las funcionalidades definidas en la fase anterior. 
@@ -245,9 +255,12 @@ los usuarios. Esto incluye la gestión de usuarios, proyectos, postulaciones, ho
 
 \subsubsection{Entorno de ejecución y \textit{Framework}}
 Se seleccionó \textbf{Node.js} como entorno de ejecución, utilizando el \textit{framework} \textbf{Express}.
-Este entorno permite que la API opere de manera asíncrona y facilitando el manejo de solicitudes simultáneas
-sin afectar el rendimiento. Express, por su parte, proporciona una estructura flexible y minimalista, lo cuál
-agiliza el desarrollo y facilita aspectos de mantenibilidad y escalabilidad.
+Node.js ofrece una ejecución de código rápido, una de sus altas ventajas en un entorno orientado al
+\textit{Backend} es que tiene un modelo I/O no bloqueante, lo cuál le permite manejar gran cantidad de solicitudes
+simultáneas de manera eficiente. Gracias a esto, el entorno Node.js permite que la API opere de manera 
+asíncrona y facilitando el manejo de solicitudes simultáneas sin afectar el rendimiento.
+Express, por su parte, proporciona una estructura flexible y minimalista, lo cuál agiliza el desarrollo y facilita 
+aspectos de mantenibilidad y escalabilidad.
 
 \subsubsection{Compilador}
 Para aumentar la robustez del código y tener un desarrollo más eficiente y seguro, se seleccionó \textbf{TypeScript}
@@ -259,8 +272,12 @@ Se optó por una base de datos relacional utilizando \textbf{PostgreSQL} como mo
 almacenamiento de los datos de la plataforma. Esto gracias a su robustez, escalabilidad, soporte a tipos de datos
 avanzados (como UUID, gracias a la extensión pgcrypto).
 
-Además, para el almacenamiento de archivos se optó por \textbf{Amazon S3}. Esto gracias a su alta disponibilidad, escalabilidad y
-seguridad. Además, AWS ofrece un SDK para JavaScript en Node.js, lo que facilita su integración con la API.
+Además, para el almacenamiento de archivos se optó por \textbf{Amazon S3}. Amazon Web Services (AWS) es un proveedor
+ampliamente reconocido y confiable en la industria de servicios en la nube, provee una alta escalabilidad, seguridad,
+y una sobresaliente disponibilidad, lo que lo convierte en el mejor candidato para el almacenamiento persistente de
+archivos que la plataforma requiere. Además, AWS ofrece un SDK para JavaScript en Node.js, lo que facilita 
+su integración con la API. Por lo tanto, el uso de \textit{Amazon S3} ofrecerá una alta disponibilidad, acceso seguro
+a los archivos y un manejo de ciclos de vida de los mismos para garantizar la eficiencia y escalabilidad.
 
 \subsection{Librerías}
 
@@ -327,12 +344,13 @@ un código limpio, mantenible y bajo la premisa \gls{dry} se logró desarrollar 
 definidos para cada módulo. Cada uno de los módulos protegidos con \textit{rate limiting} y \textit{tokens} cuando aplica.
 
 \subsubsection{Autenticación y autorización}
-Para el módulo de Autenticación se implementó una autenticación basada en \textit{Access Tokens} (corta duración, 1 hora) y \textit{Refresh Tokens}
-(larga duración, 7 días), con rotación de \textit{tokens} cuando un usuario renueva su sesión (\textit{refresh token}). El \textit{Access Token}, generado
-con JWT, incluye información relevante del usuario así como su rol, lo que permite una autorización basada en roles para los distintos \textit{endpoints} 
-de los demás módulos. El \textit{Refresh Token} se almacena de manera segura en la base de datos, asociado al usuario y a la sesión específica, lo que
-permite gestionar múltiples sesiones por usuario y revocar sesiones de manera individual. Este último se envía al cliente como una \textit{cookie} HTTP-only,
-con el fin aumentar la seguridad.
+Para el módulo de Autenticación se implementó una autenticación basada en \textit{Access Tokens} (corta duración, 1 hora)
+y \textit{Refresh Tokens}
+(larga duración, 7 días), con rotación de \textit{tokens} cuando un usuario renueva su sesión (\textit{refresh token}).
+El \textit{Access Token}, generado con JWT, incluye información relevante del usuario así como su rol, lo que permite una autorización
+basada en roles para los distintos \textit{endpoints} de los demás módulos. El \textit{Refresh Token} se almacena de manera segura
+en la base de datos, asociado al usuario y a la sesión específica, lo que permite gestionar múltiples sesiones por usuario y
+revocar sesiones de manera individual. Este último se envía al cliente como una \textit{cookie} HTTP-only, con el fin aumentar la seguridad.
 Todos los usuarios deben de verificar su correo electrónico por medio de un \textit{token} de verificación enviado por medio de correo electrónico.
 
 \subsubsection{Gestión de usuarios}
@@ -342,98 +360,111 @@ como temas de autenticación, como el cambio de contraseña.
 Adicional, las organizaciones deberán de ser aprobadas por algún director para poder tener su cuenta habilitada.
 
 \subsubsection{Ciclo de vida de proyectos de extensión}
-Para el módulo de Proyectos, se implementó un ciclo de vida completo para los proyectos en los que se incluyen los estados: \textit{draft}, \textit{open},
-\textit{in progress}, \textit{completed} y \textit{cancelled}. Una vez un Director u Organización externa crea un proyecto, este se encuentra en estado 
-\textit{draft} hasta que un Director lo aprueba, momento en el que el proyecto pasa a estado \textit{open} y los estudiantes pueden ver y llegar a postularse.
-Una vez el dueño del proyecto inicia el proyecto, este pasa a estado \textit{in progress} (ya no se aceptan postulaciones). Una vez el proyecto finaliza,
-el dueño del proyecto lo marca como finalizado, pasando a estado \textit{completed}, permitiendo a los estudiantes que participaron en el proyecto registrar
-sus horas trabajadas. En caso de que el proyecto sea cancelado, el dueño del proyecto lo marca como cancelado, pasando a estado \textit{cancelled}, lo que permite
-a los estudiantes indicar las horas trabajadas, si aplica.
+Para el módulo de Proyectos, se implementó un ciclo de vida completo para los proyectos en los que se incluyen los estados: \textit{draft},
+\textit{open}, \textit{in progress}, \textit{completed} y \textit{cancelled}. Una vez un Director u Organización externa crea un proyecto,
+este se encuentra en estado \textit{draft} hasta que un Director lo aprueba, momento en el que el proyecto pasa a estado \textit{open} y los
+estudiantes pueden ver y llegar a postularse. Una vez el dueño del proyecto inicia el proyecto, este pasa a estado \textit{in progress}
+(ya no se aceptan postulaciones). Una vez el proyecto finaliza, el dueño del proyecto lo marca como finalizado, pasando a estado
+\textit{completed}, permitiendo a los estudiantes que participaron en el proyecto registrar sus horas trabajadas. En caso de que el proyecto
+sea cancelado, el dueño del proyecto lo marca como cancelado, pasando a estado \textit{cancelled}, lo que permite a los estudiantes indicar
+las horas trabajadas, si aplica.
 
 \subsubsection{Ciclo de vida de partipación en proyectos de extensión}
-Para el módulo de Postulaciones, se implementó un ciclo de vida completo para estas, en el que se incluyen los estados: \textit{pending}, \textit{accepted},
-\textit{rejected} y \textit{finalized}. Al momento en el que un estudiante se postula para participar en un proyecto, la postulación se encuentra en estado
-\textit{pending} hasta que el dueño del proyecto la aprueba o rechaza, momento en el que la postulación pasa a estado \textit{accepted} o \textit{rejected},
-respectivamente. En caso de que la postulación sea aprobada, el estudiante se convierte en participante del proyecto y no podrá postularse o participar
-en otros proyectos hasta que su participación actual concluya. Una vez el proyecto finalice o el estudiante abandone el proyecto, la postulación pasa a
-estado \textit{finalized}.
+Para el módulo de Postulaciones, se implementó un ciclo de vida completo para estas, en el que se incluyen los estados: \textit{pending},
+\textit{accepted}, \textit{rejected} y \textit{finalized}. Al momento en el que un estudiante se postula para participar en un proyecto,
+la postulación se encuentra en estado \textit{pending} hasta que el dueño del proyecto la aprueba o rechaza, momento en el que la
+postulación pasa a estado \textit{accepted} o \textit{rejected}, respectivamente. En caso de que la postulación sea aprobada, el estudiante
+se convierte en participante del proyecto y no podrá postularse o participar en otros proyectos hasta que su participación actual concluya.
+Una vez el proyecto finalice o el estudiante abandone el proyecto, la postulación pasa a estado \textit{finalized}.
 
 \subsubsection{Ciclo de vida de horas trabajadas en proyectos de extensión}
-Para el módulo de Horas, se implementó un ciclo de vida completo para estas, en el que se incluyen los estados:  \textit{pending}, \textit{approved},
-\textit{rejected}. Al momento en el que un estudiante registra horas trabajadas en un proyecto, estas se encuentran en estado \textit{pending} hasta que
-el dueño del proyecto las aprueba o rechaza, momento en el que las horas pasan a estado \textit{approved} o \textit{rejected}, respectivamente.
-En caso de que las horas sean rechazadas, el estudiante tendrá la opción de corregir la cantidad de horas indicadas y reenviar las horas para su aprobación,
-este proceso se podrá realizar un máximo de 3 veces, después de lo cual las horas quedarán en estado \textit{rejected} de manera permanente.
+Para el módulo de Horas, se implementó un ciclo de vida completo para estas, en el que se incluyen los estados:  \textit{pending},
+\textit{approved}, \textit{rejected}. Al momento en el que un estudiante registra horas trabajadas en un proyecto, estas se encuentran
+en estado \textit{pending} hasta que el dueño del proyecto las aprueba o rechaza, momento en el que las horas pasan a estado
+\textit{approved} o \textit{rejected}, respectivamente. En caso de que las horas sean rechazadas, el estudiante tendrá la opción de corregir
+la cantidad de horas indicadas y reenviar las horas para su aprobación, este proceso se podrá realizar un máximo de 3 veces, después de
+lo cual las horas quedarán en estado \textit{rejected} de manera permanente.
 
 \subsubsection{Manejo de archivos}
 Para el módulo de Archivos, se utilizó el SDK de AWS S3 para poder realizar operaciones de carga, consulta y eliminación de archivos.
-Dentro de la instancia de S3 se creó un \textit{bucket} con tres directorios: \textit{profile} para almacenar las fotografías de perfil de los usuarios, 
-\textit{resource} para almacenar los archivos relacionados a los proyectos y \textit{evidence} para almacenar los archivos relacionados al reporte de horas
-trabajadas por los estudiantes. Los directorios de \textit{resource} y \textit{evidence} se organizan internamente con subdirectorios por proyecto o usuario;
-además, estos directorios son de acceso privado. Por lo que para consultar o descargar un archivo, se genera un \textit{pre-signed URL} con una duración limitada,
-que permite acceder al archivo de manera segura sin exponer el acceso directo a S3.
-Cada vez que se realiza la carga de un archivo, el primer paso es validar que el archivo cumpla reglas de tamaño máximo, extensiones, entre otras validaciones.
-Luego, el archivo se carga a S3 en su respectivo directorio, esta acción retorna un nombre único conocido como \textit{key}. Esta \textit{key}, junto con otra
-información relevante, se almacena en la base de datos con sus respectivas relaciones con usuarios, proyectos u horas, dependiendo del caso.
+Dentro de la instancia de S3 se creó un \textit{bucket} con tres directorios: \textit{profile} para almacenar las fotografías de perfil
+de los usuarios, \textit{resource} para almacenar los archivos relacionados a los proyectos y \textit{evidence} para almacenar los
+archivos relacionados al reporte de horas trabajadas por los estudiantes. Los directorios de \textit{resource} y \textit{evidence} se
+organizan internamente con subdirectorios por proyecto o usuario; además, estos directorios son de acceso privado. Por lo que para
+consultar o descargar un archivo, se genera un \textit{pre-signed URL} con una duración limitada, que permite acceder al archivo de
+manera segura sin exponer el acceso directo a S3. Cada vez que se realiza la carga de un archivo, el primer paso es validar que el
+archivo cumpla reglas de tamaño máximo, extensiones, entre otras validaciones. Luego, el archivo se carga a S3 en su respectivo
+directorio, esta acción retorna un nombre único conocido como \textit{key}. Esta \textit{key}, junto con otra información relevante,
+se almacena en la base de datos con sus respectivas relaciones con usuarios, proyectos u horas, dependiendo del caso.
 
 \section{Fase 3: Implementación del \textit{Frontend}}
 
-La tercera fase se centró en la implementación del \textit{Frontend} de la plataforma, utilizando los prototipos de interfaz de usuario previamente diseñados
-por Andrés Rodríguez en \cite{Rodríguez_Dis_2023} como guía ya validada para la construcción de la interfaz de usuario.
+La tercera fase se centró en la implementación del \textit{Frontend} de la plataforma, utilizando los prototipos de interfaz de
+usuario previamente diseñados por Andrés Rodríguez en \cite{Rodríguez_Dis_2023} como guía ya validada para la construcción de la
+interfaz de usuario.
 
-El objetivo de esta fase es desarrollar la interfaz de usuario que permita a los usuarios interactuar con la plataforma web, utilizando la API desarrollada
-en la fase anterior para gestionar usuarios, proyectos de extensión, postulaciones, horas y archivos.
+El objetivo de esta fase es desarrollar la interfaz de usuario que permita a los usuarios interactuar con la plataforma web,
+utilizando la API desarrollada en la fase anterior para gestionar usuarios, proyectos de extensión, postulaciones, horas y archivos.
 
 \subsection{Selección de tecnologías}
 
 \subsubsection{Entorno de construcción y librería principal}
-Se seleccionó \textbf{Vite} como entorno de construcción, utilizando la librería \textbf{React}. Vite ofrece un servidor de desarrollo rápido, optimizado y
-con configuraciones ideales para un proyecto moderno de \textit{Frontend}. Gracias a su \gls{hmr} permite un desarrollo eficiente y fluido. React, por su parte,
-es una librería que facilita la construcción de componentes reutilizables, gestionando el estado de la aplicación de manera eficiente y permitiendo basar una
-arquitectura de reutilizable y mantenible.
+Se seleccionó \textbf{Vite} como entorno de construcción, utilizando la librería \textbf{React}. Vite ofrece un servidor de
+desarrollo rápido, optimizado y con configuraciones ideales para un proyecto moderno de \textit{Frontend}. Gracias a su
+\gls{hmr} permite un desarrollo eficiente y fluido. React, por su parte, es una librería que facilita la construcción de
+componentes reutilizables, gestionando el estado de la aplicación de manera eficiente y permitiendo basar una arquitectura
+de reutilizable y mantenible.
 
 \subsubsection{Compilador}
-Al igual que en el \textit{Backend}, se seleccionó \textbf{TypeScript} para introducir tipado estático. Aumentando la robustez del código, evitando errores
-durante el desarrollo y mejorando la legibilidad del código. Además, TypeScript se integra de manera nativa con React, lo que facilita su uso en el proyecto.
-Adicional a esto, se integró \textbf{ESLint} para mantener un estilo de código consistente y evitar errores comunes, así como \textbf{Prettier} para el
-formateo automático del código.
+Al igual que en el \textit{Backend}, se seleccionó \textbf{TypeScript} para introducir tipado estático. Aumentando la
+robustez del código, evitando errores durante el desarrollo y mejorando la legibilidad del código. Además, TypeScript
+se integra de manera nativa con React, lo que facilita su uso en el proyecto. Adicional a esto, se integró \textbf{ESLint}
+para mantener un estilo de código consistente y evitar errores comunes, así como \textbf{Prettier} para el formateo
+automático del código.
 
 \subsection{Librerías}
 
 \subsubsection{Interfaz de usuario y estilos}
-Con el fin de garantizar una interfaz de usuario alineada con los diseños de interfaz y con una línea gráfica coherente, se optó por utilizar \textbf{Material UI},
-ya que además de que ofrece una amplia variedad de componentes preconstruidos y personalizables para adaptar el diseño y colores para alinear
-la identidad visual de la plataforma, tiene integración nativa para TypeScript.
+Con el fin de garantizar una interfaz de usuario alineada con los diseños de interfaz y con una línea gráfica coherente,
+se optó por utilizar \textbf{Material UI}, ya que además de que ofrece una amplia variedad de componentes preconstruidos
+y personalizables para adaptar el diseño y colores para alinear la identidad visual de la plataforma, tiene integración
+nativa para TypeScript.
 
 \subsubsection{Enrutamiento}
-Para la gestión de rutas y navegación dentro de la plataforma se seleccionó \textbf{TanStack Router}, ya que ofrece enrutamiento tipado, gestión de datos
-asíncronas (\textit{preloaders}) y rutas anidadas, entre muchas otras características. Su enrutamiento basado en archivos permite una organización y 
-entendimiento del proyecto más sencillo.
+Para la gestión de rutas y navegación dentro de la plataforma se seleccionó \textbf{TanStack Router}, ya que ofrece
+enrutamiento tipado, gestión de datos asíncronas (\textit{preloaders}) y rutas anidadas, entre muchas otras
+características. Su enrutamiento basado en archivos permite una organización y entendimiento del proyecto más sencillo.
 
 \subsubsection{Consumo de la API}
-Para la gestión de datos asíncrona y comunicación con la API se seleccionó \textbf{TanStack Query}, ya que ofrece sincronización automática para los datos,
-manejo de estados durante el proceso de \textit{fetching} (cargando, error, éxito, entre otros), almacenamiento en caché para optimizar el rendimiento.
-Adicionalmente, se integró \textbf{Axios} como cliente HTTP para realizar las solicitudes a la API, gracias a su manejo de promesas, interceptores.
+Para la gestión de datos asíncrona y comunicación con la API se seleccionó \textbf{TanStack Query}, ya que ofrece
+sincronización automática para los datos, manejo de estados durante el proceso de \textit{fetching}
+(cargando, error, éxito, entre otros), almacenamiento en caché para optimizar el rendimiento. Adicionalmente, se integró
+\textbf{Axios} como cliente HTTP para realizar las solicitudes a la API, gracias a su manejo de promesas, interceptores.
 TanStack Query admite cualquier cliente HTTP, por lo que Axios se integra de manera sencilla.
 
 \subsubsection{Manejo de estados}
-Finalmente, para el manejo de estados globales de la plataforma se seleccionó \textbf{Zustand}, ya que es ligero y optimizado para el rendimiento, permitiendo
-una gestión de estados simple pero efectiva. Para la validación de formularios se seleccionó \textbf{Zod} gracias a su enfoque en TypeScript y la construcción
-de esquemas de validación robusta y reutilizable. Para el manejo de estados de formularios se seleccionó \textbf{TanStack Form} gracias a su soporte para múltiples
-\textit{frameworks} y librerías, entre ellas, React, así como su integración con distintas librerías de validación como Zod.
+Finalmente, para el manejo de estados globales de la plataforma se seleccionó \textbf{Zustand}, ya que es ligero y
+optimizado para el rendimiento, permitiendo una gestión de estados simple pero efectiva. Para la validación de
+formularios se seleccionó \textbf{Zod} gracias a su enfoque en TypeScript y la construcción de esquemas de validación
+robusta y reutilizable. Para el manejo de estados de formularios se seleccionó \textbf{TanStack Form} gracias a su
+soporte para múltiples \textit{frameworks} y librerías, entre ellas, React, así como su integración con distintas
+librerías de validación como Zod.
 
 \subsection{Arquitectura}
-La arquitectura seleccionada fue la arquitectura \textit{Single Page Application} (SPA, por sus siglas en inglés) utilizando la estrategia de renderizado web
-\gls{csr}. Esto debido a que debido a la naturaleza de la plataforma, se requiere que el usuario pueda interactuar con la aplicación de manera fluida, 
-delegando la carga del renderizado al cliente para evitar recargas completas de la página.
+La arquitectura seleccionada fue la arquitectura \textit{Single Page Application} (SPA, por sus siglas en inglés)
+utilizando la estrategia de renderizado web \gls{csr}. Esto debido a que debido a la naturaleza de la plataforma,
+se requiere que el usuario pueda interactuar con la aplicación de manera fluida, delegando la carga del renderizado
+al cliente para evitar recargas completas de la página.
 
 \subsubsection{Estructura del proyecto}
-Con el fin de mantener un código modular, organizado, mantenible y escalable, se estructuró el proyecto en directorios siguiendo \textit{feature-based}
-(basada en características), por lo que se separaron las responsabilidades.
+Con el fin de mantener un código modular, organizado, mantenible y escalable, se estructuró el proyecto en directorios
+siguiendo \textit{feature-based} (basada en características), por lo que se separaron las responsabilidades.
 Resultando en los siguientes directorios principales:
 \begin{itemize}
-    \item \textbf{Routers:} Este directorio contiene la configuración de las rutas de la aplicación empleando TanStack Router. Definiendo el árbol de rutas para tener el mapa de navegación de la aplicación.
-    \item \textbf{Pages:} Este directorio contiene los componentes de página, que representan las distintas vistas o pantallas de la aplicación.
+    \item \textbf{Routers:} Este directorio contiene la configuración de las rutas de la aplicación empleando TanStack
+            Router. Definiendo el árbol de rutas para tener el mapa de navegación de la aplicación.
+    \item \textbf{Pages:} Este directorio contiene los componentes de página, que representan las distintas vistas o
+            pantallas de la aplicación.
     \item \textbf{Components:} Este directorio contiene los componentes reutilizables de la aplicación.
     \item \textbf{Services:} Este directorio contiene los servicios de la aplicación, específicamente, los servicios de API.
     \item \textbf{Stores:} Este directorio contiene los archivos relacionados con el manejo de estados globales.
@@ -442,29 +473,33 @@ Resultando en los siguientes directorios principales:
 \subsubsection{Archivos adicionales}
 \begin{itemize}
     \item \textbf{Types:} Este directorio contiene las definiciones de tipos utilizados en el proyecto.
-    \item \textbf{Styles:} Este directorio contiene un único archivo que configura el \textit{theme} de Material UI para toda la aplicación.
+    \item \textbf{Styles:} Este directorio contiene un único archivo que configura el \textit{theme} de Material UI
+            para toda la aplicación.
     \item \textbf{Utils:} Este directorio contiene utilidades y configuraciones utilizadas en la aplicación.
     \item \textbf{Schemas:} Este directorio contiene los esquemas de validación de datos.
     \item \textbf{Context:} Este directorio contiene los contextos de React utilizados en la aplicación.
 \end{itemize}
 
 \subsection{Desarrollo de la interfaz de usuario}
-Una vez definida la estrategia de renderizado, arquitectura y estructura del proyecto se procedió a desarrollar la interfaz de usuario
-utilizando los prototipos de interfaz de usuario previamente diseñados por Andrés Rodríguez en \cite{Rodríguez_Dis_2023}. Ya que dichos
-diseños fueron validados tanto por usuarios finales como por expertos en el área.
+Una vez definida la estrategia de renderizado, arquitectura y estructura del proyecto se procedió a desarrollar la
+interfaz de usuario utilizando los prototipos de interfaz de usuario previamente diseñados por Andrés Rodríguez en
+\cite{Rodríguez_Dis_2023}. Ya que dichos diseños fueron validados tanto por usuarios finales como por expertos en el área.
 
 Luego de varias iteraciones, pruebas, correcciones y refactorizaciones, se logró desarrollar una interfaz de usuario funcional,
 \textit{responsive} y alineada con los diseños de interfaz, que permite a los usuarios interactuar con la plataforma de una manera
-fuida y eficiente. Utilizando correctamente la API desarrollada en la fase anterior para lograr gestión de usuarios, proyectos de extensión,
-postulaciones, horas y archivos por parte de los usuarios desde la plataforma.
+fuida y eficiente. Utilizando correctamente la API desarrollada en la fase anterior para lograr gestión de usuarios, proyectos de
+extensión, postulaciones, horas y archivos por parte de los usuarios desde la plataforma.
 
 \subsubsection{Pantallas}
 Las pantallas, previamente diseñadas, necesarias para la plataforma son las siguientes:
 \begin{itemize}
-    \item \textbf{Home:} Esta pantalla es la página de inicio de la plataforma. Tiene dos variantes, una para usuarios no autenticados y otra para usuarios autenticados. Sus elementos dependen del rol del usuario.
-    \item \textbf{Registro:} Pantalla que permite a los nuevos usuarios crear una cuenta en la plataforma. Incluye un formulario de registro con campos específicos para cada tipo de usuario.
+    \item \textbf{Home:} Esta pantalla es la página de inicio de la plataforma. Tiene dos variantes, una para usuarios no autenticados
+            y otra para usuarios autenticados. Sus elementos dependen del rol del usuario.
+    \item \textbf{Registro:} Pantalla que permite a los nuevos usuarios crear una cuenta en la plataforma. Incluye un formulario de
+            registro con campos específicos para cada tipo de usuario.
     \item \textbf{Inicio de sesión:} Pantalla que permite a los usuarios existentes iniciar sesión en la plataforma.
-    \item \textbf{Verificación de correo electrónico:} Pantalla que permite a los usuarios verificar su dirección de correo electrónico después de registrarse.
+    \item \textbf{Verificación de correo electrónico:} Pantalla que permite a los usuarios verificar su dirección de correo
+            electrónico después de registrarse.
     \item \textbf{Restablecimiento de contraseña:} Pantalla que permite a los usuarios solicitar un restablecimiento de contraseña.
     \item \textbf{Perfil:} Pantalla que muestra la información de un usuario.
     \item \textbf{Edición de perfil:} Pantalla que permite a los usuarios editar su información de perfil.
@@ -472,15 +507,19 @@ Las pantallas, previamente diseñadas, necesarias para la plataforma son las sig
     \item \textbf{Proyectos propios:} Pantalla que muestra los proyectos creados por el usuario. Visible para directores y organizaciones externas.
     \item \textbf{Creación de proyecto:} Pantalla que permite a directores y organizaciones externas crear un nuevo proyecto en la plataforma.
     \item \textbf{Edición de proyecto:} Pantalla que permite a directores y organizaciones externas editar un proyecto existente.
-    \item \textbf{Búsqueda de proyectos:} Pantalla que permite a los usuarios buscar proyectos en la plataforma. Los filtros de búsqueda dependen del rol del usuario.
-    \item \textbf{Visualización de proyecto:} Pantalla que permite a los usuarios visualizar los detalles de un proyecto. Los elementos visibles dependen del rol del usuario.
-    \item \textbf{Configuración de proyecto:} Pantalla que permite a directores y organizaciones externas cambiar el estado de un proyecto, modificar los participantes o aceptar/rechazar postulaciones.
+    \item \textbf{Búsqueda de proyectos:} Pantalla que permite a los usuarios buscar proyectos en la plataforma. Los filtros de búsqueda
+            dependen del rol del usuario.
+    \item \textbf{Visualización de proyecto:} Pantalla que permite a los usuarios visualizar los detalles de un proyecto. Los elementos
+            visibles dependen del rol del usuario.
+    \item \textbf{Configuración de proyecto:} Pantalla que permite a directores y organizaciones externas cambiar el estado de un proyecto,
+            modificar los participantes o aceptar/rechazar postulaciones.
     \item \textbf{Proyecto actual:} Pantalla que muestra la información del proyecto en el que se está participando actualmente. Visible para estudiantes.
     \item \textbf{Historial de proyectos}: Pantalla que muestra el historial de proyectos en los que se ha participado. Visible para estudiantes.
     \item \textbf{Registro de horas:} Pantalla que permite a los estudiantes registrar las horas trabajadas en un proyecto, incluyendo la carga de evidencias.
     \item \textbf{Motivaciones:} Pantalla que muestra las motivaciones disponibles para los usuarios.
     \item \textbf{Proyectos pendientes de aprobación:} Pantalla que muestra los proyectos que están en espera de ser aprobados. Visible para directores.
-    \item \textbf{Organizaciones externas pendientes de aprobación:} Pantalla que muestra las organizaciones externas que están en espera de ser aprobadas. Visible para directores.
+    \item \textbf{Organizaciones externas pendientes de aprobación:} Pantalla que muestra las organizaciones externas que están en espera de
+            ser aprobadas. Visible para directores.
 \end{itemize}
 
 \subsubsection{Definición de tema}
@@ -488,7 +527,8 @@ Utilizando la característica de personalización de temas de Material UI, se de
 \begin{itemize}
     \item \textbf{Paleta de colores:} Se definieron colores primarios, secundarios, de fondo, de texto, error, información, éxito, entre otros.
     \item \textbf{Tipografía:} Se definieron las fuentes (Roboto Mono y Raleway), tamaños, pesos y estilos.
-    \item \textbf{\textit{Breakpoints}:} Se definieron los puntos de quiebre para \textit{desktop}, \textit{tablet} y \textit{mobile} para el diseño \textit{responsive}.
+    \item \textbf{\textit{Breakpoints}:} Se definieron los puntos de quiebre para \textit{desktop}, \textit{tablet} y \textit{mobile}
+            para el diseño \textit{responsive}.
 \end{itemize}
 
 \subsubsection{Rutas y navegación}
@@ -514,11 +554,30 @@ la renovación de tokens de autenticación.
 \subsubsection{Consumo de la API}
 Cada uno de los módulos de la API fue integrado al \textit{Frontend} bajo dos formas. Para cada módulo se crearon:
 \begin{itemize}
-    \item \textbf{Servicios:} Contienen funciones puras (las llamadas realizadas con Axios), \textit{hooks} de TanStack Query (envuelven las funciones puras) e invalidaciones (para forzar resincronizaciones) y utilidades relacionadas a cada módulo.
-    \item \textbf{\textit{Hooks} personalizados:} Contienen y llaman a los servicios, por lo que contienen los datos retornados por Axios y los estados de las peticiones entregados por TanStack Query. Estos \textit{hooks} son los que se utilizan dentro de los componentes para consumir la API.
+    \item \textbf{Servicios:} Contienen funciones puras (las llamadas realizadas con Axios), \textit{hooks} de TanStack Query
+            (envuelven las funciones puras) e invalidaciones (para forzar resincronizaciones) y utilidades relacionadas a cada módulo.
+    \item \textbf{\textit{Hooks} personalizados:} Contienen y llaman a los servicios, por lo que contienen los datos retornados por Axios
+            y los estados de las peticiones entregados por TanStack Query. Estos \textit{hooks} son los que se utilizan dentro de los
+            componentes para consumir la API.
 \end{itemize}
 
 \subsubsection{Gestión de estado global}
-El único estado global que se maneja en la plataforma es la autenticación del usuario. Esto encapsula información relevante de una sesión, como si el usuario se encuentra autenticado, rol, nombre, 
-foto de perfil, entre otros. Ligado a esto, se crearon dos \textit{hooks}. El primero para la información de autenticación del usuario, y el segundo para la validación de permisos de acceso a rutas
-o elementos basados en el rol del usuario. 
+El único estado global que se maneja en la plataforma es la autenticación del usuario. Esto encapsula información relevante de una
+sesión, como si el usuario se encuentra autenticado, rol, nombre, foto de perfil, entre otros. Ligado a esto, se crearon dos
+\textit{hooks}. El primero para la información de autenticación del usuario, y el segundo para la validación de permisos de acceso
+a rutas o elementos basados en el rol del usuario. 
+
+\section{Fase 4: Pruebas de funcionalidad y usabilidad}
+La cuarta fase se centró en la realización de pruebas de funcionalidad para el \textit{Backend} y pruebas de usabilidad 
+para el \textit{Frontend}.
+
+El objetivo de esta fase es garantizar que la plataforma web es capaz de realizar todas las funcionalidades definidas en la fase 1
+para cada módulo, así como garantizar que la interfaz de usuario ofrece el acceso a dichas funcionalidades de manera correcta
+y alineada con los diseños de interfaz utilizada.
+
+\subsubsection{Backend}
+Para el \textit{Backend} se busca garantizar que la API es capaz de brindar todas las funcionalidades definidas en la fase 1 para cada
+módulo. Esto incluye que cada uno de los \textit{endpoints} definidos en la fase 1 funcione correctamente, aceptando y retornando los
+datos esperados, manejo correcto de la autorización basada en roles, así como el manejo de errores.
+
+
