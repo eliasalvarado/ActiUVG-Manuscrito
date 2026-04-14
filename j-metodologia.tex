@@ -119,6 +119,7 @@ enumerados (ENUMs) para los roles de los usuarios y estados de proyectos, postul
     \item \textbf{Projects:} Almacena los proyectos disponibles en la plataforma. Incluyendo información como título, descripción,
             fechas, estado, requisitos, entre otros.
     \item \textbf{ProjectCareers:} Tabla intermedia que permite vincular proyectos con carreras.
+    \item \textbf{Tags:} Almacena las etiquetas disponibles para categorizar proyectos.
     \item \textbf{ProjectTags:} Tabla intermedia que permite vincular etiquetas con proyectos.
     \item \textbf{Applications:} Almacena las postulaciones de los estudiantes a proyectos específicos, incluyendo el estado de
             la aplicación.
@@ -143,6 +144,7 @@ enumerados (ENUMs) para los roles de los usuarios y estados de proyectos, postul
     \item Un estudiante puede registrar múltiples transacciones de horas en distintos proyectos.
     \item Un proyecto puede tener múltiples registros de horas asociados.
     \item Un usuario puede subir múltiples archivos.
+    \item Un proyecto puede tener múltiples \textit{tags} asociados, y una \textit{tag} puede estar asociada a múltiples proyectos.
     \item Un proyecto puede tener múltiples archivos asociados como recursos.
     \item Un registro de horas puede tener múltiples archivos asociados como evidencias.
     \item Un usuario puede tener múltiples tokens de autenticación, verificación o recuperación asociados.
@@ -387,15 +389,20 @@ lo cual las horas quedarán en estado \textit{rejected} de manera permanente.
 
 \subsubsection{Manejo de archivos}
 Para el módulo de Archivos, se utilizó el SDK de AWS S3 para poder realizar operaciones de carga, consulta y eliminación de archivos.
-Dentro de la instancia de S3 se creó un \textit{bucket} con tres directorios: \textit{profile} para almacenar las fotografías de perfil
-de los usuarios, \textit{resource} para almacenar los archivos relacionados a los proyectos y \textit{evidence} para almacenar los
-archivos relacionados al reporte de horas trabajadas por los estudiantes. Los directorios de \textit{resource} y \textit{evidence} se
-organizan internamente con subdirectorios por proyecto o usuario; además, estos directorios son de acceso privado. Por lo que para
-consultar o descargar un archivo, se genera un \textit{pre-signed URL} con una duración limitada, que permite acceder al archivo de
-manera segura sin exponer el acceso directo a S3. Cada vez que se realiza la carga de un archivo, el primer paso es validar que el
-archivo cumpla reglas de tamaño máximo, extensiones, entre otras validaciones. Luego, el archivo se carga a S3 en su respectivo
-directorio, esta acción retorna un nombre único conocido como \textit{key}. Esta \textit{key}, junto con otra información relevante,
-se almacena en la base de datos con sus respectivas relaciones con usuarios, proyectos u horas, dependiendo del caso.
+Dentro de la instancia de S3 se creó un \textit{bucket} con cuatro directorios: \textit{profilepic} para almacenar las fotografías de perfil
+de los usuarios, \textit{resource} para almacenar los archivos relacionados a los proyectos, \textit{evidence} para almacenar los
+archivos relacionados al reporte de horas trabajadas por los estudiantes y \textit{projectImage} para almacenar las imágenes colocadas
+en los editores de texto enriquesidos, los cuales forman parte de la descripción, justificación y requerimientos de un proyecto.
+Los directorios de \textit{resource} y \textit{evidence} se organizan internamente con subdirectorios por proyecto o usuario; 
+además, estos directorios son de acceso privado. Por lo que para consultar o descargar un archivo, se genera un 
+\textit{pre-signed URL} con una duración limitada, que permite acceder al archivo de manera segura sin exponer el acceso 
+directo a S3. Por otro lado, el directorio de \textit{profilepic} y \textit{projectImage} son de acceso público, esto debido a que
+estos archivos necesitan ser accedidos de manera frecuente para la visualización de perfiles y proyectos, respectivamente, y su contenido
+es de acceso público por naturaleza.
+Cada vez que se realiza la carga de un archivo, el primer paso es validar que el archivo cumpla reglas de tamaño 
+máximo, extensiones, entre otras validaciones. Luego, el archivo se carga a S3 en su respectivo directorio, esta acción retorna 
+un nombre único conocido como \textit{key}. Esta \textit{key}, junto con otra información relevante, se almacena en la base de 
+datos con sus respectivas relaciones con usuarios, proyectos u horas, dependiendo del caso.
 
 \section{Fase 3: Implementación del \textit{Frontend}}
 
@@ -502,6 +509,7 @@ Las pantallas, previamente diseñadas, necesarias para la plataforma son las sig
             electrónico después de registrarse.
     \item \textbf{Restablecimiento de contraseña:} Pantalla que permite a los usuarios solicitar un restablecimiento de contraseña.
     \item \textbf{Perfil:} Pantalla que muestra la información de un usuario.
+    \item \textbf{Motivaciones:} Pantalla que muestra las motivaciones disponibles para los usuarios.
     \item \textbf{Edición de perfil:} Pantalla que permite a los usuarios editar su información de perfil.
     \item \textbf{Cambio de contraseña:} Pantalla que permite a los usuarios cambiar su contraseña.
     \item \textbf{Proyectos propios:} Pantalla que muestra los proyectos creados por el usuario. Visible para directores y organizaciones externas.
@@ -516,7 +524,7 @@ Las pantallas, previamente diseñadas, necesarias para la plataforma son las sig
     \item \textbf{Proyecto actual:} Pantalla que muestra la información del proyecto en el que se está participando actualmente. Visible para estudiantes.
     \item \textbf{Historial de proyectos}: Pantalla que muestra el historial de proyectos en los que se ha participado. Visible para estudiantes.
     \item \textbf{Registro de horas:} Pantalla que permite a los estudiantes registrar las horas trabajadas en un proyecto, incluyendo la carga de evidencias.
-    \item \textbf{Motivaciones:} Pantalla que muestra las motivaciones disponibles para los usuarios.
+    \item \textbf{Horas pendientes de aprobación:} Pantalla que muestra las horas registradas por los estudiantes que están en espera de ser aprobadas. Visible para directores y organizaciones externas.
     \item \textbf{Proyectos pendientes de aprobación:} Pantalla que muestra los proyectos que están en espera de ser aprobados. Visible para directores.
     \item \textbf{Organizaciones externas pendientes de aprobación:} Pantalla que muestra las organizaciones externas que están en espera de
             ser aprobadas. Visible para directores.
