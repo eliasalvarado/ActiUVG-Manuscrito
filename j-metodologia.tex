@@ -89,7 +89,7 @@ Con el fin de garantizar integridad, seguridad y escalabilidad de los datos, se 
 base de datos relacional.
 La Figura \ref{fig:ERdb} muestra el diagrama entidad-relación de la base de datos.
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{assets/ERdb.png}
     \caption{Diagrama Entidad-Relación de la Base de Datos}
@@ -177,7 +177,6 @@ incluyendo consulta de perfiles, actualización de datos, cambio de contraseña 
     \item \texttt{GET /users/}: Listar estudiantes.
     \item \texttt{GET /users/me}: Obtener perfil propio.
     \item \texttt{GET /users/:id/profile}: Obtener perfil público de un usuario.
-    \item \texttt{GET /users/:userId}: Obtener usuario por ID (administrador).
     \item \texttt{PUT /users/:id}: Actualizar información de usuario.
     \item \texttt{PUT /users/:id/change-password}: Cambiar contraseña.
     \item \texttt{DELETE /users/:id}: Eliminar usuario.
@@ -193,10 +192,12 @@ aprobación y eliminación de proyectos.
     \item \texttt{GET /projects}: Listar proyectos con filtros.
     \item \texttt{GET /projects/my-projects}: Listar proyectos propios.
     \item \texttt{GET /projects/pending-approvals}: Listar proyectos pendientes de aprobación o rechazo.
+    \item \texttt{POST /projects/:projectId/approve}: Aprobar o rechazar proyecto.
     \item \texttt{GET /projects/:projectId}: Obtener proyecto por ID.
     \item \texttt{POST /projects}: Crear proyecto.
     \item \texttt{PUT /projects/:projectId}: Actualizar proyecto.
-    \item \texttt{POST /projects/:projectId/approve}: Aprobar o rechazar proyecto.
+    \item \texttt{POST /projects/:projectId/resources}: Agregar recursos.
+    \item \texttt{DELETE /projects/:projectId/resources/:fileId}: Eliminar recurso específico.
     \item \texttt{PATCH /projects/:projectId/status}: Cambiar estado del proyecto.
     \item \texttt{DELETE /projects/:projectId}: Eliminar proyecto.
 \end{itemize}
@@ -208,6 +209,7 @@ a proyectos y la administración de participantes.
     \item \texttt{POST /applications}: Aplicar a un proyecto.
     \item \texttt{GET /applications/completed}: Obtener historial de proyectos finalizados.
     \item \texttt{GET /applications/project/:projectId}: Obtener aplicaciones de un proyecto.
+    \item \texttt{GET /applications/my-current-project}: Obtener proyecto actual en el que participa el estudiante.
     \item \texttt{GET /applications/project/:projectId/participants}: Obtener participantes aceptados de un proyecto.
     \item \texttt{PATCH /applications/:applicationId/status}: Aprobar o rechazar aplicación.
     \item \texttt{PATCH /applications/project/:projectId/leave}: Abandonar proyecto.
@@ -234,6 +236,7 @@ de la plataforma. Esto incluye fotos de perfil, recursos de proyectos y evidenci
 \begin{itemize}
     \item \texttt{GET /files/:id/download}: Descargar archivo.
     \item \texttt{GET /files/:id/preview}: Previsualizar archivo.
+    \item \texttt{POST /files/editor/upload-temp}: Subir archivo temporal para el editor de texto enriquecido.
 \end{itemize}
 
 \subsubsection{Otros}
@@ -583,9 +586,29 @@ El objetivo de esta fase es garantizar que la plataforma web es capaz de realiza
 para cada módulo, así como garantizar que la interfaz de usuario ofrece el acceso a dichas funcionalidades de manera correcta
 y alineada con los diseños de interfaz utilizada.
 
-\subsubsection{Backend}
+Para llevar a cabo estas pruebas, el primer paso fue desplegar la plataforma en un entorno de pruebas local, utilizando Docker para
+orquestar la ejecución de los servicios necesarios, como el \textit{Backend}, la base de datos (con la estructura definida anteriormente)
+y el \textit{Frontend}.
+Este entorno fue desplegado utilizando variables de entorno del entorno de producción, con el fin que la simulación de las pruebas sean fieles
+a la experiencia final de la plataforma, utilizando servicios de AWS S3 y correo electrónico reales. 
+
+\subsection{Backend}
 Para el \textit{Backend} se busca garantizar que la API es capaz de brindar todas las funcionalidades definidas en la fase 1 para cada
 módulo. Esto incluye que cada uno de los \textit{endpoints} definidos en la fase 1 funcione correctamente, aceptando y retornando los
-datos esperados, manejo correcto de la autorización basada en roles, así como el manejo de errores.
+datos y códigos de respuesta esperados, manejo correcto de la autorización basada en roles, así como el manejo de errores.
+
+Con este fin se creó una colección de Postman con pruebas para cada uno de los \textit{endpoints}, agrupado por los distintos módulos
+que cuenta la plataforma. Permitiendo una ejecución interactiva para la evaluación de distintos escenarios, como casos de éxito, casos
+de error, casos de autorización, entre otros.
+Para el caso especial del manejo de archivos (recursos, evidencias, fotos de perfil e imágenes), el proceso de éxito contempla tanto
+la correcta creación y eliminación de la entidad en la base de datos y en el Bucket S3.
+
+\subsection{Frontend}
+Para el \textit{Frontend} se busca garantizar que la interfaz de usuario es capaz de brindar acceso a todas las funcionalidades que ofrece la
+API, mostrando correctamente las pantallas correspondientes a cada rol según los diseños de interfaz utilizados. 
+
+Con este fin se realizaron pruebas de usabilidad con usuarios finales, donde se les asignaron tareas específicas a cada participante y al finalizar
+la prueba contestaron una pequeña encuesta.
+
 
 
