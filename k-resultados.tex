@@ -1,3 +1,65 @@
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae eleifend ipsum, ut mattis nunc. Pellentesque ac hendrerit lacus. Cras sollicitudin eget sem nec luctus. Vivamus aliquet lorem id elit venenatis pellentesque. Nam id orci iaculis, rutrum ipsum vel, porttitor magna. Etiam molestie vel elit sed suscipit. Proin dui risus, scelerisque porttitor cursus ac, tempor eget turpis. Aliquam ultricies congue ligula ac ornare. Duis id purus eu ex pharetra feugiat. Vivamus ac orci arcu. Nulla id diam quis erat rhoncus hendrerit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed vulputate, metus vel efficitur fringilla, orci ex ultricies augue, sit amet rhoncus ex purus ut massa. Nam pharetra ipsum consequat est blandit, sed commodo nunc scelerisque. Maecenas ut suscipit libero. Sed vel euismod tellus.
+\section{Pruebas de funcionalidad}
+La implementación del \textit{Backend} concluyó con pruebas de funcionalidad a cada uno de los
+\textit{endpoints} que la API ofrece, con el fin de garantizar que cada uno de ellos realizan correctamente
+las operaciones esperadas.
+La colección de Postman ofrece una prueba de éxito para cada uno de los \textit{endpoints}, al ser
+un entorno de pruebas iterativo, se pueden modificar \textit{queries} de los \textit{endpoints} o bien
+los \textit{body} de las peticiones para comprobar manejo de errores, validación y autorización. 
 
-Proin elit tellus, finibus et metus et, vestibulum ullamcorper est. Nulla viverra nisl id libero sodales, a porttitor est congue. Maecenas semper, felis ut rhoncus cursus, leo magna convallis ligula, at vehicula neque quam at ipsum. Integer commodo mattis eros sit amet tristique. Cras eu maximus arcu. Morbi condimentum dignissim enim non hendrerit. Sed molestie erat sit amet porttitor sagittis. Maecenas porttitor tincidunt erat, ac lacinia lacus sodales faucibus. Integer nec laoreet massa. Proin a arcu lorem. Donec at tincidunt arcu, et sodales neque. Morbi rhoncus, ligula porta lobortis faucibus, magna diam aliquet felis, nec ultrices metus turpis et libero. Integer efficitur erat dolor, quis iaculis metus dignissim eu.
+A continuación, se mostrarán resultados obtenidos para algunos de los \textit{endpoints} de la API con distinto
+verbo HTTP:
+\begin{itemize}
+    \item \texttt{POST /auth/register}: Esta solicitud permite registrar a un nuevo usuario en la plataforma.
+        Dentro del \textit{body} se incluyen los datos requeridos para cada tipo de usuario. El resultado esperado
+        para esta prueba es un código de respuesta HTTP 201 con un mensaje de éxito y \textit{data} importante del
+        nuevo usuario. Además, se espera que el usuario reciba un correo electrónico de verificación. 
+            \begin{figure}[H]
+                \centering
+                \begin{minipage}{0.44\textwidth}
+                    \centering
+                    \includegraphics[width=\textwidth]{assets/studentRegister.png}
+                    \subcaption{Registro de Estudiante - Prueba de éxito}
+                \end{minipage}
+                \begin{minipage}{0.44\textwidth}
+                    \centering
+                    \includegraphics[width=\textwidth]{assets/verifyEmail.png}
+                    \subcaption{Correo electrónico para verificación}
+                \end{minipage}
+                \caption{Registro de usuario y correo de verificación}
+                \label{fig:studentRegister}
+            \end{figure}
+    \item \texttt{GET /projects}: Esta solicitud permite obtener una lista de proyectos disponibles en la plataforma. El resultado esperado
+        para esta prueba es un código de respuesta HTTP 200 con el listado de proyectos en la sección de \textit{data}.
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.88\textwidth]{assets/getProjects.png}
+                \caption{Obtención de proyectos - Prueba de éxito}
+                \label{fig:getProjects}
+            \end{figure}
+    \item \texttt{PUT /projects/:projectId}: Esta solicitud permite actualizar la información de un proyecto. El resultado esperado
+        para esta prueba es un código de respuesta HTTP 200 con un mensaje de éxito y la información actualizada del proyecto en la sección de \textit{data}.
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.88\textwidth]{assets/updateProject.png}
+                \caption{Actualización de proyecto - Prueba de éxito}
+                \label{fig:updateProject}
+            \end{figure}
+    \item \texttt{PATCH /projects/:projectId/status}: Esta solicitud permite actualizar el estado de un proyecto. El resultado esperado
+        para esta prueba es un código de respuesta HTTP 200 con un mensaje de éxito y la información actualizada del proyecto en la sección de \textit{data}.
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.88\textwidth]{assets/updateProjectStatus.png}
+                \caption{Actualización de estado de proyecto - Prueba de éxito}
+                \label{fig:updateProjectStatus}
+            \end{figure}
+    \item \texttt{DELETE /projects/:projectId/resources/:fileId}: Esta solicitud permite eliminar un recurso asociado a un proyecto. El resultado esperado
+        para esta prueba es un código de respuesta HTTP 200 con un mensaje de éxito.
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.88\textwidth]{assets/deleteResource.png}
+                \caption{Eliminación de recurso - Prueba de éxito}
+                \label{fig:deleteResource}
+            \end{figure}
+\end{itemize}
+
+\section{Pruebas de usabilidad}
