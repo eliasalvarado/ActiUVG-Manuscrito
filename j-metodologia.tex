@@ -7,7 +7,7 @@ los distintos productos finales de cada fase.
 
 \section{Fase 1: Recolección de Requerimientos}
 La primera fase se centró en la extracción de requerimientos técnicos y funcionales a partir del
-análisis de los diseños de Interfaz de Usuario previamente elaborador por Andrés Rodríguez en
+análisis de los diseños de Interfaz de Usuario previamente elaborados por Andrés Rodríguez en
 \cite{Rodríguez_Dis_2023}.
 
 Esta fase tiene como objetivo principal identificar y documentar las reglas de negocio, flujos de
@@ -78,7 +78,13 @@ De esta manera, se definieron los roles y permisos por usuario, resultando en la
     \end{itemize}
     \item \textbf{Directores:}
     \begin{itemize}
-        \item Lo mismo que organizaciones externas.
+        \item Creación, edición y eliminación de proyectos con archivos (recursos) ligados.
+        \item Iniciar, finalizar y cancelar proyectos propios.
+        \item Visualización de postulaciones a proyectos propios.
+        \item Aprobación de postulaciones de proyectos propios.
+        \item Visualización de participantes de proyectos propios.
+        \item Eliminar participantes de proyectos propios.
+        \item Aprobación de horas trabajadas por estudiantes en proyectos propios.
         \item Aprobación de proyectos enviados por organizaciones externas.
         \item Aprobación de cuentas de organizaciones externas.
     \end{itemize}
@@ -261,10 +267,10 @@ los usuarios. Esto incluye la gestión de usuarios, proyectos, postulaciones, ho
 \subsubsection{Entorno de ejecución y \textit{Framework}}
 Se seleccionó \textbf{Node.js} como entorno de ejecución, utilizando el \textit{framework} \textbf{Express}.
 Node.js ofrece una ejecución de código rápido, una de sus altas ventajas en un entorno orientado al
-\textit{Backend} es que tiene un modelo I/O no bloqueante, lo cuál le permite manejar gran cantidad de solicitudes
+\textit{Backend} es que tiene un modelo I/O no bloqueante, lo cual le permite manejar gran cantidad de solicitudes
 simultáneas de manera eficiente. Gracias a esto, el entorno Node.js permite que la API opere de manera 
 asíncrona y facilitando el manejo de solicitudes simultáneas sin afectar el rendimiento.
-Express, por su parte, proporciona una estructura flexible y minimalista, lo cuál agiliza el desarrollo y facilita 
+Express, por su parte, proporciona una estructura flexible y minimalista, lo cual agiliza el desarrollo y facilita 
 aspectos de mantenibilidad y escalabilidad.
 
 \subsubsection{Compilador}
@@ -374,7 +380,7 @@ estudiantes pueden ver y llegar a postularse. Una vez el dueño del proyecto ini
 sea cancelado, el dueño del proyecto lo marca como cancelado, pasando a estado \textit{cancelled}, lo que permite a los estudiantes indicar
 las horas trabajadas, si aplica.
 
-\subsubsection{Ciclo de vida de partipación en proyectos de extensión}
+\subsubsection{Ciclo de vida de participación en proyectos de extensión}
 Para el módulo de Postulaciones, se implementó un ciclo de vida completo para estas, en el que se incluyen los estados: \textit{pending},
 \textit{accepted}, \textit{rejected} y \textit{finalized}. Al momento en el que un estudiante se postula para participar en un proyecto,
 la postulación se encuentra en estado \textit{pending} hasta que el dueño del proyecto la aprueba o rechaza, momento en el que la
@@ -395,7 +401,7 @@ Para el módulo de Archivos, se utilizó el SDK de AWS S3 para poder realizar op
 Dentro de la instancia de S3 se creó un \textit{bucket} con cuatro directorios: \textit{profilepic} para almacenar las fotografías de perfil
 de los usuarios, \textit{resource} para almacenar los archivos relacionados a los proyectos, \textit{evidence} para almacenar los
 archivos relacionados al reporte de horas trabajadas por los estudiantes y \textit{projectImage} para almacenar las imágenes colocadas
-en los editores de texto enriquesidos, los cuales forman parte de la descripción, justificación y requerimientos de un proyecto.
+en los editores de texto enriquecidos, los cuales forman parte de la descripción, justificación y requerimientos de un proyecto.
 Los directorios de \textit{resource} y \textit{evidence} se organizan internamente con subdirectorios por proyecto o usuario; 
 además, estos directorios son de acceso privado. Por lo que para consultar o descargar un archivo, se genera un 
 \textit{pre-signed URL} con una duración limitada, que permite acceder al archivo de manera segura sin exponer el acceso 
@@ -423,7 +429,7 @@ Se seleccionó \textbf{Vite} como entorno de construcción, utilizando la librer
 desarrollo rápido, optimizado y con configuraciones ideales para un proyecto moderno de \textit{Frontend}. Gracias a su
 \gls{hmr} permite un desarrollo eficiente y fluido. React, por su parte, es una librería que facilita la construcción de
 componentes reutilizables, gestionando el estado de la aplicación de manera eficiente y permitiendo basar una arquitectura
-de reutilizable y mantenible.
+reutilizable y mantenible.
 
 \subsubsection{Compilador}
 Al igual que en el \textit{Backend}, se seleccionó \textbf{TypeScript} para introducir tipado estático. Aumentando la
@@ -462,7 +468,7 @@ librerías de validación como Zod.
 
 \subsection{Arquitectura}
 La arquitectura seleccionada fue la arquitectura \textit{Single Page Application} (SPA, por sus siglas en inglés)
-utilizando la estrategia de renderizado web \gls{csr}. Esto debido a que debido a la naturaleza de la plataforma,
+utilizando la estrategia de renderizado web \gls{csr}. Esto debido a la naturaleza de la plataforma,
 se requiere que el usuario pueda interactuar con la aplicación de manera fluida, delegando la carga del renderizado
 al cliente para evitar recargas completas de la página.
 
@@ -497,7 +503,7 @@ interfaz de usuario utilizando los prototipos de interfaz de usuario previamente
 
 Luego de varias iteraciones, pruebas, correcciones y refactorizaciones, se logró desarrollar una interfaz de usuario funcional,
 \textit{responsive} y alineada con los diseños de interfaz, que permite a los usuarios interactuar con la plataforma de una manera
-fuida y eficiente. Utilizando correctamente la API desarrollada en la fase anterior para lograr gestión de usuarios, proyectos de
+fluida y eficiente. Utilizando correctamente la API desarrollada en la fase anterior para lograr gestión de usuarios, proyectos de
 extensión, postulaciones, horas y archivos por parte de los usuarios desde la plataforma.
 
 \subsubsection{Pantallas}
@@ -552,13 +558,13 @@ Para la construcción de componentes se utilizó principalmente los componentes 
 fueron ordenados en subdirectorios dentro del directorio de \textit{Components} con el fin de mantener una organización clara.
 
 \subsubsection{Formularios y validaciones}
-Para manejar el estado de los formularios, TanStack Form ofrece un hook llamado \texttt{useAppForm}, el cuál permite el uso de componentes previamente
+Para manejar el estado de los formularios, TanStack Form ofrece un hook llamado \texttt{useAppForm}, el cual permite el uso de componentes previamente
 implementados como parte de un formulario. Logrando una fácil gestión del estado del formulario en conjunto con una integración de Zod para validación
 síncrona de los datos de entrada.
 
 \subsubsection{Integración de la API}
 Para la integración de la API se utilizó TansStack Query y Axios. TanStack Query se encarga del ciclo de vida de las peticiones, mientras que Axios 
-se encarga de realizar dichas peticiones a la API. Axios fue configurado con dos intercepotores, uno para incluir el token de autenticación en las
+se encarga de realizar dichas peticiones a la API. Axios fue configurado con dos interceptores, uno para incluir el token de autenticación en las
 solicitudes y otro para manejar errores globales. Una configuración importante fue habilitar el uso de \textit{cookies} en las solicitudes para permitir 
 la renovación de tokens de autenticación. 
 
