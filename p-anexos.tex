@@ -1,3 +1,148 @@
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae eleifend ipsum, ut mattis nunc. Pellentesque ac hendrerit lacus. Cras sollicitudin eget sem nec luctus. Vivamus aliquet lorem id elit venenatis pellentesque. Nam id orci iaculis, rutrum ipsum vel, porttitor magna. Etiam molestie vel elit sed suscipit. Proin dui risus, scelerisque porttitor cursus ac, tempor eget turpis. Aliquam ultricies congue ligula ac ornare. Duis id purus eu ex pharetra feugiat. Vivamus ac orci arcu. Nulla id diam quis erat rhoncus hendrerit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed vulputate, metus vel efficitur fringilla, orci ex ultricies augue, sit amet rhoncus ex purus ut massa. Nam pharetra ipsum consequat est blandit, sed commodo nunc scelerisque. Maecenas ut suscipit libero. Sed vel euismod tellus.
+\section{Lista de endpoints}
+\label{anexo:listaEnpoints}
 
-Proin elit tellus, finibus et metus et, vestibulum ullamcorper est. Nulla viverra nisl id libero sodales, a porttitor est congue. Maecenas semper, felis ut rhoncus cursus, leo magna convallis ligula, at vehicula neque quam at ipsum. Integer commodo mattis eros sit amet tristique. Cras eu maximus arcu. Morbi condimentum dignissim enim non hendrerit. Sed molestie erat sit amet porttitor sagittis. Maecenas porttitor tincidunt erat, ac lacinia lacus sodales faucibus. Integer nec laoreet massa. Proin a arcu lorem. Donec at tincidunt arcu, et sodales neque. Morbi rhoncus, ligula porta lobortis faucibus, magna diam aliquet felis, nec ultrices metus turpis et libero. Integer efficitur erat dolor, quis iaculis metus dignissim eu.
+Las siguientes tablas presentan los \textit{endpoints} implementados en el \textit{Backend}.
+
+\small
+\renewcommand{\arraystretch}{1.15}
+
+\newcommand{\epmethod}[1]{\texttt{#1}}
+\newcommand{\eproute}[1]{\path{#1}}
+
+\subsection*{Autenticación}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{1.8cm}|p{4.4cm}|p{7.6cm}|}
+		\hline
+		\textbf{Método} &   \textbf{Ruta}                   &   \textbf{Función}                                                    \\ \hline
+		\epmethod{POST} &   \eproute{/auth/register}        &   Registrar un nuevo usuario en la plataforma.                        \\ \hline
+		\epmethod{POST} &   \eproute{/auth/login}           &   Autenticar al usuario e iniciar sesión.                             \\ \hline
+		\epmethod{POST} &   \eproute{/auth/refresh}         &   Renovar el \textit{access token} usando el \textit{refresh token}.  \\ \hline
+		\epmethod{POST} &   \eproute{/auth/verify-email}    &   Confirmar la verificación del correo electrónico.                   \\ \hline
+		\epmethod{POST} &   \eproute{/auth/forgot-password} &   Solicitar el envío de token para restablecer contraseña.            \\ \hline
+		\epmethod{POST} &   \eproute{/auth/reset-password}  &   Restablecer la contraseña usando el token de recuperación.          \\ \hline
+		\epmethod{POST} &   \eproute{/auth/logout}          &   Cerrar una sesión específica del usuario.                           \\ \hline
+		\epmethod{POST} &   \eproute{/auth/logout-all}      &   Cerrar todas las sesiones activas del usuario.                      \\ \hline
+		\epmethod{GET}  &   \eproute{/auth/sessions}        &   Listar las sesiones activas del usuario autenticado.                \\ \hline
+	\end{tabular}
+	\caption[Endpoints de Autenticación]{Endpoints del módulo de autenticación.}
+	\label{tab:endpointsBackend}
+\end{table}
+
+\subsection*{Usuarios}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{1.8cm}|p{4.4cm}|p{7.6cm}|}
+		\hline
+		\textbf{Método}     & \textbf{Ruta}                         & \textbf{Función}                                          \\ \hline
+		\epmethod{GET}      & \eproute{/users/}                     & Listar estudiantes disponibles en la plataforma.          \\ \hline
+		\epmethod{GET}      & \eproute{/users/me}                   & Obtener la información del perfil del usuario autenticado.\\ \hline
+		\epmethod{GET}      & \eproute{/users/:id/profile}          & Obtener el perfil público de un usuario por su ID.        \\ \hline
+		\epmethod{PUT}      & \eproute{/users/:id}                  & Actualizar la información de un usuario.                  \\ \hline
+		\epmethod{PUT}      & \eproute{/users/:id/change-password}  & Cambiar la contraseña del usuario.                        \\ \hline
+		\epmethod{DELETE}   & \eproute{/users/:id}                  & Eliminar la cuenta de usuario.                            \\ \hline
+		\epmethod{PUT}      & \eproute{/users/:id/profile-picture}  & Actualizar la fotografía de perfil del usuario.           \\ \hline
+		\epmethod{GET}      & \eproute{/pending-organizations}      & Listar organizaciones externas pendientes de aprobación.  \\ \hline
+		\epmethod{PATCH}    & \eproute{/users/:id/approve}          & Aprobar o rechazar cuentas de organizaciones externas.    \\ \hline
+	\end{tabular}
+	\caption[Endpoints de Usuarios]{Endpoints del módulo de usuarios.}
+\end{table}
+
+\subsection*{Proyectos}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{1.8cm}|p{4.4cm}|p{7.6cm}|}
+		\hline
+		\textbf{Método}     & \textbf{Ruta}                                     & \textbf{Función}                                      \\ \hline
+		\epmethod{GET}      & \eproute{/projects}                               & Listar proyectos aplicando filtros de búsqueda.       \\ \hline
+		\epmethod{GET}      & \eproute{/projects/my-projects}                   & Listar proyectos creados por el usuario autenticado.  \\ \hline
+		\epmethod{GET}      & \eproute{/projects/pending-approvals}             & Listar proyectos pendientes de aprobación o rechazo.  \\ \hline
+		\epmethod{POST}     & \eproute{/projects/:projectId/approve}            & Aprobar o rechazar un proyecto específico.            \\ \hline
+		\epmethod{GET}      & \eproute{/projects/:projectId}                    & Obtener el detalle de un proyecto por ID.             \\ \hline
+		\epmethod{POST}     & \eproute{/projects}                               & Crear un nuevo proyecto.                              \\ \hline
+		\epmethod{PUT}      & \eproute{/projects/:projectId}                    & Actualizar la información de un proyecto existente.   \\ \hline
+		\epmethod{POST}     & \eproute{/projects/:projectId/resources}          & Agregar archivos de recurso a un proyecto.            \\ \hline
+		\epmethod{DELETE}   & \eproute{/projects/:projectId/resources/:fileId}  & Eliminar un recurso específico de un proyecto.        \\ \hline
+		\epmethod{PATCH}    & \eproute{/projects/:projectId/status}             & Cambiar el estado de un proyecto.                     \\ \hline
+		\epmethod{DELETE}   & \eproute{/projects/:projectId}                    & Eliminar un proyecto.                                 \\ \hline
+	\end{tabular}
+	\caption[Endpoints de Proyectos]{Endpoints del módulo de proyectos.}
+\end{table}
+
+\subsection*{Aplicaciones}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{1.8cm}|p{4.4cm}|p{7.6cm}|}
+		\hline
+		\textbf{Método}     & \textbf{Ruta}                                                     & \textbf{Función}                                              \\ \hline
+		\epmethod{POST}     & \eproute{/applications}                                           & Registrar una postulación de estudiante a un proyecto.        \\ \hline
+		\epmethod{GET}      & \eproute{/applications/completed}                                 & Obtener el historial de proyectos finalizados del estudiante. \\ \hline
+		\epmethod{GET}      & \eproute{/applications/project/:projectId}                        & Obtener las postulaciones de un proyecto específico.          \\ \hline
+		\epmethod{GET}      & \eproute{/applications/my-current-project}                        & Obtener el proyecto actual del estudiante autenticado.        \\ \hline
+		\epmethod{GET}      & \eproute{/applications/project/:projectId/participants}           & Listar participantes aceptados en un proyecto.                \\ \hline
+		\epmethod{PATCH}    & \eproute{/applications/:applicationId/status}                     & Aprobar o rechazar una postulación.                           \\ \hline
+		\epmethod{PATCH}    & \eproute{/applications/project/:projectId/leave}                  & Permitir que un estudiante abandone un proyecto.              \\ \hline
+		\epmethod{PATCH}    & \eproute{/applications/project/:projectId/participant/:studentId} & Eliminar a un participante de un proyecto.                    \\ \hline
+	\end{tabular}
+	\caption[Endpoints de Aplicaciones]{Endpoints del módulo de aplicaciones.}
+\end{table}
+
+\subsection*{Horas}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{1.8cm}|p{4.4cm}|p{7.6cm}|}
+		\hline
+		\textbf{Método}     & \textbf{Ruta}                                 & \textbf{Función}                                              \\ \hline
+		\epmethod{POST}     & \eproute{/hours}                              & Registrar horas trabajadas con sus evidencias.                \\ \hline
+		\epmethod{GET}      & \eproute{/hours/total}                        & Obtener el total de horas aprobadas del estudiante.           \\ \hline
+		\epmethod{GET}      & \eproute{/hours/:hourId}                      & Obtener el detalle de un registro de horas.                   \\ \hline
+		\epmethod{GET}      & \eproute{/hours/project/:projectId/pending}   & Listar horas pendientes de aprobación en un proyecto.         \\ \hline
+		\epmethod{PATCH}    & \eproute{/hours/:hourId/status}               & Aprobar o rechazar un registro de horas.                      \\ \hline
+		\epmethod{POST}     & \eproute{/hours/:hourId/evidences}            & Agregar evidencias a un registro de horas.                    \\ \hline
+		\epmethod{DELETE}   & \eproute{/hours/:hourId/evidences/:fileId}    & Eliminar una evidencia específica de un registro de horas.    \\ \hline
+		\epmethod{PATCH}    & \eproute{/hours/:hourId/resubmit}             & Reenviar horas rechazadas para nueva revisión.                \\ \hline
+	\end{tabular}
+	\caption[Endpoints de Horas]{Endpoints del módulo de horas.}
+\end{table}
+
+\subsection*{Archivos}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{1.8cm}|p{4.4cm}|p{7.6cm}|}
+		\hline
+		\textbf{Método} & \textbf{Ruta}                         & \textbf{Función}                                                  \\ \hline
+		\epmethod{GET}  & \eproute{/files/:id/download}         & Descargar un archivo almacenado en la plataforma.                 \\ \hline
+		\epmethod{GET}  & \eproute{/files/:id/preview}          & Previsualizar un archivo sin descargarlo.                         \\ \hline
+		\epmethod{POST} & \eproute{/files/editor/upload-temp}   & Subir un archivo temporal para el editor de texto enriquecido.    \\ \hline
+	\end{tabular}
+	\caption[Endpoints de Archivos]{Endpoints del módulo de archivos.}
+\end{table}
+
+\subsection*{Otros}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{1.8cm}|p{4.4cm}|p{7.6cm}|}
+		\hline
+		\textbf{Método} & \textbf{Ruta}         & \textbf{Función}              \\ \hline
+		\epmethod{GET}  & \eproute{/faculties}  & Listar facultades disponibles.\\ \hline
+		\epmethod{GET}  & \eproute{/careers}    & Listar carreras disponibles.  \\ \hline
+		\epmethod{GET}  & \eproute{/campuses}   & Listar campus disponibles.    \\ \hline
+		\epmethod{GET}  & \eproute{/tags}       & Listar etiquetas disponibles. \\ \hline
+	\end{tabular}
+	\caption[Endpoints complementarios]{Endpoints complementarios de consulta general.}
+\end{table}
+
+\normalsize
+
+\section{Código Fuente}
+
+El código referente al \textbf{\textit{Backend}} del proyecto, puede ser obtenido
+a través de:
+\href{https://github.com/csuvg/control-horas-extension-backend.git}{\textbf{ActiUVG - Backend}}
+
+El código referente al \textbf{\textit{Frontend}} del proyecto, puede ser obtenido
+a través de:
+\href{https://github.com/csuvg/control-horas-extension-frontend.git}{\textbf{ActiUVG - Frontend}}
+
+\textbf{Nota:} Por motivos de seguridad, ambos repositorios se encuentran privados,
+en caso de requerir acceso al código fuente, por favor contactar al autor de ambos repositorios.

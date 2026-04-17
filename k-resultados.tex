@@ -4,10 +4,29 @@ La implementación del \textit{Backend} concluyó con pruebas de funcionalidad a
 las operaciones esperadas.
 La colección de Postman ofrece una prueba de éxito para cada uno de los \textit{endpoints}, al ser
 un entorno de pruebas iterativo, se pueden modificar \textit{queries} de los \textit{endpoints} o bien
-los \textit{body} de las peticiones para comprobar manejo de errores, validación y autorización. 
+los \textit{body} de las peticiones para comprobar manejo de errores, validación y autorización.
 
-A continuación, se mostrarán resultados obtenidos para algunos de los \textit{endpoints} de la API con distinto
-verbo HTTP:
+La prueba de funcionalidad para cada verbo HTTP se considera exitosa si la respuesta cumple con lo siguiente:
+\begin{itemize}
+    \item \textbf{GET}: El resultado contiene el código HTTP 200, un mensaje de éxito indicando que se obtuvieron
+        los recursos y la información solicitada correctamente filtrada por los parámetros de la consulta,
+        si es que se incluyen, en la sección de \textit{data}.
+    \item \textbf{POST}: El resultado contiene el código HTTP 201, un mensaje de éxito indicando que el
+        recurso se creó correctamente y un objeto \textit{data} con información importante del nuevo recurso.
+        Además, el recurso debe estar creado en la base de datos con la información correspondiente y que exista en el Bucket S3, si aplica.
+    \item \textbf{PUT}: El resultado contiene el código HTTP 200, un mensaje de éxito indicando que el recurso
+        se actualizó correctamente y un objeto \textit{data} con información importante del recurso actualizado.
+        Además, el recurso debe de estar actualizado en la base de datos con la información correspondiente.
+    \item \textbf{PATCH}: El resultado contiene el código HTTP 200, un mensaje de éxito indicando que el recurso
+        se actualizó correctamente y un objeto \textit{data} con información importante del recurso actualizado.
+        Además, el recurso debe de estar actualizado en la base de datos con la información correspondiente.
+    \item \textbf{DELETE}: El resultado contiene el código HTTP 200, un mensaje de éxito indicando que el recurso
+        se eliminó correctamente. Además, el recurso eliminado se espera que ya no exista en la base de datos
+        y que se elimine del Bucket S3, si aplica.
+\end{itemize}
+
+A continuación, se mostrarán resultados obtenidos para algunos de los \textit{endpoints} de la API, la lista completa de pruebas se encuentra en
+el Anexo \ref{anexo:listaEnpoints}.
 \begin{itemize}
     \item \texttt{POST /auth/register}: Esta solicitud permite registrar a un nuevo usuario en la plataforma.
         Dentro del \textit{body} se incluyen los datos requeridos para cada tipo de usuario. El resultado esperado
