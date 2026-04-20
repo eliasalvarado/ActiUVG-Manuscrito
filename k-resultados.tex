@@ -1,6 +1,6 @@
 \section{Pruebas de funcionalidad}
 La implementación del \textit{Backend} concluyó con pruebas de funcionalidad a cada uno de los
-\textit{endpoints} que la API ofrece, con el fin de garantizar que cada uno de ellos realizan correctamente
+\textit{endpoints} que la API ofrece, con el fin de garantizar que cada uno de ellos realiza correctamente
 las operaciones esperadas.
 La colección de Postman ofrece una prueba de éxito para cada uno de los \textit{endpoints}, al ser
 un entorno de pruebas iterativo, se pueden modificar \textit{queries} de los \textit{endpoints} o bien
@@ -26,7 +26,7 @@ La prueba de funcionalidad para cada verbo HTTP se considera exitosa si la respu
 \end{itemize}
 
 A continuación, se mostrarán resultados obtenidos para algunos de los \textit{endpoints} de la API, la lista completa de pruebas se encuentra en
-el Anexo \ref{anexo:listaEnpoints}.
+el Anexo \ref{anexo:listaendpoints}.
 \begin{itemize}
     \item \texttt{POST /auth/register}: Esta solicitud permite registrar a un nuevo usuario en la plataforma.
         Dentro del \textit{body} se incluyen los datos requeridos para cada tipo de usuario. El resultado esperado
@@ -47,6 +47,14 @@ el Anexo \ref{anexo:listaEnpoints}.
                 \caption{Registro de usuario y correo de verificación}
                 \label{fig:studentRegister}
             \end{figure}
+        Al intentar registrar a un usuario sin alguno de los campos requeridos, se espera que el resultado sea un
+        código de respuesta HTTP 400 con un mensaje de error indicando que faltan campos requeridos.
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.88\textwidth]{assets/registerBadRequest.png}
+                \caption{Registro de usuario con campos faltantes - Prueba de error}
+                \label{fig:registerBadRequest}
+            \end{figure}
     \item \texttt{GET /projects}: Esta solicitud permite obtener una lista de proyectos disponibles en la plataforma. El resultado esperado
         para esta prueba es un código de respuesta HTTP 200 con el listado de proyectos en la sección de \textit{data}.
             \begin{figure}[H]
@@ -54,6 +62,14 @@ el Anexo \ref{anexo:listaEnpoints}.
                 \includegraphics[width=0.88\textwidth]{assets/getProjects.png}
                 \caption{Obtención de proyectos - Prueba de éxito}
                 \label{fig:getProjects}
+            \end{figure}
+        Al no incluir un token de autenticación en la solicitud, se espera que el resultado sea un código de respuesta HTTP 401 con un
+        mensaje de error indicando que el acceso fue denegado.
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.88\textwidth]{assets/getProjectsUnauthorized.png}
+                \caption{Obtención de proyectos sin autenticación - Prueba de error}
+                \label{fig:getProjectsUnauthorized}
             \end{figure}
     \item \texttt{PUT /projects/:projectId}: Esta solicitud permite actualizar la información de un proyecto. El resultado esperado
         para esta prueba es un código de respuesta HTTP 200 con un mensaje de éxito y la información actualizada del proyecto en la sección de \textit{data}.
@@ -78,6 +94,14 @@ el Anexo \ref{anexo:listaEnpoints}.
                 \includegraphics[width=0.88\textwidth]{assets/deleteResource.png}
                 \caption{Eliminación de recurso - Prueba de éxito}
                 \label{fig:deleteResource}
+            \end{figure}
+    \item \texttt{GET /ruta/inexistente}: Esta solicitud busca acceder a una ruta que no existe. El resultado esperado
+        para esta prueba es un código de respuesta HTTP 404 con un mensaje de error que indica que la ruta no fue encontrada.
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.88\textwidth]{assets/notFound.png}
+                \caption{Ruta no encontrada - Prueba de error}
+                \label{fig:notFound}
             \end{figure}
 \end{itemize}
 
