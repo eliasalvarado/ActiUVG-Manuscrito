@@ -614,7 +614,23 @@ Para el \textit{Frontend} se busca garantizar que la interfaz de usuario es capa
 API, mostrando correctamente las pantallas correspondientes a cada rol según los diseños de interfaz utilizados. 
 
 Con este fin se realizaron pruebas de usabilidad con usuarios finales, donde se les asignaron tareas específicas a cada participante y al finalizar
-la prueba contestaron una pequeña encuesta.
+la prueba contestaron una pequeña encuesta que busca recabar información sobre la experiencia que tuvo el usuario utilizando la plataforma y
+verificar que la plataforma brinde usabilidad correcta e intuitiva. Con este fin, la encuesta incluye preguntas demográficas (edad y dispositivo utilizado),
+preguntas para evaluar cada una de las tareas asignadas (si la tarea fue completada, dificultad percibida y tiempo empleado) y se agregaron las preguntas SUS
+para evaluar la usabilidad general de la plataforma.
 
+\section{Fase 5: Despliegue en la nube}
+La quinta y última fase se centró en el despliegue de la plataforma web en la nube.
 
+El objetivo de esta fase es desplegar la plataforma para que esté disponible en Internet y sea accesible para los usuarios finales.
 
+Para llevar a cabo el despliegue, se seleccionó Amazon Web Services como el proveedor de servicios en la nube, debido a su confiabilidad,
+escalabilidad, seguridad y facilidad de configuración. 
+
+\subsection{Configuración de la instancia}
+Específicamente, se utilizó una instancia de EC2 para alojar la plataforma, con Ubuntu como sistema operativo, c7i-flex.large como tipo de instancia
+(2 vCPU, 4GB RAM) para garantizar un rendimiento adecuado.
+Dentro de la instancia se instaló Docker y Docker Compose para orquestar la ejecución de los servicios necesarios (\textit{Backend}, base de datos y \textit{Frontend}).
+
+Además, se configuró un servidor web Nginx para manejar las solicitudes entrantes y redirigirlas a los servicios correspondientes, así como para servir el
+\textit{Frontend} de manera eficiente y manejar correctamente las llamadas a la API.
