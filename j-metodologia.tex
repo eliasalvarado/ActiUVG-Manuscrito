@@ -616,8 +616,17 @@ API, mostrando correctamente las pantallas correspondientes a cada rol según lo
 Con este fin se realizaron pruebas de usabilidad con usuarios finales, donde se les asignaron tareas específicas a cada participante y al finalizar
 la prueba contestaron una pequeña encuesta que busca recabar información sobre la experiencia que tuvo el usuario utilizando la plataforma y
 verificar que la plataforma brinde usabilidad correcta e intuitiva. Con este fin, la encuesta incluye preguntas demográficas (edad y dispositivo utilizado),
-preguntas para evaluar cada una de las tareas asignadas (si la tarea fue completada, dificultad percibida y tiempo empleado) y se agregaron las preguntas SUS
-para evaluar la usabilidad general de la plataforma.
+preguntas para evaluar cada una de las tareas asignadas (si la tarea fue completada, dificultad percibida y tiempo empleado), se agregaron las preguntas SUS
+para evaluar la usabilidad general de la plataforma y finalmente, una pregunta abierta para recabar cualquier comentario/sugerencia que el usuario tenga sobre la plataforma.
+
+Con el fin de garantizar que las tareas asignadas a los usuarios durante las pruebas de usabilidad fueron resueltas correctamente, se realizó una validación de
+cada una de las tareas en el \textit{Backend}. Verificando que los cambios realizados por los usuarios durante las pruebas se hayan reflejado correctamente en la
+Base de Datos y en el Bucket S3, en caso de que aplique.
+
+Dado a que las pruebas de usabilidad se realizaron con usuarios finales reales, se les indicó que sus respuestas serán anónimas y que no se recabará ningún dato personal sensible.
+Además, se les brindó un consentimiento informado para que puedan decidir si desean participar o no en las pruebas de usabilidad, el cuál contiene información relevante de la
+plataforma, el objetivo de las pruebas, la información que se recabará, entre otros aspectos importantes. El consentimiento informado completo se encuentra en el Anexo \ref{anexo:consentimientoinformado}.
+El cuestionario utilizado para las pruebas de usabilidad se encuentra en el Anexo \ref{anexo:encuestausabilidad}.
 
 \section{Fase 5: Despliegue en la nube}
 La quinta y última fase se centró en el despliegue de la plataforma web en la nube.

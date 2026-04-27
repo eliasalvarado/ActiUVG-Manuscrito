@@ -484,13 +484,22 @@ parámetros, cuerpos y autenticación, así como el manejo de las respuestas. So
 Además, permite la creación de colecciones para organizar las solicitudes y la configuración de entornos para poder gestionar variables
 de entorno y saltar de entornos de desarrollo a producción de manera sencilla \cite{postman2025}.
 
-\subsection{\textit{System Usability Scale} (SUS)}
-El Sistema de Escalas de Usabilidad (SUS, por sus siglas en inglés) es un pequeño cuestionario que busca evaluar la usabilidad de
-cualquier sistema. Permite evaluar tres parámetros principales: eficacia, eficiencia y satisfacción. Consta de 10 preguntas predefinidas
-con respuestas en una escala de 5 puntos, donde 1 es "totalmente en desacuerdo" y 5 es "totalmente de acuerdo". El puntaje final se 
-calcula de la siguiente manera \cite{castro2016herramienta}:
+\subsection{ISO 9241-11:2018}
+La norma ISO 9241-11:2018 define la usabilidad como \textit{\guillemetleft{}la medida en que un producto, sistema o servicio puede ser
+utilizado por usuarios específicos para lograr objetivos específicos con efectividad, eficiencia y satisfacción en un contexto de uso
+específico\guillemetright{}} \cite{ISO9241-11}. Por lo tanto, para esta norma, la usabilidad tiene tres componentes esenciales que son:
+eficacia, eficiencia y satisfacción, las cuales permiten evaluar la usabilidad de un sistema, producto de consumo, servicios, etc.
+
+\subsubsection{\textit{System Usability Scale} (SUS)}
+Aliado a la norma ISO 9241-11:2018, el Sistema de Escalas de Usabilidad (SUS, por sus siglas en inglés) es una herramienta de evaluación
+que permite cuantificar la usabilidad percibida de un sistema.
+Consta de 10 preguntas predefinidas con respuestas en una escala de 5 puntos, donde 1 es "totalmente en desacuerdo" y 5 
+es "totalmente de acuerdo". El puntaje final se calcula de la siguiente manera \cite{brooke1996sus}:
 \begin{enumerate}
     \item Sumando las respuestas de los enunciados impares y restando 5.
     \item Sumando las respuestas de los enunciados pares y restando ese valor a 25.
     \item Sumando ambos resultados y multiplicando por 2.5 para obtener un puntaje entre 0 y 100.
 \end{enumerate}
+El puntaje SUS promedio es de 68, un resultado por debajo de este valor indica que el sistema tiene muchas áreas de mejora, mientras que un
+resultado por encima de este valor indica que el sistema es bastante usable, aunque siempre con espacio para mejoras. Un puntaje SUS de 80 o
+más se considera que el sistema es excelente, con una usabilidad sobresaliente \cite{sauro2011sus}.
