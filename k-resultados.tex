@@ -105,4 +105,32 @@ el Anexo \ref{anexo:listaendpoints}.
             \end{figure}
 \end{itemize}
 
+\subsection{Pruebas de estrés}
+
 \section{Pruebas de usabilidad}
+
+\section{Análisis de vulnerabilidades}
+La plataforma web fue sometida a un análisis de vulnerabilidades utilizando la herramienta OWASP ZAP, esperando detectar posibles
+vulnerabilidades de seguridad en la API y en el \textit{Frontend}. Se realizó un escaneo automatizado utilizando la funcionalidad
+de \textit{Spider} y \textit{AJAX Spider}, seguido de un escaneo activo utilizando la funcionalidad de \textit{Active Scan}.
+El resultado del análisis de vulnerabilidades no mostró ninguna alerta de seguridad crítica o alta, lo que indica que la plataforma
+no presenta vulnerabilidades de seguridad significativas; sin embargo, sí mostró algunas alertas de seguridad de nivel medio y bajo,
+las cuales fueron revisadas y mitigadas en la medida de lo posible, como la implementación o eliminación de encabezados HTTP.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.44\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/zapInitial.png}
+        \subcaption{Análisis inicial de vulnerabilidades - OWASP ZAP}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.44\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/zapFinal.png}
+        \subcaption{Análisis final de vulnerabilidades - OWASP ZAP}
+    \end{minipage}
+    \caption{Análisis de vulnerabilidades - OWASP ZAP}
+    \label{fig:vulnerabilities}
+\end{figure}
+

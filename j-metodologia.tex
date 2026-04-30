@@ -589,10 +589,10 @@ la renovación de tokens de autenticación.
 Cada uno de los módulos de la API fue integrado al \textit{Frontend} bajo dos formas. Para cada módulo se crearon:
 \begin{itemize}
     \item \textbf{Servicios:} Contienen funciones puras (las llamadas realizadas con Axios), \textit{hooks} de TanStack Query
-            (envuelven las funciones puras) e invalidaciones (para forzar resincronizaciones) y utilidades relacionadas a cada módulo.
+    (envuelven las funciones puras) e invalidaciones (para forzar resincronizaciones) y utilidades relacionadas a cada módulo.
     \item \textbf{\textit{Hooks} personalizados:} Contienen y llaman a los servicios, por lo que contienen los datos retornados por Axios
-            y los estados de las peticiones entregados por TanStack Query. Estos \textit{hooks} son los que se utilizan dentro de los
-            componentes para consumir la API.
+    y los estados de las peticiones entregados por TanStack Query. Estos \textit{hooks} son los que se utilizan dentro de los
+    componentes para consumir la API.
 \end{itemize}
 
 \subsubsection{Gestión de estado global}
@@ -601,19 +601,30 @@ sesión, como si el usuario se encuentra autenticado, rol, nombre, foto de perfi
 \textit{hooks}. El primero para la información de autenticación del usuario, y el segundo para la validación de permisos de acceso
 a rutas o elementos basados en el rol del usuario. 
 
-\section{Fase 4: Pruebas de funcionalidad y usabilidad}
-La cuarta fase se centró en la realización de pruebas de funcionalidad para el \textit{Backend} y pruebas de usabilidad 
+\section{Fase 4: Despliegue en la nube}
+La cuarta fase se centró en el despliegue de la plataforma web en la nube.
+
+El objetivo de esta fase es desplegar la plataforma para que esté disponible en Internet y sea accesible para los usuarios finales.
+
+Para llevar a cabo el despliegue, se seleccionó Amazon Web Services como el proveedor de servicios en la nube, debido a su confiabilidad,
+escalabilidad, seguridad y facilidad de configuración. 
+
+\subsection{Configuración de la instancia}
+Específicamente, se utilizó una instancia de EC2 para alojar la plataforma, con Ubuntu como sistema operativo, c7i-flex.large como tipo
+de instancia (2 vCPU, 4GB RAM) para garantizar un rendimiento adecuado.
+Dentro de la instancia se instaló Docker y Docker Compose para orquestar la ejecución de los servicios necesarios (\textit{Backend},
+base de datos y \textit{Frontend}).
+
+Además, se configuró un servidor web Nginx para manejar las solicitudes entrantes y redirigirlas a los servicios correspondientes, así
+como para servir el \textit{Frontend} de manera eficiente y manejar correctamente las llamadas a la API.
+
+\section{Fase 5: Pruebas de funcionalidad y usabilidad}
+La quinta, y última, fase se centró en la realización de pruebas de funcionalidad para el \textit{Backend} y pruebas de usabilidad 
 para el \textit{Frontend}.
 
 El objetivo de esta fase es garantizar que la plataforma web es capaz de realizar todas las funcionalidades definidas en la fase 1
 para cada módulo, así como garantizar que la interfaz de usuario ofrece el acceso a dichas funcionalidades de manera correcta
 y alineada con los diseños de interfaz utilizada.
-
-Para llevar a cabo estas pruebas, el primer paso fue desplegar la plataforma en un entorno de pruebas local, utilizando Docker para
-orquestar la ejecución de los servicios necesarios, como el \textit{Backend}, la base de datos (con la estructura definida anteriormente)
-y el \textit{Frontend}.
-Este entorno fue desplegado utilizando variables de entorno del entorno de producción, con el fin que la simulación de las pruebas sean fieles
-a la experiencia final de la plataforma, utilizando servicios de AWS S3 y correo electrónico reales. 
 
 \subsection{Backend}
 Para el \textit{Backend} se busca garantizar que la API es capaz de brindar todas las funcionalidades definidas en la fase 1 para cada
@@ -625,6 +636,12 @@ que cuenta la plataforma. Permitiendo una ejecución interactiva para la evaluac
 de error, casos de autorización, entre otros.
 Para el caso especial del manejo de archivos (recursos, evidencias, fotos de perfil e imágenes), el proceso de éxito contempla tanto
 la correcta creación y eliminación de la entidad en la base de datos y en el Bucket S3.
+
+\subsubsection{Pruebas de estrés}
+Además de las pruebas de funcionalidad, se realizaron pruebas de estrés para evaluar el rendimiento de la API bajo condiciones de carga.
+Para esto se utilizó \textit{Loader.io}, una herramienta que permite simular múltiples usuarios concurrentes, lo que permite evaluar
+el desempeño de la API bajo condiciones de alta demanda. Se realizaron pruebas con diferentes niveles y tiempos de concurrencia, tomando
+en cuenta las capacidades de la instancia EC2 de la capa gratuita de AWS.
 
 \subsection{Frontend}
 Para el \textit{Frontend} se busca garantizar que la interfaz de usuario es capaz de brindar acceso a todas las funcionalidades que ofrece la
@@ -667,19 +684,8 @@ lo acepte, y finalmente, la participación del estudiante finalice dentro de dic
 de registrarse en la plataforma, lo que hacia que su perfil estuviera vacío, como es de esperarse, pero para fines de las pruebas de usabilidad,
 no era un escenario ideal. El cuestionario utilizado para las pruebas de usabilidad se encuentra en el Anexo \ref{anexo:encuestausabilidad}.
 
-\section{Fase 5: Despliegue en la nube}
-La quinta y última fase se centró en el despliegue de la plataforma web en la nube.
-
-El objetivo de esta fase es desplegar la plataforma para que esté disponible en Internet y sea accesible para los usuarios finales.
-
-Para llevar a cabo el despliegue, se seleccionó Amazon Web Services como el proveedor de servicios en la nube, debido a su confiabilidad,
-escalabilidad, seguridad y facilidad de configuración. 
-
-\subsection{Configuración de la instancia}
-Específicamente, se utilizó una instancia de EC2 para alojar la plataforma, con Ubuntu como sistema operativo, c7i-flex.large como tipo
-de instancia (2 vCPU, 4GB RAM) para garantizar un rendimiento adecuado.
-Dentro de la instancia se instaló Docker y Docker Compose para orquestar la ejecución de los servicios necesarios (\textit{Backend},
-base de datos y \textit{Frontend}).
-
-Además, se configuró un servidor web Nginx para manejar las solicitudes entrantes y redirigirlas a los servicios correspondientes, así
-como para servir el \textit{Frontend} de manera eficiente y manejar correctamente las llamadas a la API.
+\subsection{Escaneo de vulnerabilidades}
+Finalmente, se realizó un escaneo de vulnerabilidades para identificar posibles vulnerabilidades de seguridad en la plataforma y corregirlas.
+Para esto se utilizó la herramienta OWASP ZAP, debido a que es una herramienta que permite lanzar escaneos automáticos de vulnerabilidades, los
+cuales son capaces de identificar rápidamente vulnerabilidades comunes como inyección SQL, Cross-Site Scripting, configuraciones incorrectas,
+entre otras. Además, sus alertas detallan la vulnerabilidad encontrada y brindan información relevante para una corrección adecuada.
