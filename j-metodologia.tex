@@ -314,14 +314,15 @@ en las solicitudes entrantes que permite realizar validaciones y manejo de los a
 que permite realizar operaciones de carga, consulta y eliminación de archivos en S3.
 
 \subsubsection{Monitoreo}
-Para el monitoreo del sistema se utilizó \textbf{Winston} con el fin de generar \textit{\gls{log}} de eventos relevantes del sistema,
-como errores, acciones de usuarios, entre otros.
+Para el monitoreo del sistema se utilizó \textbf{Winston} con el fin de generar \textit{\gls{log}} de eventos relevantes del
+sistema, como errores, acciones de usuarios, entre otros.
 
 \subsection{Arquitectura}
 Para mantener una organización y separación de responsabilidades clara, el proyecto utiliza una arquitectura por capas.
 
 \subsubsection{Estructura del proyecto}
-Ya que se seleccionó una arquitectura por capas, se estructuró el proyecto en capas lógicas, cada una con responsabilidades específicas:
+Ya que se seleccionó una arquitectura por capas, se estructuró el proyecto en capas lógicas, cada una con responsabilidades
+específicas:
 \begin{itemize}
     \item \textbf{Routers:} Esta capa se encarga de definir y exponer los \textit{endpoints} con el fin de interceptar las
             solicitudes entrantes y dirigirlas al controlador correspondiente.
@@ -329,17 +330,17 @@ Ya que se seleccionó una arquitectura por capas, se estructuró el proyecto en 
             validaciones como autenticación, autorización, validación de datos, manejo de errores, entre otros.
     \item \textbf{Controllers:} Esta capa se encarga de recibir las solicitudes enviadas por los routers, procesar la información
             de entrada e invocar los servicios correspondientes y devolver una respuesta al cliente.
-    \item \textbf{Services:} Esta capa se encarga de toda la lógica de negocio, orquestando operaciones, reglas de negocio y permitiendo
-            reutilización de servicios.
-    \item \textbf{Repositories:} Esta capa se encarga de la interacción directa con la base de datos, realizando operaciones CRUD de
-            las entidades y consultas directas.
+    \item \textbf{Services:} Esta capa se encarga de toda la lógica de negocio, orquestando operaciones, reglas de negocio y
+        permitiendo reutilización de servicios.
+    \item \textbf{Repositories:} Esta capa se encarga de la interacción directa con la base de datos, realizando operaciones CRUD
+        de las entidades y consultas directas.
 \end{itemize}
 
 Esta estructura fue aplicada a cada uno de los módulos definidos en la fase anterior.
 
 \subsubsection{Archivos adicionales}
-Además de las capas mencionadas, se crearon directorios y archivos adicionales para configuración de la plataforma, así como archivos
-de conexión (a la base de datos, a AWS S3 y servicios de correo electrónico), entre otros.
+Además de las capas mencionadas, se crearon directorios y archivos adicionales para configuración de la plataforma, así como
+archivos de conexión (a la base de datos, a AWS S3 y servicios de correo electrónico), entre otros.
 \begin{itemize}
     \item \textbf{Types:} Este directorio contiene las definiciones de tipos utilizados en el proyecto.
     \item \textbf{Validators:} Este directorio contiene esquemas de validación de datos de entrada utilizando Joi.
@@ -361,53 +362,60 @@ y \textit{Refresh Tokens}
 El \textit{Access Token}, generado con JWT, incluye información relevante del usuario así como su rol, lo que permite una autorización
 basada en roles para los distintos \textit{endpoints} de los demás módulos. El \textit{Refresh Token} se almacena de manera segura
 en la base de datos, asociado al usuario y a la sesión específica, lo que permite gestionar múltiples sesiones por usuario y
-revocar sesiones de manera individual. Este último se envía al cliente como una \textit{cookie} HTTP-only, con el fin aumentar la seguridad.
-Todos los usuarios deben de verificar su correo electrónico por medio de un \textit{token} de verificación enviado por medio de correo electrónico.
+revocar sesiones de manera individual. Este último se envía al cliente como una \textit{cookie} HTTP-only, con el fin aumentar la
+seguridad. Todos los usuarios deben de verificar su correo electrónico por medio de un \textit{token} de verificación enviado por
+medio de correo electrónico.
 
 \subsubsection{Gestión de usuarios}
-Para el módulo de Usuarios se implementó la gestión básica de usuarios. Esto incluye la consulta, actualización y eliminación de usuarios.
-Se crearon reglas de negocio para la actualización y eliminación de usuarios, como que un usuario pueda actualizar solamente su propia información. Así
-como temas de autenticación, como el cambio de contraseña.
+Para el módulo de Usuarios se implementó la gestión básica de usuarios. Esto incluye la consulta, actualización y eliminación de
+usuarios. Se crearon reglas de negocio para la actualización y eliminación de usuarios, como que un usuario pueda actualizar
+solamente su propia información. Así como temas de autenticación, como el cambio de contraseña.
 Adicional, las organizaciones deberán de ser aprobadas por algún director para poder tener su cuenta habilitada.
 
 \subsubsection{Ciclo de vida de proyectos de extensión}
-Para el módulo de Proyectos, se implementó un ciclo de vida completo para los proyectos en los que se incluyen los estados: \textit{draft},
-\textit{open}, \textit{in progress}, \textit{completed} y \textit{cancelled}. Una vez un Director u Organización externa crea un proyecto,
-este se encuentra en estado \textit{draft} hasta que un Director lo aprueba, momento en el que el proyecto pasa a estado \textit{open} y los
-estudiantes pueden ver y llegar a postularse. Una vez el dueño del proyecto inicia el proyecto, este pasa a estado \textit{in progress}
-(ya no se aceptan postulaciones). Una vez el proyecto finaliza, el dueño del proyecto lo marca como finalizado, pasando a estado
-\textit{completed}, permitiendo a los estudiantes que participaron en el proyecto registrar sus horas trabajadas. En caso de que el proyecto
-sea cancelado, el dueño del proyecto lo marca como cancelado, pasando a estado \textit{cancelled}, lo que permite a los estudiantes indicar
-las horas trabajadas, si aplica.
+Para el módulo de Proyectos, se implementó un ciclo de vida completo para los proyectos en los que se incluyen los estados:
+\textit{draft}, \textit{open}, \textit{in progress}, \textit{completed} y \textit{cancelled}. Una vez un Director u Organización
+externa crea un proyecto, este se encuentra en estado \textit{draft} hasta que un Director lo aprueba, momento en el que el
+proyecto pasa a estado \textit{open} y los estudiantes pueden ver y llegar a postularse. Una vez el dueño del proyecto inicia el
+proyecto, este pasa a estado \textit{in progress} (ya no se aceptan postulaciones). Una vez el proyecto finaliza, el dueño del
+proyecto lo marca como finalizado, pasando a estado \textit{completed}, permitiendo a los estudiantes que participaron en el
+proyecto registrar sus horas trabajadas. En caso de que el proyecto sea cancelado, el dueño del proyecto lo marca como cancelado,
+pasando a estado \textit{cancelled}, lo que permite a los estudiantes indicar las horas trabajadas, si aplica.
 
 \subsubsection{Ciclo de vida de participación en proyectos de extensión}
-Para el módulo de Postulaciones, se implementó un ciclo de vida completo para estas, en el que se incluyen los estados: \textit{pending},
-\textit{accepted}, \textit{rejected} y \textit{finalized}. Al momento en el que un estudiante se postula para participar en un proyecto,
-la postulación se encuentra en estado \textit{pending} hasta que el dueño del proyecto la aprueba o rechaza, momento en el que la
-postulación pasa a estado \textit{accepted} o \textit{rejected}, respectivamente. En caso de que la postulación sea aprobada, el estudiante
-se convierte en participante del proyecto y no podrá postularse o participar en otros proyectos hasta que su participación actual concluya.
-Una vez el proyecto finalice o el estudiante abandone el proyecto, la postulación pasa a estado \textit{finalized}.
+Para el módulo de Postulaciones, se implementó un ciclo de vida completo para estas, en el que se incluyen los estados:
+\textit{pending}, \textit{accepted}, \textit{rejected} y \textit{finalized}. Al momento en el que un estudiante se postula para
+participar en un proyecto, la postulación se encuentra en estado \textit{pending} hasta que el dueño del proyecto la aprueba o
+rechaza, momento en el que la postulación pasa a estado \textit{accepted} o \textit{rejected}, respectivamente. En caso de que
+la postulación sea aprobada, el estudiante se convierte en participante del proyecto y no podrá postularse o participar en otros
+proyectos hasta que su participación actual concluya. Una vez el proyecto finalice o el estudiante abandone el proyecto, la
+postulación pasa a estado \textit{finalized}.
 
 \subsubsection{Ciclo de vida de horas trabajadas en proyectos de extensión}
 Para el módulo de Horas, se implementó un ciclo de vida completo para estas, en el que se incluyen los estados:  \textit{pending},
-\textit{approved}, \textit{rejected}. Al momento en el que un estudiante registra horas trabajadas en un proyecto, estas se encuentran
-en estado \textit{pending} hasta que el dueño del proyecto las aprueba o rechaza, momento en el que las horas pasan a estado
-\textit{approved} o \textit{rejected}, respectivamente. En caso de que las horas sean rechazadas, el estudiante tendrá la opción de corregir
-la cantidad de horas indicadas y reenviar las horas para su aprobación, este proceso se podrá realizar un máximo de 3 veces, después de
-lo cual las horas quedarán en estado \textit{rejected} de manera permanente.
+\textit{approved}, \textit{rejected}. Al momento en el que un estudiante registra horas trabajadas en un proyecto, estas se
+encuentran en estado \textit{pending} hasta que el dueño del proyecto las aprueba o rechaza, momento en el que las horas pasan a
+estado \textit{approved} o \textit{rejected}, respectivamente. En caso de que las horas sean rechazadas, el estudiante tendrá la
+opción de corregir la cantidad de horas indicadas y reenviar las horas para su aprobación, este proceso se podrá realizar un
+máximo de 3 veces, después de lo cual las horas quedarán en estado \textit{rejected} de manera permanente.
 
 \subsubsection{Manejo de archivos}
-Para el módulo de Archivos, se utilizó el SDK de AWS S3 para poder realizar operaciones de carga, consulta y eliminación de archivos.
-Dentro de la instancia de S3 se creó un \textit{bucket} con cuatro directorios: \textit{profilepic} para almacenar las fotografías de perfil
-de los usuarios, \textit{resource} para almacenar los archivos relacionados a los proyectos, \textit{evidence} para almacenar los
-archivos relacionados al reporte de horas trabajadas por los estudiantes y \textit{projectImage} para almacenar las imágenes colocadas
-en los editores de texto enriquecidos, los cuales forman parte de la descripción, justificación y requerimientos de un proyecto.
-Los directorios de \textit{resource} y \textit{evidence} se organizan internamente con subdirectorios por proyecto o usuario; 
-además, estos directorios son de acceso privado. Por lo que para consultar o descargar un archivo, se genera un 
+Para el módulo de Archivos, se utilizó el SDK de AWS S3 para poder realizar operaciones de carga, consulta y eliminación de
+archivos. Dentro de la instancia de S3 se creó un \textit{bucket} con cuatro directorios: \textit{profilepic} para almacenar las
+fotografías de perfil de los usuarios, \textit{resource} para almacenar los archivos relacionados a los proyectos,
+\textit{evidence} para almacenar los archivos relacionados al reporte de horas trabajadas por los estudiantes y \textit{projectImage}
+para almacenar las imágenes colocadas en los editores de texto enriquecidos, los cuales forman parte de la descripción, justificación
+y requerimientos de un proyecto. Los directorios de \textit{resource} y \textit{evidence} se organizan internamente con subdirectorios
+por proyecto o usuario; además, estos directorios son de acceso privado. Por lo que para consultar o descargar un archivo, se genera un 
 \textit{pre-signed URL} con una duración limitada, que permite acceder al archivo de manera segura sin exponer el acceso 
 directo a S3. Por otro lado, el directorio de \textit{profilepic} y \textit{projectImage} son de acceso público, esto debido a que
 estos archivos necesitan ser accedidos de manera frecuente para la visualización de perfiles y proyectos, respectivamente, y su contenido
 es de acceso público por naturaleza.
+Además, \textit{projectImage} tiene un subdirectorio \textit{temp} para almacenar imágenes temporales subidas desde el editor de texto
+enriquecido, estas imágenes se mueven a un directorio permanente una vez el proyecto es creado o actualizado, asociando el archivo con
+el proyecto correspondiente. El subdirectorio \textit{temp} tiene configurada una regla de ciclo de vida que elimina los archivos
+después de 24 horas, con el fin de evitar la acumulación de archivos temporales que no fueron asociados a ningún proyecto.
+
 Cada vez que se realiza la carga de un archivo, el primer paso es validar que el archivo cumpla reglas de tamaño 
 máximo, extensiones, entre otras validaciones. Luego, el archivo se carga a S3 en su respectivo directorio, esta acción retorna 
 un nombre único conocido como \textit{key}. Esta \textit{key}, junto con otra información relevante, se almacena en la base de 
@@ -521,8 +529,10 @@ Las pantallas, previamente diseñadas, necesarias para la plataforma son las sig
     \item \textbf{Motivaciones:} Pantalla que muestra las motivaciones disponibles para los usuarios.
     \item \textbf{Edición de perfil:} Pantalla que permite a los usuarios editar su información de perfil.
     \item \textbf{Cambio de contraseña:} Pantalla que permite a los usuarios cambiar su contraseña.
-    \item \textbf{Proyectos propios:} Pantalla que muestra los proyectos creados por el usuario. Visible para directores y organizaciones externas.
-    \item \textbf{Creación de proyecto:} Pantalla que permite a directores y organizaciones externas crear un nuevo proyecto en la plataforma.
+    \item \textbf{Proyectos propios:} Pantalla que muestra los proyectos creados por el usuario. Visible para directores y
+        organizaciones externas.
+    \item \textbf{Creación de proyecto:} Pantalla que permite a directores y organizaciones externas crear un nuevo proyecto en la
+        plataforma.
     \item \textbf{Edición de proyecto:} Pantalla que permite a directores y organizaciones externas editar un proyecto existente.
     \item \textbf{Búsqueda de proyectos:} Pantalla que permite a los usuarios buscar proyectos en la plataforma. Los filtros de búsqueda
             dependen del rol del usuario.
@@ -530,19 +540,26 @@ Las pantallas, previamente diseñadas, necesarias para la plataforma son las sig
             visibles dependen del rol del usuario.
     \item \textbf{Configuración de proyecto:} Pantalla que permite a directores y organizaciones externas cambiar el estado de un proyecto,
             modificar los participantes o aceptar/rechazar postulaciones.
-    \item \textbf{Proyecto actual:} Pantalla que muestra la información del proyecto en el que se está participando actualmente. Visible para estudiantes.
-    \item \textbf{Historial de proyectos}: Pantalla que muestra el historial de proyectos en los que se ha participado. Visible para estudiantes.
-    \item \textbf{Registro de horas:} Pantalla que permite a los estudiantes registrar las horas trabajadas en un proyecto, incluyendo la carga de evidencias.
-    \item \textbf{Horas pendientes de aprobación:} Pantalla que muestra las horas registradas por los estudiantes que están en espera de ser aprobadas. Visible para directores y organizaciones externas.
-    \item \textbf{Proyectos pendientes de aprobación:} Pantalla que muestra los proyectos que están en espera de ser aprobados. Visible para directores.
+    \item \textbf{Proyecto actual:} Pantalla que muestra la información del proyecto en el que se está participando actualmente.
+        Visible para estudiantes.
+    \item \textbf{Historial de proyectos}: Pantalla que muestra el historial de proyectos en los que se ha participado. Visible para
+        estudiantes.
+    \item \textbf{Registro de horas:} Pantalla que permite a los estudiantes registrar las horas trabajadas en un proyecto, incluyendo
+        la carga de evidencias.
+    \item \textbf{Horas pendientes de aprobación:} Pantalla que muestra las horas registradas por los estudiantes que están en espera
+        de ser aprobadas. Visible para directores y organizaciones externas.
+    \item \textbf{Proyectos pendientes de aprobación:} Pantalla que muestra los proyectos que están en espera de ser aprobados.
+        Visible para directores.
     \item \textbf{Organizaciones externas pendientes de aprobación:} Pantalla que muestra las organizaciones externas que están en espera de
             ser aprobadas. Visible para directores.
 \end{itemize}
 
 \subsubsection{Definición de tema}
-Utilizando la característica de personalización de temas de Material UI, se definieron los siguientes aspectos para el tema global de la aplicación:
+Utilizando la característica de personalización de temas de Material UI, se definieron los siguientes aspectos para el tema global de
+la aplicación:
 \begin{itemize}
-    \item \textbf{Paleta de colores:} Se definieron colores primarios, secundarios, de fondo, de texto, error, información, éxito, entre otros.
+    \item \textbf{Paleta de colores:} Se definieron colores primarios, secundarios, de fondo, de texto, error, información, éxito,
+        entre otros.
     \item \textbf{Tipografía:} Se definieron las fuentes (Roboto Mono y Raleway), tamaños, pesos y estilos.
     \item \textbf{\textit{Breakpoints}:} Se definieron los puntos de quiebre para \textit{desktop}, \textit{tablet} y \textit{mobile}
             para el diseño \textit{responsive}.
@@ -558,9 +575,9 @@ Para la construcción de componentes se utilizó principalmente los componentes 
 fueron ordenados en subdirectorios dentro del directorio de \textit{Components} con el fin de mantener una organización clara.
 
 \subsubsection{Formularios y validaciones}
-Para manejar el estado de los formularios, TanStack Form ofrece un hook llamado \texttt{useAppForm}, el cual permite el uso de componentes previamente
-implementados como parte de un formulario. Logrando una fácil gestión del estado del formulario en conjunto con una integración de Zod para validación
-síncrona de los datos de entrada.
+Para manejar el estado de los formularios, TanStack Form ofrece un hook llamado \texttt{useAppForm}, el cual permite el uso de componentes
+previamente implementados como parte de un formulario. Logrando una fácil gestión del estado del formulario en conjunto con una integración
+de Zod para validación síncrona de los datos de entrada.
 
 \subsubsection{Integración de la API}
 Para la integración de la API se utilizó TansStack Query y Axios. TanStack Query se encarga del ciclo de vida de las peticiones, mientras que Axios 
@@ -613,23 +630,42 @@ la correcta creación y eliminación de la entidad en la base de datos y en el B
 Para el \textit{Frontend} se busca garantizar que la interfaz de usuario es capaz de brindar acceso a todas las funcionalidades que ofrece la
 API, mostrando correctamente las pantallas correspondientes a cada rol según los diseños de interfaz utilizados. 
 
-Con este fin se realizaron pruebas de usabilidad con usuarios finales, donde se les asignaron tareas específicas a cada participante y al finalizar
-la prueba contestaron una pequeña encuesta que busca recabar información sobre la experiencia que tuvo el usuario utilizando la plataforma y
-verificar que la plataforma brinde usabilidad correcta e intuitiva. Con este fin, la encuesta incluye preguntas demográficas (edad y dispositivo utilizado),
-preguntas para evaluar cada una de las tareas asignadas (si la tarea fue completada, dificultad percibida y tiempo empleado), se agregaron las preguntas SUS
-para evaluar la usabilidad general de la plataforma y finalmente, una pregunta abierta para recabar cualquier comentario/sugerencia que el usuario tenga sobre la plataforma.
-Para poder evaluar la usabilidad de la plataforma con distintos tipos de usuarios, se realizaron pruebas con un total de 10 usuarios finales, con la siguiente
-distribución: 5 estudiantes, 3 directores y 2 organizaciones externas. Cada usuario realizó tareas específicas relacionadas a su rol, como crear un proyecto
-para los directores y organizaciones externas, aprobar un proyecto para los directores, postularse o enviar reporte de horas de un proyecto para los estudiantes.
+Con este fin se realizaron pruebas de usabilidad con usuarios finales, donde se les asignaron tareas específicas a cada participante y al
+finalizar la prueba contestaron una pequeña encuesta que busca recabar información sobre la experiencia que tuvo el usuario utilizando la
+plataforma y verificar que la plataforma brinde usabilidad correcta e intuitiva. Debido a esto, la encuesta incluye preguntas demográficas
+(edad y dispositivo utilizado), preguntas para evaluar cada una de las tareas asignadas (si la tarea fue completada, dificultad percibida
+y tiempo empleado), se agregaron las preguntas SUS para evaluar la usabilidad general de la plataforma y finalmente, una pregunta abierta
+para recabar cualquier comentario/sugerencia que el usuario tenga sobre la plataforma.
 
-Con el fin de garantizar que las tareas asignadas a los usuarios durante las pruebas de usabilidad fueron resueltas correctamente, se realizó una validación de
-cada una de las tareas en el \textit{Backend}. Verificando que los cambios realizados por los usuarios durante las pruebas se hayan reflejado correctamente en la
-Base de Datos y en el Bucket S3, en caso de que aplique.
+Para poder evaluar la usabilidad de la plataforma con distintos tipos de usuarios, se realizaron pruebas con un total de 10 usuarios
+finales, con la siguiente distribución: 5 estudiantes, 3 directores y 2 organizaciones externas. Cada usuario realizó tareas específicas
+relacionadas a su rol.
 
-Dado a que las pruebas de usabilidad se realizaron con usuarios finales reales, se les indicó que sus respuestas serán anónimas y que no se recabará ningún dato personal sensible.
-Además, se les brindó un consentimiento informado para que puedan decidir si desean participar o no en las pruebas de usabilidad, el cuál contiene información relevante de la
-plataforma, el objetivo de las pruebas, la información que se recabará, entre otros aspectos importantes. El consentimiento informado completo se encuentra en el Anexo \ref{anexo:consentimientoinformado}.
-El cuestionario utilizado para las pruebas de usabilidad se encuentra en el Anexo \ref{anexo:encuestausabilidad}.
+Las tareas asignadas por rol pueden ser las siguientes (cada usuario realizó un total de 3 tareas específicas de su rol):
+\begin{itemize}
+        \item \textbf{Todos los usuarios:} Iniciar sesión y editar su perfil.
+        \item \textbf{Estudiantes:} Buscar un proyecto y postularse a un proyecto, registrar horas trabajadas en un proyecto finalizado.
+        \item \textbf{Directores:} Crear/Editar un proyecto, aprobar un proyecto, aprobar la cuenta de una organización externa.
+        \item \textbf{Organizaciones externas:} Crear un proyecto, editar un proyecto, aprobar horas trabajadas por estudiantes.
+\end{itemize}
+
+Con el fin de garantizar que las tareas asignadas a los usuarios durante las pruebas de usabilidad fueron resueltas correctamente, se
+realizó una validación de cada una de las tareas en el \textit{Backend}. Verificando que los cambios realizados por los usuarios durante
+las pruebas se hayan reflejado correctamente en la Base de Datos y en el Bucket S3, en caso de que aplique.
+
+Dado a que las pruebas de usabilidad se realizaron con usuarios finales reales, se les indicó que sus respuestas serán anónimas y que no
+se recabará ningún dato personal sensible. Además, se les brindó un consentimiento informado para que puedan decidir si desean participar
+o no en las pruebas de usabilidad, el cuál contiene información relevante de la plataforma, el objetivo de las pruebas, la información que
+se recabará, entre otros aspectos importantes. El consentimiento informado completo se encuentra en el Anexo \ref{anexo:consentimientoinformado}.
+
+Luego de una prueba de usabilidad piloto, se pudo validar la correcta interpretación de la prueba por parte del participante, confirmando
+que la prueba de usabilidad fue diseñada de manera clara y concisa para que los participantes puedan entenderla y realizarla sin inconvenientes;
+sin embargo, se realizó un pequeño ajuste a la prueba, el cual consistió en crear un usuario a todos los participantes antes de la prueba,
+con el fin de evitar que los participantes estudiantes tengan inconvenientes para el registro de horas de un proyecto, ya que para esto es
+necesario que el estudiante cuente con un proyecto finalizado (lo que implica que el estudiante se postule a un proyecto, el dueño del proyecto
+lo acepte, y finalmente, la participación del estudiante finalice dentro de dicho proyecto). Inicialmente, los participantes estudiantes debían
+de registrarse en la plataforma, lo que hacia que su perfil estuviera vacío, como es de esperarse, pero para fines de las pruebas de usabilidad,
+no era un escenario ideal. El cuestionario utilizado para las pruebas de usabilidad se encuentra en el Anexo \ref{anexo:encuestausabilidad}.
 
 \section{Fase 5: Despliegue en la nube}
 La quinta y última fase se centró en el despliegue de la plataforma web en la nube.
@@ -640,9 +676,10 @@ Para llevar a cabo el despliegue, se seleccionó Amazon Web Services como el pro
 escalabilidad, seguridad y facilidad de configuración. 
 
 \subsection{Configuración de la instancia}
-Específicamente, se utilizó una instancia de EC2 para alojar la plataforma, con Ubuntu como sistema operativo, c7i-flex.large como tipo de instancia
-(2 vCPU, 4GB RAM) para garantizar un rendimiento adecuado.
-Dentro de la instancia se instaló Docker y Docker Compose para orquestar la ejecución de los servicios necesarios (\textit{Backend}, base de datos y \textit{Frontend}).
+Específicamente, se utilizó una instancia de EC2 para alojar la plataforma, con Ubuntu como sistema operativo, c7i-flex.large como tipo
+de instancia (2 vCPU, 4GB RAM) para garantizar un rendimiento adecuado.
+Dentro de la instancia se instaló Docker y Docker Compose para orquestar la ejecución de los servicios necesarios (\textit{Backend},
+base de datos y \textit{Frontend}).
 
-Además, se configuró un servidor web Nginx para manejar las solicitudes entrantes y redirigirlas a los servicios correspondientes, así como para servir el
-\textit{Frontend} de manera eficiente y manejar correctamente las llamadas a la API.
+Además, se configuró un servidor web Nginx para manejar las solicitudes entrantes y redirigirlas a los servicios correspondientes, así
+como para servir el \textit{Frontend} de manera eficiente y manejar correctamente las llamadas a la API.
