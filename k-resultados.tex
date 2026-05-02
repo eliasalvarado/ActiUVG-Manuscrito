@@ -106,6 +106,51 @@ el Anexo \ref{anexo:listaendpoints}.
 \end{itemize}
 
 \subsection{Pruebas de estrés}
+Con el fin de garantizar que la API puede manejar correctamente una cantidad considerable de solicitudes concurrentes, se realizaron pruebas
+de estrés utilizando la herramienta \textit{Loader.io}.
+
+Las pruebas de estrés se consideran exitosas si la API puede manejar la cantidad de solicitudes concurrentes sin presentar errores o caídas,
+y si el tiempo de respuesta se mantiene dentro de un rango aceptable, lo cual se define como un tiempo de respuesta promedio inferior a 1s.
+
+La lista completa de pruebas se encuentra en el Anexo \ref{anexo:pruebasestres}.
+A continuación, se muestran los resultados obtenidos para las pruebas de estrés realizadas con diferentes niveles de concurrencia:
+\begin{itemize}
+    \item \texttt{GET /projects}: El tiempo de respuesta promedio fue de 18ms.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.88\textwidth]{assets/stressTestProjects.png}
+            \caption{Prueba de estrés - GET /projects}
+            \label{fig:stressTestProjects}
+        \end{figure}
+    \item \texttt{GET /projects/:projectId}: El tiempo de respuesta promedio fue de 21ms.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.88\textwidth]{assets/stressTestProjectById.png}
+            \caption{Prueba de estrés - GET /projects/:projectId}
+            \label{fig:stressTestProjectById}
+        \end{figure}
+    \item \texttt{GET /applications/completed}: El tiempo de respuesta promedio fue de 16ms.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.88\textwidth]{assets/stressTestApplicationsCompleted.png}
+            \caption{Prueba de estrés - GET /applications/completed}
+            \label{fig:stressTestApplicationsCompleted}
+        \end{figure}
+    \item \texttt{GET /hours/total}: El tiempo de respuesta promedio fue de 16ms.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.88\textwidth]{assets/stressTestHoursTotal.png}
+            \caption{Prueba de estrés - GET /hours/total}
+            \label{fig:stressTestHoursTotal}
+        \end{figure}
+    \item \texttt{POST /auth/login}: El tiempo de respuesta promedio fue de 138ms.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.88\textwidth]{assets/stressTestAuthLogin.png}
+            \caption{Prueba de estrés - POST /auth/login}
+            \label{fig:stressTestAuthLogin}
+        \end{figure}
+\end{itemize}
 
 \section{Pruebas de usabilidad}
 

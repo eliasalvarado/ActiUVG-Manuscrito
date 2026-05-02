@@ -640,8 +640,24 @@ la correcta creación y eliminación de la entidad en la base de datos y en el B
 \subsubsection{Pruebas de estrés}
 Además de las pruebas de funcionalidad, se realizaron pruebas de estrés para evaluar el rendimiento de la API bajo condiciones de carga.
 Para esto se utilizó \textit{Loader.io}, una herramienta que permite simular múltiples usuarios concurrentes, lo que permite evaluar
-el desempeño de la API bajo condiciones de alta demanda. Se realizaron pruebas con diferentes niveles y tiempos de concurrencia, tomando
-en cuenta las capacidades de la instancia EC2 de la capa gratuita de AWS.
+el desempeño de la API bajo condiciones de alta demanda.
+Se configuraron pruebas con diferentes niveles de concurrencia, incluyendo 50, 100 y 250 usuarios simultáneos durante un período de
+1 minuto. Siempre teniendo en cuenta las capacidades de la instancia EC2 de la capa gratuita de AWS.
+Los \textit{endpoints} seleccionados para las pruebas de estrés fueron aquellos que se espera tengan un mayor tráfico, los cuales son
+los siguientes:
+\begin{itemize}
+    \item \textbf{GET /projects:} Este endpoint es utilizado para la búsqueda de proyectos, por lo que se espera un alto tráfico, ya que
+        es el punto principal de la plataforma para que los estudiantes puedan encontrar proyectos de extensión.
+    \item \textbf{GET /projects/:id:} Este endpoint es utilizado para la visualización de los detalles de un proyecto, por lo que también
+        se espera un alto tráfico al estar relacionado con la búsqueda de proyectos.
+    \item \textbf{GET /applications/completed:} Este endpoint es utilizado para la visualización del historial de proyectos en los que
+        un estudiante ha participado, por lo que se espera un tráfico moderado, pero con picos durante ciertos momentos del ciclo académico,
+        como el final de cada semestre.
+    \item \textbf{GET /hours/total:} Este endpoint es utilizado para la visualización del total de horas trabajadas por un estudiante,
+        por lo que se espera un tráfico moderado, pero con picos durante ciertos momentos del ciclo académico, como el final de cada semestre.
+    \item \textbf{POST /auth/login:} Este endpoint es utilizado para el inicio de sesión de los usuarios, por lo que se espera un tráfico
+        moderado, pero con picos durante ciertos momentos del ciclo académico, como el final de cada semestre.
+\end{itemize}
 
 \subsection{Frontend}
 Para el \textit{Frontend} se busca garantizar que la interfaz de usuario es capaz de brindar acceso a todas las funcionalidades que ofrece la

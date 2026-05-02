@@ -147,6 +147,121 @@ a través de:
 \textbf{Nota:} Por motivos de seguridad, ambos repositorios se encuentran privados,
 en caso de requerir acceso al código fuente, por favor contactar al autor de ambos repositorios.
 
+\section{Pruebas de Estrés}
+\label{anexo:pruebasestres}
+
+El detalle de las pruebas de estrés para cada una de sus distribuciones se presenta a continuación:
+
+\subsection{\texttt{GET /projects}}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.44\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{assets/stressTestProjects250.png}
+		\subcaption{Prueba de estrés con 250 usuarios concurrentes}
+	\end{minipage}
+	\begin{minipage}{0.44\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{assets/stressTestProjects100.png}
+			\subcaption{Prueba de estrés con 100 usuarios concurrentes}
+	\end{minipage}
+	\begin{minipage}{0.44\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{assets/stressTestProjects50.png}
+		\subcaption{Prueba de estrés con 50 usuarios concurrentes}
+	\end{minipage}
+	\caption{Detalle de la prueba de estrés - GET /projects}
+	\label{fig:detailedStressTestProjects}
+\end{figure}
+
+\subsection{\texttt{GET /projects/:projectId}}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.44\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{assets/stressTestProjectById250.png}
+		\subcaption{Prueba de estrés con 250 usuarios concurrentes}
+	\end{minipage}
+	\begin{minipage}{0.44\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{assets/stressTestProjectById100.png}
+			\subcaption{Prueba de estrés con 100 usuarios concurrentes}
+	\end{minipage}
+	\begin{minipage}{0.44\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{assets/stressTestProjectById50.png}
+		\subcaption{Prueba de estrés con 50 usuarios concurrentes}
+	\end{minipage}
+	\caption{Detalle de la prueba de estrés - GET /projects/:projectId}
+	\label{fig:detailedStressTestProjectById}
+\end{figure}
+
+\subsection{\texttt{GET /applications/completed}}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.44\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{assets/stressTestApplicationsCompleted250.png}
+		\subcaption{Prueba de estrés con 250 usuarios concurrentes}
+	\end{minipage}
+	\begin{minipage}{0.44\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{assets/stressTestApplicationsCompleted100.png}
+			\subcaption{Prueba de estrés con 100 usuarios concurrentes}
+	\end{minipage}
+	\begin{minipage}{0.44\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{assets/stressTestApplicationsCompleted50.png}
+		\subcaption{Prueba de estrés con 50 usuarios concurrentes}
+	\end{minipage}
+	\caption{Detalle de la prueba de estrés - GET /applications/completed}
+	\label{fig:detailedStressTestApplicationsCompleted}
+\end{figure}
+
+\subsection{\texttt{GET /hours/total}}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.44\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{assets/stressTestHoursTotal250.png}
+		\subcaption{Prueba de estrés con 250 usuarios concurrentes}
+	\end{minipage}
+	\begin{minipage}{0.44\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{assets/stressTestHoursTotal100.png}
+			\subcaption{Prueba de estrés con 100 usuarios concurrentes}
+	\end{minipage}
+	\begin{minipage}{0.44\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{assets/stressTestHoursTotal50.png}
+		\subcaption{Prueba de estrés con 50 usuarios concurrentes}
+	\end{minipage}
+	\caption{Detalle de la prueba de estrés - GET /hours/total}
+	\label{fig:detailedStressTestHoursTotal}
+\end{figure}
+
+\subsection{\texttt{POST /auth/login}}
+\begin{figure}[H]
+	\centering
+	\begin{minipage}{0.44\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{assets/stressTestAuthLogin250.png}
+		\subcaption{Prueba de estrés con 250 usuarios concurrentes}
+	\end{minipage}
+	\begin{minipage}{0.44\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{assets/stressTestAuthLogin100.png}
+			\subcaption{Prueba de estrés con 100 usuarios concurrentes}
+	\end{minipage}
+	\begin{minipage}{0.44\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{assets/stressTestAuthLogin50.png}
+		\subcaption{Prueba de estrés con 50 usuarios concurrentes}
+	\end{minipage}
+	\caption{Detalle de la prueba de estrés - POST /auth/login}
+	\label{fig:detailedStressTestAuthLogin}
+\end{figure}
+
 \section{Pruebas de Usabilidad}
 \label{anexo:pruebasusabilidad}
 
