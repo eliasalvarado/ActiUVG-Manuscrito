@@ -637,6 +637,11 @@ de error, casos de autorización, entre otros.
 Para el caso especial del manejo de archivos (recursos, evidencias, fotos de perfil e imágenes), el proceso de éxito contempla tanto
 la correcta creación y eliminación de la entidad en la base de datos y en el Bucket S3.
 
+\subsubsection{Pruebas Unitarias}
+Se implementaron pruebas unitarias utilizando Vitest, para garantizar que las funciones puras como \textit{validators}, \textit{utils},
+\textit{repositories}, entre otras, funcionan correctamente de manera aislada. Estas pruebas tienen como objetivo no solo validar que las
+funciones puras realizan y manejan la lógica esperada, sino también dar soporte a futuras refactorizaciones.
+
 \subsubsection{Pruebas de estrés}
 Además de las pruebas de funcionalidad, se realizaron pruebas de estrés para evaluar el rendimiento de la API bajo condiciones de carga.
 Para esto se utilizó \textit{Loader.io}, una herramienta que permite simular múltiples usuarios concurrentes, lo que permite evaluar
