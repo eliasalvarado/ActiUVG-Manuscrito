@@ -73,10 +73,21 @@ el Anexo \ref{anexo:listaendpoints}.
             \end{figure}
     \item \texttt{PUT /projects/:projectId}: Esta solicitud permite actualizar la información de un proyecto. El resultado esperado
         para esta prueba es un código de respuesta HTTP 200 con un mensaje de éxito y la información actualizada del proyecto en la sección de \textit{data}.
+        En caso que un usuario que no es el creador del proyecto intente actualizarlo, se espera que el resultado sea un código de respuesta HTTP 403 con un
+        mensaje de error indicando que no tiene permisos para realizar la acción.
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=0.88\textwidth]{assets/updateProject.png}
-                \caption{Actualización de proyecto - Prueba de éxito}
+                \begin{minipage}{0.44\textwidth}
+                    \centering
+                    \includegraphics[width=0.88\textwidth]{assets/updateProject.png}
+                    \subcaption{Actualización de proyecto - Prueba de éxito}
+                \end{minipage}
+                \begin{minipage}{0.44\textwidth}
+                    \centering
+                    \includegraphics[width=\textwidth]{assets/updateProjectUnauthorized.png}
+                    \subcaption{Actualización de proyecto por usuario no autorizado - Prueba de error}
+                \end{minipage}
+                \caption{Actualización de proyecto}
                 \label{fig:updateProject}
             \end{figure}
     \item \texttt{PATCH /projects/:projectId/status}: Esta solicitud permite actualizar el estado de un proyecto. El resultado esperado
@@ -153,6 +164,121 @@ A continuación, se muestran los resultados obtenidos para las pruebas de estré
 \end{itemize}
 
 \section{Pruebas de usabilidad}
+La implementación del \textit{Frontend} concluyó con pruebas de usabilidad realizadas por parte de usuarios finales, con el fin de garantizar
+que la interfaz gráfica desarrollada a partir de los diseños previamente construidos y validados, permitan a los usuarios finales interactuar
+con la plataforma para lograr realizar operaciones específicas para su rol, como lo son estudiantes, organizaciones externas y directores.
+Las pruebas de usabilidad se consideran exitosas si los usuarios finales pueden realizar las operaciones esperadas sin dificultades significativas,
+si la interfaz no presenta errores o comportamientos inesperados, y los resultados de la encuensta SUS se encuentra en un valor superior al promedio
+de 68.
+
+Las respuestas completas de las pruebas de usabilidad se encuentran en el Anexo \ref{anexo:resultadospruebasusabilidad}.
+
+\subsection{Tareas}
+Tal como se puede observar en la Figura \ref{fig:completedTasksGraph}, el 100\% de los participantes lograron completar las tareas asignadas.
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.44\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/completedTasksTarea1.png}
+        \subcaption{Tarea 1}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.44\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/completedTasksTarea2.png}
+        \subcaption{Tarea 2}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.44\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/completedTasksTarea3.png}
+        \subcaption{Tarea 3}
+    \end{minipage}
+    \caption{Resultados de la Encuesta de Usabilidad - Sección de Evaluación de Tareas}
+    \label{fig:completedTasksGraph}
+\end{figure}
+
+La dificultad percibida y el tiempo aproximado para completar cada tarea se muestra en la Figura \ref{fig:difficultyAndTimeGraph}.
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.44\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/difficultyAndTimeTarea1.png}
+        \subcaption{Tarea 1}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.44\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/difficultyAndTimeTarea2.png}
+        \subcaption{Tarea 2}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.44\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/difficultyAndTimeTarea3.png}
+        \subcaption{Tarea 3}
+    \end{minipage}
+    \caption{Resultados de la Encuesta de Usabilidad - Sección de Evaluación de Tareas}
+    \label{fig:difficultyAndTimeGraph}
+\end{figure}
+
+Algo por aclarar en estos resultados es que, algunos de los participantes respondieron de manera errónea la dificultad percibida, ya que aunque
+en el cuestionario se indicó que 1 es muy fácil y 5 es muy difícil, algunos participantes respondieron con 5 para indicar que la tarea fue muy fácil,
+lo cual se pudo corroborar con los tiempos aproximados para completar cada tarea, los cuales fueron menores a 2 minutos para los participantes
+que respondieron con 5, lo cual indica que la tarea fue fácil de completar para ellos.
+
+\subsubsection{Validación de cambios en la Base de Datos y Bucket S3}
+En la Figura \ref{fig:usabilityTestDB} se muestra la validación de los cambios realizados en la Base de Datos durante una prueba de usabilidad,
+en este caso, el participante era un estudiante que realizó actualización de su perfil, postulación a un proyecto de extensión y el registro
+de horas de participación en un proyecto de extensión.
+Se puede observar que los cambios realizados por el participante durante la prueba de usabilidad se reflejaron correctamente en la Base de Datos,
+lo que indica que la plataforma web funciona correctamente en cuanto a la manipulación de datos y permite a los usuarios realizar las operaciones esperadas.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.44\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/usabilityTestDBbefore.png}
+        \subcaption{Base de Datos antes de la prueba de usabilidad}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.44\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/usabilityTestDBafter.png}
+        \subcaption{Base de Datos después de la prueba de usabilidad}
+    \end{minipage}
+    \caption{Validación de cambios en la Base de Datos - Prueba de Usabilidad}
+    \label{fig:usabilityTestDB}
+\end{figure}
+
+En la Figura \ref{fig:usabilityTestBucketS3} se muestra la validación de los cambios realizados en el Bucket S3 durante una prueba de usabilidad,
+en este caso, el participante era un estudiante que realizó la carga de un archivo de tipo evidencia de participación en un proyecto de extensión.
+Se puede observar que el archivo se cargó correctamente en la carpeta esperada dentro del Bucket S3, y que los metadatos del archivo reflejan la
+información correspondiente al proyecto de extensión al que se asoció el archivo y al usuario que realizó la carga, lo que indica que la plataforma
+web funciona correctamente en cuanto a la manipulación de archivos y permite a los usuarios realizar las operaciones esperadas.
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.44\textwidth}
+        \centering
+        \includegraphics[width=0.88\textwidth]{assets/usabilityTestBucket.png}
+        \subcaption{Archivo en el Bucket S3 de la prueba de usabilidad}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.44\textwidth}
+        \centering
+        \includegraphics[width=0.88\textwidth]{assets/usabilityTestBucketMetadata.png}
+        \subcaption{Metadatos del archivo en el Bucket S3 de la prueba de usabilidad}
+    \end{minipage}
+    \caption{Validación de cambios en el Bucket S3 - Prueba de Usabilidad}
+    \label{fig:usabilityTestBucketS3}
+\end{figure}
+
+\subsection{SUS}
+Las respuestas obtenidas para las preguntas SUS se muestran en la Figura \ref{fig:resultadosPreguntasSUS} y el cálculo del puntaje SUS a partir de
+estas respuestas se muestra en la Figura \ref{fig:resultadoSUS}.
+
+El puntaje promedio obtenido para las preguntas SUS fue de \textbf{80}, lo cual indica que la plataforma cuenta con una usabilidad excelente al estar por encima
+del promedio de 68.
 
 \section{Análisis de vulnerabilidades}
 La plataforma web fue sometida a un análisis de vulnerabilidades utilizando la herramienta OWASP ZAP, esperando detectar posibles

@@ -669,14 +669,14 @@ Para el \textit{Frontend} se busca garantizar que la interfaz de usuario es capa
 API, mostrando correctamente las pantallas correspondientes a cada rol según los diseños de interfaz utilizados. 
 
 Con este fin se realizaron pruebas de usabilidad con usuarios finales, donde se les asignaron tareas específicas a cada participante y al
-finalizar la prueba contestaron una pequeña encuesta que busca recabar información sobre la experiencia que tuvo el usuario utilizando la
-plataforma y verificar que la plataforma brinde usabilidad correcta e intuitiva. Debido a esto, la encuesta incluye preguntas demográficas
-(edad y dispositivo utilizado), preguntas para evaluar cada una de las tareas asignadas (si la tarea fue completada, dificultad percibida
-y tiempo empleado), se agregaron las preguntas SUS para evaluar la usabilidad general de la plataforma y finalmente, una pregunta abierta
-para recabar cualquier comentario/sugerencia que el usuario tenga sobre la plataforma.
+finalizar la prueba contestaron una pequeña encuesta, utilizando la tecnología \textit{Google Forms}, que busca recabar información sobre
+la experiencia que tuvo el usuario utilizando la plataforma y verificar que la plataforma brinde usabilidad correcta e intuitiva.
+Debido a esto, la encuesta incluye preguntas demográficas (edad y dispositivo utilizado), preguntas para evaluar cada una de las tareas
+asignadas (si la tarea fue completada, dificultad percibida y tiempo empleado), se agregaron las preguntas SUS para evaluar la usabilidad
+general de la plataforma y finalmente, una pregunta abierta para recabar cualquier comentario/sugerencia que el usuario tenga sobre la plataforma.
 
 Para poder evaluar la usabilidad de la plataforma con distintos tipos de usuarios, se realizaron pruebas con un total de 10 usuarios
-finales, con la siguiente distribución: 5 estudiantes, 3 directores y 2 organizaciones externas. Cada usuario realizó tareas específicas
+finales, con la siguiente distribución: 7 estudiantes, 2 directores y 1 organización externa. Cada usuario realizó tareas específicas
 relacionadas a su rol.
 
 Las tareas asignadas por rol fueron las siguientes (cada usuario realizó un total de 3 tareas específicas de su rol):
@@ -689,7 +689,17 @@ Las tareas asignadas por rol fueron las siguientes (cada usuario realizó un tot
 
 Con el fin de garantizar que las tareas asignadas a los usuarios durante las pruebas de usabilidad fueron resueltas correctamente, se
 realizó una validación de cada una de las tareas en el \textit{Backend}. Verificando que los cambios realizados por los usuarios durante
-las pruebas se hayan reflejado correctamente en la Base de Datos y en el Bucket S3, en caso de que aplique.
+las pruebas se hayan reflejado correctamente en la Base de Datos y en el Bucket S3, en caso de que aplique. La verificación de las tareas
+se realizó de manera manual, realizando consultas directas a la base de datos y visualizando la información en el Bucket S3.
+Para un tipo de usuario estudiante, en la Base de Datos inicialmente, se muestra la información del perfil del usuario utilizando el \textit{query}
+\texttt{SELECT * FROM students WHERE userid={UUID-del-usuario};}, seguido por la información de las postulaciones realizadas
+por el estudiante utilizando el \textit{query} \texttt{SELECT * FROM applications WHERE studentid={ID-del-estudiante};}, y finalmente, la información de las horas
+registradas por el estudiante utilizando el \textit{query} \texttt{SELECT * FROM hours WHERE studentid={ID-del-estudiante};}.
+Después de la prueba de usabilidad, se muestra la información actualizada del perfil del estudiante utilizando el mismo \textit{query}, seguido
+por la información actualizada de las postulaciones realizadas por el estudiante utilizando el mismo \textit{query}, y finalmente, la información
+actualizada de las horas registradas por el estudiante utilizando el mismo \textit{query}.
+Para la validación de los archivos en el Bucket S3, se realizó una verificación manual utilizando la consola de AWS S3, ingresando a la carpeta
+correspondiente al tipo de archivo (profilepic o evidence) y verificando que el archivo correspondiente al usuario.
 
 Dado que las pruebas de usabilidad se realizaron con usuarios finales reales, se les indicó que sus respuestas serán anónimas y que no
 se recabará ningún dato personal sensible. Además, se les brindó un consentimiento informado para que puedan decidir si desean participar
