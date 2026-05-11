@@ -1,0 +1,99 @@
+La gestión de los proyectos de extensión en la Universidad del Valle de Guatemala (UVG) representaba un desafío
+operativo y técnico significativo. La falta de un sistema centralizado debido a la dependencia histórica de
+procesos manuales y canales de comunicación descentralizados, y en ocasiones informales, resultaba en una gestión
+ineficiente y propensa a errores humanos.
+Por lo que surgió la necesidad de modernizar este proceso mediante la implementación de un sistema de gestión de
+proyectos de extensión por medio de una plataforma web. Al evaluar los resultados obtenidos tras la implementación
+de la plataforma, se evidencia que la adopción de un nuevo modelo digital unificado no solo es técnicamente viable,
+sino que también es esencial para mejorar la eficiencia operativa y la calidad de los servicios ofrecidos por la
+UVG. Esta plataforma permite responder de manera directa a las necesidads de gobernanza y trazabilidad de los
+proyectos de extensión.
+
+La API, producto del desarrollo del \textit{Backend}, se diseñó con una arquitectura modular y escalable. Las pruebas
+de estrés realizadas demostraron que la API puede manejar un alto volumen de peticiones concurrentes sin comprometer
+el rendimiento, lo que es crucial para garantizar la disponibilidad y capacidad de respuesta de la plataforma. Las
+pruebas de estrés incluyeron tres escenarios de carga: baja, media y alta, con 50, 100 y 250 usuarios simultáneos
+respectivamente.
+En promedio, la API mantuvo tiempos de respuesta inferiores a 200ms. Con un tiempo de respuesta promedio de 16 a 21
+milisegundos para consultas de datos como se puede observar en la Figura \ref{fig:stressTestProjects}, y 116 a 283
+milisegundos para operaciones que involucran escritura de datos o procesos más complejos como procesamiento criptográfico,
+como el inicio de sesión en la Figura \ref{fig:stressTestAuthLogin}.
+Este comportamiento demuestra que la API fue capaz de manejar alta demanda concurrente sin degradar significativamente
+el rendimiento, lo que es un indicador positivo de su escalabilidad y robustez. Esto gracias a la elección de tecnologías
+modernas y eficientes, como Node.js y Express, que permiten manejar múltiples conexiones simultáneas de manera eficiente
+por su modelo de ejecución basado en eventos de entrada/salida no bloqueante, soportando picos de tráfico sin comprometer
+la capacidad de respuesta.
+Además, el diseño modular, integración de pruebas unitarias y pruebas de funcionalidad facilitan la incorporación
+de nuevas funcionalidades o bien, la actualización de las existentes. Siendo capaz de adaptarse a las necesidades
+cambiantes de la UVG, lo que es fundamental para la mantenibilidad y sostenibilidad a largo plazo del \textit{Backend}.
+
+La API no fue diseñada únicamente para ser modular y escalable, sino que también segura. Los \textit{endpoints}
+fueron diseñados para ser accesibles solo a usuarios autenticados y autorizados, utilizando JWT para la autenticación
+y control de acceso basado en roles. Las pruebas de funcionalidad confirmaron que el diseño de los \textit{endpoints} 
+protegidos y no protegidos por autenticación y autorización se implementó correctamente, como se puede observar en
+la Figura \ref{fig:updateProject}, donde únicamente el dueño del proyecto puede actualizar la información del proyecto,
+mientras que otros usuarios no autorizados reciben un error de acceso denegado. Al igual que en la Figura
+\ref{fig:getProjectsUnauthorized}, donde un usuario no autenticado recibe un error de acceso denegado al intentar acceder 
+lista de proyectos de extensión. El control de acceso basado en roles impone reglas de negocio estrictas necesarias
+para salvaguardar la integridad de los datos y garantizar que únicamente los usuarios autorizados puedan realizar
+acciones específicas, lo que es fundamental para proteger la información sensible y mantener la confianza de los
+usuarios en la plataforma.
+De igual manera, la solidez de la seguridad de la API se ve reforzada por el análisis de vulnerabilidades automático
+con OWASP ZAP, que logró identificar alertas de seguridad medias y bajas, pero no encontró vulnerabilidades críticas.
+Esto garantiza que la API proporciona un entorno seguro para los usuarios de la plataforma, al estar protegida contra
+amenazas comunes. Por supuesto, las alertas de seguridad medias y bajas identificadas fueron abordadas y mitigadas en
+la medida de lo posible para mejorar aún más la seguridad general de la API. Como la sanitización de entradas para
+prevenir ataques de inyección de código malicioso, entre otros.
+
+El \textit{Frontend} se implementó utilizando React, lo que permitió crear una interfaz de usuario moderna, interactiva
+y \textit{responsive}.
+La selección de una arquitectura web \textit{Single Page Application} (SPA, por sus siglas en inglés) utilizando la estrategia
+de renderizado web \textit{Client-Side Rendering} (CSR, por sus siglas en inglés) fue lo que permitió al usuario interactuar
+con la plataforma de manera fluida, sin interrupciones causadas por recargas de página, lo que mejora significativamente
+la experiencia.
+Las tecnologías seleccionadas para el desarrollo del \textit{Frontend} permitieron crear un diseño fiel a los prototipos
+aprobados y una experiencia de usuario fluida. TypeScript, EsLint, Prettier y Storybook contribuyeron significativamente
+a la calidad, consistencia y mantenibilidad del código, lo que se traduce en una interfaz de usuario más robusta y fácil
+de mantener a largo plazo. Material UI se utilizó para garantizar la fidelidad visual con los prototipos aprobados, lo que
+a su vez contribuyó a una experiencia de usuario coherente y atractiva. TanStack Query fue seleccionado para la gestión de
+datos provenientes de la API, permitió una gestión eficiente del estado de los datos, mejorando el rendimiento al tener
+control sobre la caché y las actualizaciones de datos. TanStack Forms fue utilizado para la gestión de formularios, lo que
+permitió validaciones robustas en tiempo real, mejorando la experiencia del usuario al proporcionar retroalimentación
+inmediata sobre la validez de los datos ingresados y deshabilitando el envío de formularios con datos inválidos,
+lo que contribuyó a la integridad de los datos y a una experiencia de usuario más amigable.
+
+Por lo que, todo lo anterior contribuyó a los resultados obtenidos en las pruebas de usabilidad por parte de usuarios
+finales, quienes en general reportaron una experiencia muy positiva con la plataforma.
+Como se observó en la Figura \ref{fig:completedTasksGraph}, todos los usuarios fueron capaces de completar las tareas
+asignadas. Aunque es importante destacar que algunos usuarios interpretaron mal la escala de dificultad, por lo que
+colocaron tareas que consideraron fáciles como difíciles; sin embargo, la mayoría de los participantes reportaron que
+las tarea fueron muy fáciles o fáciles de completar, lo que indica que la plataforma fue intuitiva. Además, en la Figura
+\ref{fig:difficultyAndTimeGraph} se observa que, en promedio, la mayoría de usuarios completaron las tareas en menos de
+3 minutos, lo que refuerza la percepción de que la plataforma requiere una curva de aprendizaje baja.
+El \textit{Frontend} no solo ofreció una experiencia agradable para los usuarios, sino que también se integró de manera
+efectiva con el \textit{Backend}, lo que permitió realizar las operaciones requeridas que comprenden la gestión de
+proyectos de extensión, incluyendo otras operaciones como la gestión de usuarios, autenticación, entre otros. Esto se
+puede confirmar con las pruebas de funcionalidad realizadas, donde luego de completar las tareas asignadas, se verificó
+que el estado de la plataforma reflejaba correctamente las acciones realizadas por los usuarios, tal como se puede observar
+en las Figuras \ref{fig:usabilityTestDB} y \ref{fig:usabilityTestBucketS3}, donde la Base de Datos y el Bucket S3 respectivamente,
+reflejan correctamente los cambios realizados por un participante durante las pruebas de usabilidad.
+Además, las pruebas de usabilidad permitieron obtener el puntaje promedio de la Escala de Usabilidad del Sistema (SUS, por sus siglas
+en inglés), que fue de 80. Este puntaje, dentro de la escala de SUS, se considera un puntaje excelente. Esto indica que los
+usuarios finales percibieron la plataforma como altamente usable, intuitiva y genera un alto nivel de satisfacción, lo que a su
+vez refuerza la aceptación y adopción de la plataforma por parte de los usuarios finales como el nuevo sistema de gestión de
+proyectos de extensión en la UVG.
+Juntamente con el \textit{Backend}, el \textit{Frontend} fue sometido al análisis de vulnerabilidades automático con OWASP ZAP,
+el cuál identificó alertas de seguridad medias y bajas, las cuales fueron abordadas y mitigadas en la medida de lo posible como
+la definición de políticas de seguridad de contenido (CSP, por sus siglas en inglés) para proteger contra ataques de inyección
+de código malicioso, como ataques de Cross-Site Scripting (XSS, por sus siglas en inglés) comunes.
+
+Es importante destacar que las pruebas de usabilidad también revelaron áreas de mejora, como la necesidad de mover ciertos elementos
+visuales como el "Registro de horas" por parte de estudiantes, a una ubicación más visible dentro de la plataforma, no dentro del
+historial de proyectos finalizados, ya que no para todos los usuarios resultó intuitivo. O bien la necesidad de agregar un tutorial
+inicial para guiar a los usuarios en el uso de la plataforma. Y otros comentarios en relación al diseño visual. Los cuales deberán
+de ser considerados para futuras iteraciones de la plataforma.
+
+Resulta permitente afirmar, entonces, que la implementación de la plataforma web para la gestión de proyectos de extensión en la
+UVG logró cumplir con los objetivos planteados, al desarrollar un sistema que centraliza la administración, publicación, participación
+y seguimiento de los proyectos de extensión, permitiendo a estudiantes, directores y organizaciones externas participar oportunamente
+en el ciclo de vida de los proyectos de extensión. 
